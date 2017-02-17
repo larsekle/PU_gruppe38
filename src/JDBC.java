@@ -9,8 +9,8 @@ public class JDBC {
 	
 	public void connect(){
 		try {
-			conn = DriverManager.getConnection("jdbc://mysql.stud.ntnu.no/larsekle_tdt4140database?user=larsekle_tdt4140&password=PUgruppe38");
-		} catch (SQLException ex){
+			conn = DriverManager.getConnection("jdbc:mysql://mysql.stud.ntnu.no/larsekle_tdt4140database?user=larsekle_tdt4140&password=PUgruppe38");
+		} catch (Exception ex){
 			System.out.println("SQLException: "+ex.getMessage());
 		}		
 	}
@@ -19,30 +19,31 @@ public class JDBC {
 	Statement stmt = null; 
 	ResultSet rs = null;
 	
-	public void sporring(){
+	public void view(){
 		try {
 			stmt = conn.createStatement();
 			
-			String query = "SELECT * FROM BRUKERE";
+			String query = "SELECT * FROM Failures";
 			if (stmt.execute(query)){
 				rs = stmt.getResultSet();
 			}
 			
 			while (rs.next()){
-				String kolonne1 = rs.getString(1);
-				String kolonne2 = rs.getString(2);
+				String StudentID = rs.getString(2);
+				String Assignment = rs.getString(4);
+				String Exercise = rs.getString(5);
+				String Tag = rs.getString(6);
 				
-				System.out.println(kolonne1 + " - " + kolonne2);
+				System.out.println(String.format("StudentID : %s, Assignment : %s, Exercise : %s, Tag : %s", StudentID, Assignment, Exercise, Tag));
 			}
 		} catch (SQLException ex){
 			System.out.println("SQLException: " + ex.getMessage());
 		}
 	}
 	
-	public void insett(){
+	public void insert(String FailID, String StudentID, String DateTime, String Assignment, String Exercise, String Tag, String Codeline, char FE){
 		try{
-			
-			String query = "INSERT INTO Failures (FailID, StudentID, DateTime, Exercise) VALUES (1, 1, '16.02.2017, '3';";
+			String query = String.format("INSERT INTO Failures VALUES (%s, %s, %s, %s, %s, %s, %s, '%s');", FailID, StudentID, DateTime, Assignment, Exercise, Tag, Codeline, FE);
 			stmt = conn.createStatement();
 			stmt.executeUpdate(query);
 			
@@ -53,6 +54,6 @@ public class JDBC {
 	public static void main(String[] args) {
 		JDBC jdbc = new JDBC();
 		jdbc.connect();
-		jdbc.insett();
+		jdbc.view();
 	}
 }
