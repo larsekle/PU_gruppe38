@@ -54,7 +54,7 @@ public class JDBC {
 	public static void main(String[] args) {
 		JDBC jdbc = new JDBC();
 		jdbc.connect();
-		jdbc.insert(2, 2, 2, 2, 2, 2, 'E');
+		jdbc.insert(2, 2, 2, 2, 2, 2, 'F');
 		jdbc.view();
 	}
 }
