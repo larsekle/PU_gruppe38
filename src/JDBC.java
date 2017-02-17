@@ -41,9 +41,9 @@ public class JDBC {
 		}
 	}
 	
-	public void insert(String FailID, String StudentID, String DateTime, String Assignment, String Exercise, String Tag, String Codeline, char FE){
+	public void insert(int StudentID, int DateTime, int Assignment, int Exercise, int Tag, int Codeline, char FE){
 		try{
-			String query = String.format("INSERT INTO Failures VALUES (%s, %s, %s, %s, %s, %s, %s, '%s');", FailID, StudentID, DateTime, Assignment, Exercise, Tag, Codeline, FE);
+			String query = String.format("INSERT INTO Failures (StudentID, DateTime, Assignment, Exercise, Tag, Codeline, FE) VALUES (%s, %s, %s, %s, %s, %s, '%s');", StudentID, DateTime, Assignment, Exercise, Tag, Codeline, FE);
 			stmt = conn.createStatement();
 			stmt.executeUpdate(query);
 			
@@ -54,6 +54,7 @@ public class JDBC {
 	public static void main(String[] args) {
 		JDBC jdbc = new JDBC();
 		jdbc.connect();
+		jdbc.insert(2, 2, 2, 2, 2, 2, 'E');
 		jdbc.view();
 	}
 }
