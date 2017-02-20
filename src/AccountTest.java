@@ -2,15 +2,17 @@
 
 import junit.framework.TestCase;
 import no.hal.jex.runtime.JExercise;
+import src.Account;
+
 
 @JExercise(description = "Tests stateandbehavior.Account")
 @SuppressWarnings("all")
 public class AccountTest extends TestCase {
   private Account account;
   private Hashtag ht = new Hashtag();
- 
   
-
+  
+  @Override
   protected void setUp() {
     account = new Account();
     
@@ -70,7 +72,6 @@ public class AccountTest extends TestCase {
   
   private void _transition_exprAction__deposit_transitions0_actions0(final Account it) {
     try {
-      
       it.deposit(100);
       } catch (junit.framework.AssertionFailedError error) {
       fail("deposit(100) failed: " + error.getMessage());
@@ -109,9 +110,14 @@ public class AccountTest extends TestCase {
     
 //	 ************ HER HAR VI JOBBET *********************************************************
     double _balance = it.getBalance();
-    ht.addHash("#validation");
-    assertTrue("balance == 0 failed after deposit(-50)"+ht.getHashtags()+"SIGRIDXOXO", this.operator_equals(_balance, 0));
+    if (!this.operator_equals(_balance, 0)){
+    	ht.addHash("#validation");
+    	ht.addHash("#validation");
+    	ht.addHash("#constructor");
+    }
     System.out.println(ht.getHashtags());
+//    assertTrue("balance == 0 failed after deposit(-50)"+ht.getHashtags()+"SIGRIDXOXO", this.operator_equals(_balance, 0));
+//    System.out.println(ht.getHashtags());
   }
 //  ******************************************************************************************
   

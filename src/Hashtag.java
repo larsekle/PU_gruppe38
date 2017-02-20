@@ -4,7 +4,7 @@ import java.util.Map;
 public class Hashtag {
 	
 	private Map<String, Integer> hashtags = new HashMap<String, Integer>();
-	private final static int LIMIT = 5;
+	private final static int LIMIT = 2;
 	
 	public void addHash(String ht){
 		if(!hashtags.containsKey(ht)){
@@ -19,7 +19,7 @@ public class Hashtag {
 	
 	public void checkLimit(String s){
 		if (hashtags.get(s) == LIMIT){
-			talkToStudent();
+			talkToStudent(s);
 			hashtags.remove(s);
 		}
 	}
@@ -28,12 +28,13 @@ public class Hashtag {
 		return hashtags;
 	}
 	
-	public void talkToStudent(){
-		//popVindu
+	public void talkToStudent(String tag){
+		System.out.println("LIMIT er nådd for "+tag+"! Snakker til student.");
 		return;
 	}
 	
 	public void sendToDB (){
 		//SEND TIL DATABASE!!!!
 	}
+
 }
