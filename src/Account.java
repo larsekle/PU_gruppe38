@@ -29,4 +29,5 @@ public class Account {
 	void addInterest() {
 		deposit(balance * interestRate / 100);		
 	}
+
 }

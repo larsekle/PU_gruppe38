@@ -6,6 +6,10 @@ public class Hashtag {
 	private Map<String, Integer> hashtags = new HashMap<String, Integer>();
 	private final static int LIMIT = 2;
 	
+	public Hashtag(){
+		
+	}
+	
 	public void addHash(String ht){
 		if(!hashtags.containsKey(ht)){
 			hashtags.put(ht, 1);
@@ -35,6 +39,10 @@ public class Hashtag {
 	
 	public void sendToDB (){
 		//SEND TIL DATABASE!!!!
+	}
+	
+	public static void main(String[] args) {
+		System.out.println("MAIN");
 	}
 
 }

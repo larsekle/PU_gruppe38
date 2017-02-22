@@ -2,7 +2,6 @@
 
 import junit.framework.TestCase;
 import no.hal.jex.runtime.JExercise;
-import src.Account;
 
 
 @JExercise(description = "Tests stateandbehavior.Account")
