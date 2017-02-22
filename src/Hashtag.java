@@ -1,10 +1,23 @@
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Hashtag {
 	
+	private int StudentID = 11;
+	private int DateTime = 1;
+	private int Assignment = 3;
+	private int Exercise = 5;
+	private int Tag = 9; 
+	private int Codeline = 12; 
+	private char FE = '0';
 	private Map<String, Integer> hashtags = new HashMap<String, Integer>();
 	private final static int LIMIT = 2;
+	private JDBC database;
+	
+	public Hashtag (JDBC database){
+		this.database = database;
+	}
 	
 	public void addHash(String ht){
 		if(!hashtags.containsKey(ht)){
@@ -24,6 +37,10 @@ public class Hashtag {
 		}
 	}
 	
+	public void checkLimitDB(){
+		database.view(StudentID, Assignment, Exercise, Tag); 
+	}
+	
 	public Map<String, Integer> getHashtags(){
 		return hashtags;
 	}
@@ -34,7 +51,16 @@ public class Hashtag {
 	}
 	
 	public void sendToDB (){
-		//SEND TIL DATABASE!!!!
+		database.connect();
+		database.insert(StudentID, DateTime, Assignment, Exercise, Tag, Codeline, FE);
+		System.out.println("data har blitt sendt til database");
+
+	}
+	
+	
+	public static void main(String[] args) {
+	
+		
 	}
 
 }
