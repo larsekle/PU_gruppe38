@@ -15,21 +15,31 @@ public class JDBC {
 		}		
 	}
 	
-	
 	Statement stmt = null; 
 	ResultSet rs = null;
+	ResultSet countRs = null;
 	
-	public void view(){
+	public void view(int studID, int Ass, int Ex, int tag){
 		try {
-			stmt = conn.createStatement();
-			
+			stmt = conn.createStatement();  //her kommer nullpointerException, og koden stopper.
 			String query = "SELECT * FROM Failures";
+			String count = "SELECT COUNT(*) FROM Failures WHERE (StudentID="+studID+" AND Assignment="+Ass+" AND Exercise="+Ex+" AND Tag="+tag+")";
+			
+
 			if (stmt.execute(query)){
 				rs = stmt.getResultSet();
 			}
 			
+			if(stmt.execute(count)){
+				countRs = stmt.getResultSet();
+			}
+			
+			while (countRs.next()){
+				System.out.println("Count: "+countRs.getString(1));
+			}
+			
 			while (rs.next()){
-				String StudentID = rs.getString(2);
+				String StudentID = rs.getString(2); //hopper ut her.
 				String Assignment = rs.getString(4);
 				String Exercise = rs.getString(5);
 				String Tag = rs.getString(6);
@@ -54,7 +64,11 @@ public class JDBC {
 	public static void main(String[] args) {
 		JDBC jdbc = new JDBC();
 		jdbc.connect();
-		jdbc.insert(2, 2, 2, 2, 2, 2, 'F');
-		jdbc.view();
+		jdbc.view(1, 0, 3, 0);
+		
+		//Hashtag ht = new Hashtag(jdbc);
+		//ht.checkLimitDB();
 	}
+	
+	
 }

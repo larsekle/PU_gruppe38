@@ -22,11 +22,14 @@ public class Account {
 	}
 	
 	void deposit(double amount) {
-		
 			balance = balance + amount;
 	
 	}
 	void addInterest() {
 		deposit(balance * interestRate / 100);		
+	}
+	
+	public static void main(String[] args) {
+		System.out.println("Heheii");
 	}
 }
