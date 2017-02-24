@@ -27,7 +27,7 @@ public class Hashtag {
 			hashtags.put(ht, hashtags.get(ht)+1);
 			checkLimit(ht);
 			}
-		sendToDB(); //Denne kan flyttes
+		sendToDB(); 
 	}
 	
 	public void checkLimit(String s){
@@ -52,8 +52,7 @@ public class Hashtag {
 	
 	public void sendToDB (){
 		database.connect();
-		database.insert(StudentID, DateTime, Assignment, Exercise, Tag, Codeline, FE);
-		System.out.println("data har blitt sendt til database");
+		database.insert(StudentID, Assignment, Exercise, Tag, Codeline, FE);
 
 	}
 	

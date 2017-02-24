@@ -1,9 +1,9 @@
-
+import java.lang.Object;
 
 public class Account {
 
-	double balance;
-	double interestRate;
+	private double balance;
+	private double interestRate;
 	
 	public String toString() {
 		return String.format("[Account balance=%f interestRate=%f", balance, interestRate);
@@ -29,7 +29,9 @@ public class Account {
 		deposit(balance * interestRate / 100);		
 	}
 	
-	public static void main(String[] args) {
-		System.out.println("Heheii");
-	}
+//	public static void main(String[] args) {
+//		ResourcesPlugin rp = new ResourcesPlugin();
+//		System.out.println(ResourcesPlugin.getWorkspace().getRoot().getLocation().toString());
+//	}
+	
 }

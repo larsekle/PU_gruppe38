@@ -113,9 +113,7 @@ public class AccountTest extends TestCase {
 	    	ht.addHash("#validation");
 	    	ht.addHash("#constructor");
     }
-//    System.out.println(ht.getHashtags());
-//    assertTrue("balance == 0 failed after deposit(-50)"+ht.getHashtags()+"SIGRIDXOXO", this.operator_equals(_balance, 0));
-System.out.println(ht.getHashtags());
+   assertTrue("balance == 0 failed after deposit(-50)"+ht.getHashtags()+"SIGRIDXOXO", this.operator_equals(_balance, 0));
   }
 //  ******************************************************************************************
   
