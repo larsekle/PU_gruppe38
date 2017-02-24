@@ -51,6 +51,46 @@ public class JDBC {
 			System.out.println("SQLException: " + ex.getMessage());
 		}
 	}
+	
+	public String getStudentID(){
+		java.net.URL location = Account.class.getProtectionDomain().getCodeSource().getLocation();
+        int count = 0;
+        int index = 0;
+        while (count<5){
+	        	if (location.getFile().charAt(index) == '/'){
+	        		count++;
+	        	}
+	        	index++;
+        }        
+        return location.getFile().substring(0,index);
+	}
+	
+	private int filepathToID(String filepath){
+	try {
+		stmt = conn.createStatement();
+		
+		String query = "SELECT COUNT(*) FROM STUDENTID WHERE Filepath = '"+filepath+"';";
+		if (stmt.execute(query)){
+			rs = stmt.getResultSet();
+		}
+		int count = 0;
+		while (rs.next()){
+			count = Integer.parseInt(rs.getString(1));
+		}
+		if (count == 0){
+			//SETT INN FILEPATH i StudentID-tabellen
+		}
+		//HENT UT ID BASERT PÅ FILEPATH
+		
+		
+	} catch (SQLException ex){
+		System.out.println("SQLException: " + ex.getMessage());
+	}
+	return 0;
+	}
+	
+	
+	
 	public static void main(String[] args) {
 		JDBC jdbc = new JDBC();
 		jdbc.connect();
