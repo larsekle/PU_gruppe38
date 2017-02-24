@@ -38,7 +38,7 @@ public class Hashtag {
 	}
 	
 	public void checkLimitDB(){
-		database.view(StudentID, Assignment, Exercise, Tag); 
+		database.view(Assignment, Exercise, Tag); 
 	}
 	
 	public Map<String, Integer> getHashtags(){
@@ -52,7 +52,7 @@ public class Hashtag {
 	
 	public void sendToDB (){
 		database.connect();
-		database.insert(StudentID, Assignment, Exercise, Tag, Codeline, FE);
+		database.insert(Assignment, Exercise, Tag, Codeline, FE);
 
 	}
 	

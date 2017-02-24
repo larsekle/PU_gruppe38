@@ -47,12 +47,12 @@ public class JDBC {
 	}
 	
 	// Creates SQL-statement and sends to database. Database returns subset of database based on input variables.
-	public void view(int studID, int Ass, int Ex, int tag){
+	public void view(int Ass, int Ex, int tag){
 		try {
 			
 			stmt = conn.createStatement();
 			
-			String count = "SELECT COUNT(*) FROM Failures WHERE (StudentID="+studID+" AND Assignment="+Ass+" AND Exercise="+Ex+" AND Tag="+tag+")";
+			String count = "SELECT COUNT(*) FROM Failures WHERE (StudentID="+getStudentID()+" AND Assignment="+Ass+" AND Exercise="+Ex+" AND Tag="+tag+")";
 
 			if(stmt.execute(count)){
 				countRs = stmt.getResultSet();
@@ -68,7 +68,7 @@ public class JDBC {
 		}
 	}
 	
-	public void insert(int StudentID, int Assignment, int Exercise, int Tag, int Codeline, char FE){
+	public void insert(int Assignment, int Exercise, int Tag, int Codeline, char FE){
 		try{
 			
 			
@@ -78,7 +78,7 @@ public class JDBC {
 			String currentTime = sdf.format(dt);
 			
 			// Creates query and sends it til the database
-			String query = String.format("INSERT INTO Failures (StudentID, DateTime, Assignment, Exercise, Tag, Codeline, FE) VALUES (%s, '%s', %s, %s, %s, %s, '%s');", StudentID, currentTime, Assignment, Exercise, Tag, Codeline, FE);
+			String query = String.format("INSERT INTO Failures (StudentID, DateTime, Assignment, Exercise, Tag, Codeline, FE) VALUES (%s, '%s', %s, %s, %s, %s, '%s');", getStudentID(), currentTime, Assignment, Exercise, Tag, Codeline, FE);
 			stmt = conn.createStatement();
 			stmt.executeUpdate(query);
 			
@@ -88,7 +88,7 @@ public class JDBC {
 	}
 	
 	// Gets the users StudentID based om eclipse project filepath
-	public String getStudentID(){
+	public int getStudentID(){
 		java.net.URL location = Account.class.getProtectionDomain().getCodeSource().getLocation();
         int count = 0;
         int index = 0;
@@ -97,17 +97,18 @@ public class JDBC {
 	        		count++;
 	        	}
 	        	index++;
-        }        
-        return location.getFile().substring(0,index);
+        }
+        return filepathToID(location.getFile().substring(0,index));
 	}
 	
 	// Converts filepath to StudentID from database
 	private int filepathToID(String filepath){
-	
 		try {
 			stmt = conn.createStatement();
 			
-			String query = "SELECT COUNT(*) FROM STUDENTID WHERE Filepath = '"+filepath+"';";
+			
+			// Checks how many times the student is listed in table (0 or 1)
+			String query = "SELECT COUNT(*) FROM StudentID WHERE Filepath = '"+filepath+"';";
 			if (stmt.execute(query)){
 				rs = stmt.getResultSet();
 			}
@@ -115,23 +116,36 @@ public class JDBC {
 			while (rs.next()){
 				count = Integer.parseInt(rs.getString(1));
 			}
-			if (count == 0){
-				//SETT INN FILEPATH i StudentID-tabellen
-			}
-			//HENT UT ID BASERT PÅ FILEPATH
 			
+			
+			// If new student, assign studentID in table StudentID
+			if (count == 0){
+				query = String.format("INSERT INTO StudentID (Filepath) VALUES ('%s');", filepath);
+				stmt = conn.createStatement();
+				stmt.executeUpdate(query);
+			}
+			
+			// Get the studentID 
+			query = "SELECT StudentID FROM StudentID WHERE Filepath = '"+filepath+"';";
+			if (stmt.execute(query)){
+				rs = stmt.getResultSet();
+			}
+			while (rs.next()){
+				return rs.getInt(1);
+			}
 			
 		} catch (SQLException ex){
 			System.out.println("SQLException: " + ex.getMessage());
 		}
-		return 0;
+		return 0; 
 	}
 	
 	
 	public static void main(String[] args) {
 		JDBC jdbc = new JDBC();
 		jdbc.connect();
-		jdbc.view(1, 0, 3, 0);
+		System.out.println(jdbc.getStudentID());
+		
 		
 		//Hashtag ht = new Hashtag(jdbc);
 		//ht.checkLimitDB();
