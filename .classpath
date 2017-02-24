@@ -3,8 +3,5 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/3"/>
-	<classpathentry kind="lib" path="/Users/sigridfosen/Downloads/mysql-connector-java-5.1.40/mysql-connector-java-5.1.40-bin.jar"/>
-	<classpathentry kind="lib" path="/Users/sigridfosen/Programmering/tdt4100-2017-master2/git/tdt4100-2017/ovinger/libs/jexercise-runtime.jar"/>
-	<classpathentry kind="lib" path="/Users/sigridfosen/Programmering/tdt4100-2017-master2/git/tdt4100-2017/ovinger/libs/no.hal.javafx.fxmlapp.lib_0.0.1.201701160851.jar"/>
 	<classpathentry kind="output" path="bin1"/>
 </classpath>
