@@ -46,7 +46,7 @@ public class JDBC {
 		}
 	}
 	
-	
+	// Creates SQL-statement and sends to database. Database returns subset of database based on input variables.
 	public void view(int studID, int Ass, int Ex, int tag){
 		try {
 			
@@ -72,11 +72,12 @@ public class JDBC {
 		try{
 			
 			
-			//
+			// Sets date based on system clock and formats as SQL DateTime
 			Date dt = new Date();
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String currentTime = sdf.format(dt);
 			
+			// Creates query and sends it til the database
 			String query = String.format("INSERT INTO Failures (StudentID, DateTime, Assignment, Exercise, Tag, Codeline, FE) VALUES (%s, '%s', %s, %s, %s, %s, '%s');", StudentID, currentTime, Assignment, Exercise, Tag, Codeline, FE);
 			stmt = conn.createStatement();
 			stmt.executeUpdate(query);
@@ -86,9 +87,45 @@ public class JDBC {
 		}
 	}
 	
+	// Gets the users StudentID based om eclipse project filepath
+	public String getStudentID(){
+		java.net.URL location = Account.class.getProtectionDomain().getCodeSource().getLocation();
+        int count = 0;
+        int index = 0;
+        while (count<5){
+	        	if (location.getFile().charAt(index) == '/'){
+	        		count++;
+	        	}
+	        	index++;
+        }        
+        return location.getFile().substring(0,index);
+	}
 	
+	// Converts filepath to StudentID from database
+	private int filepathToID(String filepath){
 	
-	
+		try {
+			stmt = conn.createStatement();
+			
+			String query = "SELECT COUNT(*) FROM STUDENTID WHERE Filepath = '"+filepath+"';";
+			if (stmt.execute(query)){
+				rs = stmt.getResultSet();
+			}
+			int count = 0;
+			while (rs.next()){
+				count = Integer.parseInt(rs.getString(1));
+			}
+			if (count == 0){
+				//SETT INN FILEPATH i StudentID-tabellen
+			}
+			//HENT UT ID BASERT PÅ FILEPATH
+			
+			
+		} catch (SQLException ex){
+			System.out.println("SQLException: " + ex.getMessage());
+		}
+		return 0;
+	}
 	
 	
 	public static void main(String[] args) {
