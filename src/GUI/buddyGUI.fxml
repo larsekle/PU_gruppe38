@@ -2,11 +2,14 @@
 
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 
-<AnchorPane prefHeight="328.0" prefWidth="361.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111">
+<AnchorPane prefHeight="362.0" prefWidth="361.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111">
    <children>
       <TabPane layoutX="-1.0" layoutY="132.0" prefHeight="162.0" prefWidth="361.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -27,6 +30,16 @@
             </Tab>
         </tabs>
       </TabPane>
-      <Text layoutX="-1.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="360.9999978542328" />
+      <Text layoutX="-1.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BuddyBOT presenterer hva den tror du sliter med her:" textAlignment="CENTER" wrappingWidth="360.9999978542328" />
+      <Text fill="#53e1d7" layoutX="4.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BuddyBOT " textAlignment="CENTER" wrappingWidth="351.99999618530273">
+         <font>
+            <Font name="Leelawadee UI Bold" size="28.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="122.0" fitWidth="86.0" layoutX="272.0" layoutY="246.0" pickOnBounds="true" preserveRatio="true" smooth="false">
+         <image>
+            <Image url="@../../../../Bilder/BuddyBOT.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
