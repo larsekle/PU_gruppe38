@@ -2,14 +2,13 @@
 
 import junit.framework.TestCase;
 import no.hal.jex.runtime.JExercise;
-import src.Account;
 
 
 @JExercise(description = "Tests stateandbehavior.Account")
 @SuppressWarnings("all")
 public class AccountTest extends TestCase {
   private Account account;
-  private Hashtag ht = new Hashtag();
+  private Hashtag ht = new Hashtag(new JDBC());
   
   
   @Override
@@ -110,14 +109,11 @@ public class AccountTest extends TestCase {
     
 //	 ************ HER HAR VI JOBBET *********************************************************
     double _balance = it.getBalance();
-    if (!this.operator_equals(_balance, 0)){
-    	ht.addHash("#validation");
-    	ht.addHash("#validation");
-    	ht.addHash("#constructor");
+	    if (!this.operator_equals(_balance, 0)){
+	    	ht.addHash("#validation");
+	    	ht.addHash("#constructor");
     }
-    System.out.println(ht.getHashtags());
-//    assertTrue("balance == 0 failed after deposit(-50)"+ht.getHashtags()+"SIGRIDXOXO", this.operator_equals(_balance, 0));
-//    System.out.println(ht.getHashtags());
+   assertTrue("balance == 0 failed after deposit(-50)"+ht.getHashtags()+"SIGRIDXOXO", this.operator_equals(_balance, 0));
   }
 //  ******************************************************************************************
   
