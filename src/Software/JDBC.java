@@ -11,8 +11,16 @@ import java.util.Date;
 import java.text.SimpleDateFormat;
 
 public class JDBC {
+	private final int LIMIT_INCREMENT;  
 	private Connection conn = null;
 	
+	public JDBC(){
+		LIMIT_INCREMENT = 0;
+	}
+	
+	public JDBC(int LIMIT_INCREMENT){
+		this.LIMIT_INCREMENT = LIMIT_INCREMENT;  
+	}
 	// Connects Eclipse user to SQL database
 	public void connect(){
 		try {
@@ -73,7 +81,7 @@ public class JDBC {
 	}
 	
 	// Inserts new row into Failures table
-	public void insertFailure(int Assignment, int Exercise, int Tag, int Codeline, char FE){
+	public void insertFailure(int Assignment, int Exercise, int tag, int Codeline, char FE){
 		try{
 			
 			
@@ -83,7 +91,7 @@ public class JDBC {
 			String currentTime = sdf.format(dt);
 			
 			// Creates query and sends it til the database
-			String query = String.format("INSERT INTO Failures (StudentID, DateTime, Assignment, Exercise, Tag, Codeline, FE) VALUES (%s, '%s', %s, %s, %s, %s, '%s');", getStudentID(), currentTime, Assignment, Exercise, Tag, Codeline, FE);
+			String query = String.format("INSERT INTO Failures (StudentID, DateTime, Assignment, Exercise, Tag, Codeline, FE) VALUES (%s, '%s', %s, %s, %s, %s, '%s');", getStudentID(), currentTime, Assignment, Exercise, tag, Codeline, FE);
 			stmt = conn.createStatement();
 			stmt.executeUpdate(query);
 			
@@ -93,11 +101,11 @@ public class JDBC {
 	}
 	
 	// Inserts new row into Feedback table
-	public void insertFeedback(int linkID, int studID, double rating){
+	public void insertFeedback(int linkID, int studID, double rating, int tag){
 		try{
 			
 			// Creates query and sends it til the database
-			String query = String.format("INSERT INTO Feedback (StudentID, LinkID, Rating) VALUES (%s, '%s', %s, %s, %s, %s, '%s');", studID, linkID, rating);
+			String query = String.format("INSERT INTO Feedback (StudentID, LinkID, Rating, Tag) VALUES (%s, '%s', %s, %s, %s, %s, '%s');", studID, linkID, rating, tag);
 			stmt = conn.createStatement();
 			stmt.executeUpdate(query);
 			
@@ -232,6 +240,87 @@ public class JDBC {
 			System.out.println("SQLException: " + ex.getMessage());
 		}
 		return -1; 
+	}
+	
+	// Gets the last Tag value inserted to the Failures table, based on largest FailID on the StudentID. 
+	public int getLastTag(){
+		try  {
+			stmt = conn.createStatement();
+			String query = "SELECT Tag FROM Failure WHERE DateTime = (SELECT MAX(FailID) FROM Failure WHERE StudentID = '"+ getStudentID() +"')";
+			
+			if (stmt.execute(query)){
+				rs = stmt.getResultSet();
+			}
+			
+			while (rs.next()){
+				return rs.getInt(1);
+			}
+		}  catch (SQLException ex){
+			System.out.println("SQLException: " + ex.getMessage());
+		}
+		return -1; 
+	}
+	
+	// Retrurn true if limit is reached
+	public boolean limitReached(int tag, int assignment, int exercise){
+		// Check if limit is 0, and if so create new row. If limit not 0 then change existing row.
+		int limit = 0;
+		int count = 0; 
+		int studID = getStudentID(); 
+		
+		
+		try  {
+			stmt = conn.createStatement();
+			
+			
+			// Get count of failures registerd on student, assignment, exercise 
+			String query = String.format("SELECT COUNT(*) FROM Failures WHERE Assignment = %s AND Exercise = %s AND StudentID = %s AND Tag = %s", assignment, exercise, studID, tag); 
+			
+			if (stmt.execute(query)){
+				rs = stmt.getResultSet();
+			}
+			
+			if (rs.next()){
+				count = rs.getInt(1); 
+			} else{
+				throw new IllegalStateException(); 
+			}
+			
+			// Get current limit for when BuddyBOT should assist the student, and compare with 'count'
+			query = String.format("SELECT CurrentLimit FROM FailureLimit WHERE Assignment = %s AND Exercise = %s AND StudentID = %s AND Tag = %s", assignment, exercise, studID, tag);
+			
+			if (stmt.execute(query)){
+				rs = stmt.getResultSet();
+			}
+			
+			if (rs.next()){
+				limit = rs.getInt(1); 
+				
+				// Increase CurrentLimit in StudentLimit table
+				if (count >= limit){
+					
+					query = String.format("UPDATE FailureLimit SET CurrentLimit = %s WHERE  Assignment = %s AND Exercise = %s AND StudentID = %s AND Tag = %s", limit+LIMIT_INCREMENT, assignment, exercise, studID, tag); 
+					stmt.executeUpdate(query);
+					
+				}
+				return count >= limit; 
+				
+			} else{
+				
+				// Creates new row with start limit
+				
+				limit += LIMIT_INCREMENT; 
+				query = String.format("INSERT INTO FailureLimit(Assignment, Exercise, Tag, StudentID, CurrentLimit) VALUES (%s, %s, %s, %s, %s)", assignment, exercise, tag, studID, limit); 
+				stmt.executeUpdate(query);
+				
+				return count >= limit; 
+			}
+			
+		}  catch (SQLException ex){
+			System.out.println("SQLException: " + ex.getMessage());
+		}
+		
+		return false; 
 	}
 	
 }

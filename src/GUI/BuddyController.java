@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import Software.JDBC;
+import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Slider;
@@ -92,16 +93,15 @@ public class BuddyController {
 	
 	@FXML
 	private void handleSend() {
-		for (Hyperlink link : hyperlinks){
+		for (Hyperlink link : Arrays.asList(wiki1, wiki2, wiki3, online1, online2, online3, youtube1, youtube2, youtube3)){
 			if ((boolean) link.isVisited()){
 				int linkID = database.getLinkID(link.getText());
 				int studID = database.getStudentID();
 				double rating = feedbackSlider.getValue();
-				database.insertFeedback(linkID, studID, rating);
+				int tag = database.getLastTag(); 
+				database.insertFeedback(linkID, studID, rating, tag);
 			}
 		}
 		// Should close the entire window
 	}
-	
-	
 }
