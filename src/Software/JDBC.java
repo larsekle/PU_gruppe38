@@ -196,7 +196,7 @@ public class JDBC {
 			while (rs.next()){
 				
 				// Check if Link is amongst top 3 based on average against worstAVG which contains AVG for current link nr.3
-				double currAVG = getAVG(rs.getString(2)); 
+				double currAVG = getAVG(rs.getInt(1)); 
 				if (currAVG>worstAVG){				
 					worstAVG = currAVG;
 					links.remove(2); 
@@ -212,21 +212,21 @@ public class JDBC {
 	}
 	
 	// Return average rating for LinkID
-	public double getAVG(String linkID){
-		
+	public double getAVG(int linkID){
+		ResultSet subRs = null;
 		try  {
 			stmt = conn.createStatement();
 			String query = "SELECT AVG(Rating) FROM Feedback WHERE LinkID = " + linkID;
 			
 			if (stmt.execute(query)){
-				rs = stmt.getResultSet();
+				subRs = stmt.getResultSet();
 			}
 			
-			while (rs.next()){
-				if (rs.getString(1)=="NULL"){
+			while (subRs.next()){
+				if (subRs.getDouble(1) == 0){
 					return 2.5; 
 				}
-				return rs.getDouble(1);
+				return subRs.getDouble(1);
 			}
 		}  catch (SQLException ex){
 			System.out.println("SQLException: " + ex.getMessage());

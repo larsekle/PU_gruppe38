@@ -66,15 +66,27 @@ public class BuddyController {
 		ArrayList<String> onlineLinks = database.getLinks("Online");
 		
 		// Sets top links to the different tabs
-		for (int i = 0; i<=3; i++){
-			hyperlinks.get(i).setText(wikiLinks.get(i)); 
-		}
-		for (int i = 0; i<=3; i++){
-			hyperlinks.get(i+3).setText(youtubeLinks.get(i)); 
-		}
-		for (int i = 0; i<=3; i++){
-			hyperlinks.get(i+6).setText(onlineLinks.get(i)); 
-		}
+		wiki1.setText(wikiLinks.get(0));
+		wiki2.setText(wikiLinks.get(1));
+		wiki3.setText(wikiLinks.get(2));
+		
+		online1.setText(onlineLinks.get(0));
+		online2.setText(onlineLinks.get(1));
+		online3.setText(onlineLinks.get(2));
+		
+		youtube1.setText(youtubeLinks.get(0));
+		youtube2.setText(youtubeLinks.get(1));
+		youtube3.setText(youtubeLinks.get(2));
+		
+//		for (int i = 0; i<=3; i++){
+//			hyperlinks.get(i).setText(wikiLinks.get(i)); 
+//		}
+//		for (int i = 0; i<=3; i++){
+//			hyperlinks.get(i+3).setText(youtubeLinks.get(i)); 
+//		}
+//		for (int i = 0; i<=3; i++){
+//			hyperlinks.get(i+6).setText(onlineLinks.get(i)); 
+//		}
 		
 	}
 	
