@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import Software.JDBC;
-import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Slider;
@@ -47,9 +46,9 @@ public class BuddyController {
 	@FXML
 	private Slider feedbackSlider; 
 	
+	// Tried to collect Hyperlinks in ArrayList but continually failed when compiling. Could perhaps be looked at, but not important. 
+	//private ArrayList<Hyperlink> hyperlinks = new ArrayList<Hyperlink>(Arrays.asList(wiki1, wiki2, wiki3, online1, online2, online3, youtube1, youtube2, youtube3));
 	
-	private ArrayList<Hyperlink> hyperlinks = new ArrayList<Hyperlink>(Arrays.asList(wiki1, wiki2, wiki3, online1, online2, online3, youtube1, youtube2, youtube3));
-
 	
 	@FXML
 	private void initialize() {
@@ -92,14 +91,15 @@ public class BuddyController {
 	}
 	
 	@FXML
+	// Sends review from students to database based on link visited and rating through slide bar
 	private void handleSend() {
 		for (Hyperlink link : Arrays.asList(wiki1, wiki2, wiki3, online1, online2, online3, youtube1, youtube2, youtube3)){
 			if ((boolean) link.isVisited()){
 				int linkID = database.getLinkID(link.getText());
 				int studID = database.getStudentID();
 				double rating = feedbackSlider.getValue();
-				int tag = database.getLastTag(); 
-				database.insertFeedback(linkID, studID, rating, tag);
+				database.insertFeedback(linkID, studID, rating);
+				link.setVisited(false);
 			}
 		}
 		// Should close the entire window

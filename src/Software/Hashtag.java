@@ -3,15 +3,13 @@ package Software;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import GUI.BuddyController;
-import javafx.application.Application;
-import javafx.stage.Stage;
+import sun.applet.Main;
 
 public class Hashtag {
 	
 	private int Codeline = 12; 
 	private char FE = 'F';
-	private final int LIMIT_INCREMENT = 5;
+	private final int LIMIT_INCREMENT = 3;
 	private final ArrayList<String> TAGS = new ArrayList<String>(Arrays.asList("#constructor", "#validation", "#encapsulation", "#objectstructures", "#interfaces", "#inheritage")); 
 	private JDBC database;
 	
@@ -21,8 +19,7 @@ public class Hashtag {
 	
 	public void talkToStudent(String tag){
 		System.out.println("LIMIT er nådd for "+ tag + "! Snakker til student.");
-		
-		return;
+		GUI.Main.main((String[]) null);
 	}
 	
 	public void sendToDB (String tag, int assignment, int exercise){

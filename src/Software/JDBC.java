@@ -101,11 +101,11 @@ public class JDBC {
 	}
 	
 	// Inserts new row into Feedback table
-	public void insertFeedback(int linkID, int studID, double rating, int tag){
+	public void insertFeedback(int linkID, int studID, double rating){
 		try{
 			
-			// Creates query and sends it til the database
-			String query = String.format("INSERT INTO Feedback (StudentID, LinkID, Rating, Tag) VALUES (%s, '%s', %s, %s, %s, %s, '%s');", studID, linkID, rating, tag);
+			// Creates query and sends it to the database
+			String query = String.format("INSERT INTO Feedback (StudentID, LinkID, Rating) VALUES (%s, %s, %s);", studID, linkID, rating);
 			stmt = conn.createStatement();
 			stmt.executeUpdate(query);
 			
@@ -246,7 +246,7 @@ public class JDBC {
 	public int getLastTag(){
 		try  {
 			stmt = conn.createStatement();
-			String query = "SELECT Tag FROM Failure WHERE DateTime = (SELECT MAX(FailID) FROM Failure WHERE StudentID = '"+ getStudentID() +"')";
+			String query = "SELECT Tag FROM Failures WHERE DateTime = (SELECT MAX(FailID) FROM Failures WHERE StudentID = '"+ getStudentID() +"')";
 			
 			if (stmt.execute(query)){
 				rs = stmt.getResultSet();
