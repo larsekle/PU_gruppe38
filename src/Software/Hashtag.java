@@ -1,3 +1,5 @@
+package Software;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -52,7 +54,7 @@ public class Hashtag {
 	
 	public void sendToDB (){
 		database.connect();
-		database.insert(Assignment, Exercise, Tag, Codeline, FE);
+		database.insertFailure(Assignment, Exercise, Tag, Codeline, FE);
 
 	}
 	

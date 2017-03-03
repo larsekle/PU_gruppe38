@@ -1,8 +1,12 @@
+package Software;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
@@ -22,7 +26,7 @@ public class JDBC {
 	private ResultSet rs = null;
 	private ResultSet countRs = null;
 	
-	// Creates SQL-statement and sends to database. Database returns subset of database based on input variables.
+	// Creates SQL-statement and sends to database. Database returns subset of Failures table based on input variables.
 	public void view(){
 		try  {
 			stmt = conn.createStatement();
@@ -46,7 +50,7 @@ public class JDBC {
 		}
 	}
 	
-	// Creates SQL-statement and sends to database. Database returns subset of database based on input variables.
+	// Creates SQL-statement and sends to database. Database returns subset of Failures table based on input variables.
 	public void view(int Ass, int Ex, int tag){
 		try {
 			
@@ -68,7 +72,8 @@ public class JDBC {
 		}
 	}
 	
-	public void insert(int Assignment, int Exercise, int Tag, int Codeline, char FE){
+	// Inserts new row into Failures table
+	public void insertFailure(int Assignment, int Exercise, int Tag, int Codeline, char FE){
 		try{
 			
 			
@@ -87,6 +92,20 @@ public class JDBC {
 		}
 	}
 	
+	// Inserts new row into Feedback table
+	public void insertFeedback(int linkID, int studID, double rating){
+		try{
+			
+			// Creates query and sends it til the database
+			String query = String.format("INSERT INTO Feedback (StudentID, LinkID, Rating) VALUES (%s, '%s', %s, %s, %s, %s, '%s');", studID, linkID, rating);
+			stmt = conn.createStatement();
+			stmt.executeUpdate(query);
+			
+		} catch (SQLException ex){
+			System.out.println("SQLException: " + ex.getMessage());
+		}
+	}
+		
 	// Gets the users StudentID based om eclipse project filepath
 	public int getStudentID(){
 		java.net.URL location = Account.class.getProtectionDomain().getCodeSource().getLocation();
@@ -140,16 +159,79 @@ public class JDBC {
 		return 0; 
 	}
 	
-	
-	public static void main(String[] args) {
-		JDBC jdbc = new JDBC();
-		jdbc.connect();
-		System.out.println(jdbc.getStudentID());
+	// Get linkID from Resources table based on entire link
+	public int getLinkID(String link){
+		try  {
+			stmt = conn.createStatement();
+			String query = "SELECT * FROM Resources WHERE Link = '" + link + "'";
+			
+			if (stmt.execute(query)){
+				rs = stmt.getResultSet();
+			}
+			
+			while (rs.next()){
+				return rs.getInt(1);
+			}
+			
+		}  catch (SQLException ex){
+			System.out.println("SQLException: " + ex.getMessage());
+		}
+		return 0; 
+	}
+
+	// Creates SQL-statement and sends to database. Database returns top 3 links from Resources table based on type
+	public ArrayList<String> getLinks(String type){
+		// Create array containing top 3 links within each type, with empty string as default
+		ArrayList<String> links = new ArrayList<String>(Arrays.asList("", "", "")); 
+		double worstAVG = 0; 
 		
+		try  {
+			stmt = conn.createStatement();
+			String query = "SELECT * FROM Resources WHERE Type = '" + type + "'";
+			
+			if (stmt.execute(query)){
+				rs = stmt.getResultSet();
+			}
+			
+			while (rs.next()){
+				
+				// Check if Link is amongst top 3 based on average against worstAVG which contains AVG for current link nr.3
+				double currAVG = getAVG(rs.getString(2)); 
+				if (currAVG>worstAVG){				
+					worstAVG = currAVG;
+					links.remove(2); 
+					links.add(rs.getString(2));		
+				}
+			}
+			
+		}  catch (SQLException ex){
+			System.out.println("SQLException: " + ex.getMessage());
+		}
 		
-		//Hashtag ht = new Hashtag(jdbc);
-		//ht.checkLimitDB();
+		return links; 
 	}
 	
+	// Return average rating for LinkID
+	public double getAVG(String linkID){
+		
+		try  {
+			stmt = conn.createStatement();
+			String query = "SELECT AVG(Rating) FROM Feedback WHERE LinkID = " + linkID;
+			
+			if (stmt.execute(query)){
+				rs = stmt.getResultSet();
+			}
+			
+			while (rs.next()){
+				if (rs.getString(1)=="NULL"){
+					return 2.5; 
+				}
+				return rs.getDouble(1);
+			}
+		}  catch (SQLException ex){
+			System.out.println("SQLException: " + ex.getMessage());
+		}
+		return -1; 
+	}
 	
 }

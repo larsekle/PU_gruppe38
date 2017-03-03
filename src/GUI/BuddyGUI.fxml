@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="362.0" prefWidth="361.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.BuddyController">
+   <children>
+      <TabPane layoutX="-1.0" layoutY="132.0" prefHeight="162.0" prefWidth="361.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="YouTube">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ListView layoutX="14.0" layoutY="12.0" prefHeight="109.0" prefWidth="251.0" />
+                        <Hyperlink fx:id="youtube1" layoutX="14.0" layoutY="14.0" prefHeight="17.0" prefWidth="224.0" text="https://www.youtube.com/watch?v=Hl-zzrqQoSE&amp;list=PLFE2CE09D83EE3E28" />
+                        <Hyperlink fx:id="youtube2" layoutX="14.0" layoutY="48.0" prefHeight="17.0" prefWidth="224.0" text="https://www.youtube.com/watch?v=Hl-zzrqQoSE&amp;list=PLFE2CE09D83EE3E28" />
+                        <Hyperlink fx:id="youtube3" layoutX="14.0" layoutY="81.0" prefHeight="17.0" prefWidth="224.0" text="https://www.youtube.com/watch?v=Hl-zzrqQoSE&amp;list=PLFE2CE09D83EE3E28" />
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Wiki">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ListView layoutX="14.0" layoutY="12.0" prefHeight="109.0" prefWidth="251.0" />
+                        <Hyperlink fx:id="wiki1" layoutX="14.0" layoutY="14.0" prefHeight="17.0" prefWidth="224.0" text="https://www.youtube.com/watch?v=Hl-zzrqQoSE&amp;list=PLFE2CE09D83EE3E28" />
+                        <Hyperlink fx:id="wiki2" layoutX="14.0" layoutY="48.0" prefHeight="17.0" prefWidth="224.0" text="https://www.youtube.com/watch?v=Hl-zzrqQoSE&amp;list=PLFE2CE09D83EE3E28" />
+                        <Hyperlink fx:id="wiki3" layoutX="14.0" layoutY="81.0" prefHeight="17.0" prefWidth="224.0" text="https://www.youtube.com/watch?v=Hl-zzrqQoSE&amp;list=PLFE2CE09D83EE3E28" />
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+            <Tab text="Online resources">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ListView layoutX="14.0" layoutY="12.0" prefHeight="109.0" prefWidth="251.0" />
+                        <Hyperlink fx:id="online1" layoutX="14.0" layoutY="14.0" prefHeight="17.0" prefWidth="224.0" text="https://www.youtube.com/watch?v=Hl-zzrqQoSE&amp;list=PLFE2CE09D83EE3E28" />
+                        <Hyperlink fx:id="online2" layoutX="14.0" layoutY="48.0" prefHeight="17.0" prefWidth="224.0" text="https://www.youtube.com/watch?v=Hl-zzrqQoSE&amp;list=PLFE2CE09D83EE3E28" />
+                        <Hyperlink fx:id="online3" layoutX="14.0" layoutY="81.0" prefHeight="17.0" prefWidth="224.0" text="https://www.youtube.com/watch?v=Hl-zzrqQoSE&amp;list=PLFE2CE09D83EE3E28" />
+                     </children></AnchorPane>
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+      <Text fx:id="problemText" layoutX="-1.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-- BuddyBOT presenterer hva den tror du sliter med her --" textAlignment="CENTER" wrappingWidth="360.9999978542328" />
+      <Text fill="#53e1d7" layoutX="4.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BuddyBOT " textAlignment="CENTER" wrappingWidth="351.99999618530273">
+         <font>
+            <Font name="Leelawadee UI Bold" size="28.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="122.0" fitWidth="86.0" layoutX="273.0" layoutY="253.0" pickOnBounds="true" preserveRatio="true" smooth="false">
+         <image>
+            <Image url="@img/BuddyBOT.png" />
+         </image>
+      </ImageView>
+      <Slider fx:id="feedbackSlider" blockIncrement="1.0" layoutX="67.0" layoutY="334.0" max="5.0" />
+      <Text layoutX="29.0" layoutY="330.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Var linken nyttig? " textAlignment="CENTER" wrappingWidth="215.9999978542328" />
+      <Button layoutX="213.0" layoutY="322.0" mnemonicParsing="false" onAction="#handleSend" text="Send" />
+   </children>
+</AnchorPane>
