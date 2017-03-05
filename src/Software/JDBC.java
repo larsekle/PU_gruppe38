@@ -116,7 +116,7 @@ public class JDBC {
 		
 	// Gets the users StudentID based om eclipse project filepath
 	public int getStudentID(){
-		java.net.URL location = Account.class.getProtectionDomain().getCodeSource().getLocation();
+		java.net.URL location = JDBC.class.getProtectionDomain().getCodeSource().getLocation();
         int count = 0;
         int index = 0;
         while (count<5){
