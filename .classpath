@@ -5,6 +5,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/3"/>
 	<classpathentry kind="lib" path="libs/jexercise-runtime.jar"/>
 	<classpathentry kind="lib" path="libs/mysql-connector-java-5.1.40-bin.jar"/>
-	<classpathentry kind="lib" path="libs/no.hal.javafx.fxmlapp.lib_0.0.1.201701160851.jar"/>
+	<classpathentry kind="lib" path="libs/no.hal.javafx.fxmlapp.lib_0.0.1.201701160851.jar" sourcepath="src/GUI"/>
 	<classpathentry kind="output" path="bin1"/>
 </classpath>
