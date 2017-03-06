@@ -1,4 +1,4 @@
-
+package Software;
 
 import junit.framework.TestCase;
 import no.hal.jex.runtime.JExercise;
@@ -8,7 +8,9 @@ import no.hal.jex.runtime.JExercise;
 @SuppressWarnings("all")
 public class AccountTest extends TestCase {
   private Account account;
-  private Hashtag ht = new Hashtag(new JDBC());
+  private Hashtag ht = new Hashtag();
+  private int assignment; 
+  private int exercise; 
   
   
   @Override
@@ -110,10 +112,10 @@ public class AccountTest extends TestCase {
 //	 ************ HER HAR VI JOBBET *********************************************************
     double _balance = it.getBalance();
 	    if (!this.operator_equals(_balance, 0)){
-	    	ht.addHash("#validation");
-	    	ht.addHash("#constructor");
+	    	ht.sendToDB("#encapsulation", assignment, exercise);
+	    	ht.sendToDB("#constructor", assignment, exercise);
     }
-   assertTrue("balance == 0 failed after deposit(-50)"+ht.getHashtags()+"SIGRIDXOXO", this.operator_equals(_balance, 0));
+   assertTrue("balance == 0 failed after deposit(-50) SIGRIDXOXO", this.operator_equals(_balance, 0));
   }
 //  ******************************************************************************************
   
