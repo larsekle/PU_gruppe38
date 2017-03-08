@@ -1,4 +1,4 @@
-
+package Software;
 
 import junit.framework.TestCase;
 import no.hal.jex.runtime.JExercise;
@@ -8,8 +8,9 @@ import no.hal.jex.runtime.JExercise;
 @SuppressWarnings("all")
 public class AccountTest extends TestCase {
   private Account account;
-  private Hashtag ht = new Hashtag(new JDBC());
-  private int assignment;
+
+  private Hashtag ht = new Hashtag();
+  private int assignment; 
   private int exercise;
   
   
@@ -122,7 +123,7 @@ public class AccountTest extends TestCase {
 	    	ht.sendToDB("#validation",assignment,exercise);
 	    	ht.sendToDB("#constructor",assignment,exercise);
     }
-   assertTrue("balance == 0 failed after deposit(-50)"+ht.getHashtags()+"SIGRIDXOXO", this.operator_equals(_balance, 0));
+   assertTrue("balance == 0 failed after deposit(-50) SIGRIDXOXO", this.operator_equals(_balance, 0));
   }
 //  ******************************************************************************************
   

@@ -1,3 +1,4 @@
+package Software;
 import java.sql.Connection;
 
 public class JDBCTest extends junit.framework.TestCase{
@@ -8,7 +9,6 @@ public class JDBCTest extends junit.framework.TestCase{
 	
 	protected void setUp(){
 		jdbc = new JDBC();
-		ht = new Hashtag(jdbc);
 	}
 	
 	public void testConnectException(){ //Trenger ikke denne, det blir for vanskelig sier han

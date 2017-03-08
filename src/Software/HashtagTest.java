@@ -1,3 +1,5 @@
+package Software;
+
 
 public class HashtagTest extends junit.framework.TestCase {
 	
@@ -6,7 +8,7 @@ public class HashtagTest extends junit.framework.TestCase {
 
 	protected void setUp(){
 		jdbc = new JDBC();
-		ht = new Hashtag(jdbc);
+		ht = new Hashtag();
 	}
 	
 	 protected void tearDown() {
