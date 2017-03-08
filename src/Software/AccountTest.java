@@ -10,7 +10,7 @@ public class AccountTest extends TestCase {
   private Account account;
   private Hashtag ht = new Hashtag();
   private int assignment; 
-  private int exercise; 
+  private int exercise;
   
   
   @Override
