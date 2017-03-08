@@ -12,6 +12,10 @@ public class Hashtag {
 	private final int LIMIT_INCREMENT = 3;
 	private final ArrayList<String> TAGS = new ArrayList<String>(Arrays.asList("#constructor", "#validation", "#encapsulation", "#objectstructures", "#interfaces", "#inheritage")); 
 	private JDBC database;
+	private int assignment; 
+	private int exercise; 
+	private int tag; 
+	
 	
 	public Hashtag (){
 		this.database = new JDBC(LIMIT_INCREMENT);
@@ -22,8 +26,11 @@ public class Hashtag {
 		GUI.Main.main((String[]) null);
 	}
 	
-	public void sendToDB (String tag, int assignment, int exercise){
+	public void sendToDB(String tag, int assignment, int exercise){
 		database.connect();
+		this.assignment = assignment; 
+		this.exercise = exercise; 
+		this.tag = TAGS.indexOf(tag); 
 		
 		database.insertFailure(assignment, exercise, TAGS.indexOf(tag), Codeline, FE);
 		if (database.limitReached(TAGS.indexOf(tag), assignment, exercise)){
@@ -31,5 +38,28 @@ public class Hashtag {
 		}
 	}
 	
+	public JDBC getDatabase(){
+		return database;
+	}
+	
+	public int getAss(){
+		return assignment;
+	}
+	
+	public int getEx(){
+		return exercise;
+	}
+	
+	public int getTag(){
+		return tag;
+	}
+	
+	public int getCodeline(){
+		return Codeline;
+	}
+	
+	public char getFE(){
+		return FE;
+	}
 
 }

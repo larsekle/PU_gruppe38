@@ -7,7 +7,12 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Stack;
+
+
 import java.text.SimpleDateFormat;
 
 public class JDBC {
@@ -142,14 +147,18 @@ public class JDBC {
 	}
 
 	// Creates SQL-statement and sends to database. Database returns top 3 links from Resources table based on type
-	public ArrayList<String> getLinks(String type){
+	public ArrayList<String> getLinks(String type, int tag){
 		// Create array containing top 3 links within each type, with empty string as default
-		ArrayList<String> links = new ArrayList<String>(Arrays.asList("", "", "")); 
-		double worstAVG = 0; 
+		HashMap<String, Double> links = new HashMap<String, Double>();	
+		
+		// in case 
+		for (int i = 0; i<3; i++){
+			links.put("", 0.0); 
+		}
 		
 		try  {
 			stmt = conn.createStatement();
-			String query = "SELECT * FROM Resources WHERE Type = '" + type + "'";
+			String query = "SELECT * FROM Resources WHERE Type = '" + type + "' AND Tag = " + tag;
 			
 			if (stmt.execute(query)){
 				rs = stmt.getResultSet();
@@ -157,20 +166,48 @@ public class JDBC {
 			
 			while (rs.next()){
 				
-				// Check if Link is amongst top 3 based on average against worstAVG which contains AVG for current link nr.3
-				double currAVG = getAVG(rs.getInt(1)); 
-				if (currAVG>worstAVG){				
-					worstAVG = currAVG;
-					links.remove(2); 
-					links.add(rs.getString(2));		
-				}
-			}
-			
+				// Insert links-map with each link and their corresponding average rating 			
+				links.put(rs.getString(2), getAVG(rs.getInt(1))); 
+			}	
 		}  catch (SQLException ex){
 			System.out.println("SQLException: " + ex.getMessage());
 		}
 		
-		return links; 
+		// Sorts rating with largest first
+		ArrayList<Double> rating = new ArrayList<Double>(links.values()); 
+		ArrayList<String> topLinks = new ArrayList<String>(); 
+		Collections.sort(rating);
+				
+		// Adds all links with highest average rating first 
+		if (links.size()<3){
+			
+			// Get as many links as the database contains
+			for (int i=0; i<links.size(); i++){
+				double valueForLink = rating.remove(rating.size()-1); 
+				for (String link : links.keySet() ){
+					if (links.get(link).equals(valueForLink)){
+						topLinks.add(link);
+					}
+				}
+			}
+			
+			// Fill up empty space with blank lines
+			for (int i=0; i<(3-links.size()); i++){
+				topLinks.add("");
+			}
+		} else{
+			// Fill up with three top links
+			for (int i=0; i<3; i++){
+				double valueForLink = rating.remove(rating.size()-1); 
+				for (String link : links.keySet() ){
+					if (links.get(link).equals(valueForLink)){
+						topLinks.add(link);
+					}
+				}
+			}
+		}
+		
+		return new ArrayList<String>(topLinks.subList(0, 3)); 
 	}
 	
 	// Return average rating for LinkID
@@ -275,6 +312,11 @@ public class JDBC {
 		}
 		
 		return false; 
+	}
+	
+	// Gets connection for test purpose
+	public Connection getConnection(){
+		return conn; 
 	}
 	
 }
