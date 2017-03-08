@@ -277,4 +277,9 @@ public class JDBC {
 		return false; 
 	}
 	
+	// Gets connection for test purpose
+	public Connection getConnection(){
+		return conn; 
+	}
+	
 }
