@@ -1,5 +1,8 @@
 package GUI;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -59,16 +62,22 @@ public class BuddyController {
 	private void initialize() {
 		database = new JDBC();
 		database.connect();
+		int tag = database.getLastTag(); 
+		
+		
+		// Temporarily for use in tests
+		tag = 0; 
+		
 		
 		// Get hashtags from Failure table (?) 
 		String hashtag = " ..... ";
-		problemText.setText("Hi! It looks like you are strugglig with " + hashtag + ". I would advise you to look at the following resouces:");
+		problemText.setText("Hi! It looks like you are strugglig with #" + tag + ". I would advise you to look at the following resouces:");
 		online3.setText("online3");
 		
 		// Get top links from database
-		ArrayList<String> wikiLinks = database.getLinks("Wiki"); 
-		ArrayList<String> youtubeLinks = database.getLinks("Youtube");
-		ArrayList<String> onlineLinks = database.getLinks("Online");
+		ArrayList<String> wikiLinks = database.getLinks("Wiki", tag); 
+		ArrayList<String> youtubeLinks = database.getLinks("Youtube", tag);
+		ArrayList<String> onlineLinks = database.getLinks("Online", tag);
 		
 		// Sets top links to the different tabs
 		wiki1.setText(wikiLinks.get(0));
@@ -83,6 +92,24 @@ public class BuddyController {
 		youtube2.setText(youtubeLinks.get(1));
 		youtube3.setText(youtubeLinks.get(2));
 		
+	}
+	
+	@FXML
+	private void handleLink(){
+		for (Hyperlink link : Arrays.asList(wiki1, wiki2, wiki3, online1, online2, online3, youtube1, youtube2, youtube3)){
+			if ((boolean) link.isVisited()){
+				try {
+			    	java.awt.Desktop.getDesktop().browse(new URI(link.getText()));
+			    } catch (URISyntaxException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				link.setVisited(false);
+			}
+		}
 	}
 	
 	@FXML

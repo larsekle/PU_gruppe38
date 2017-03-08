@@ -25,6 +25,7 @@ public class Main extends Application {
             primaryStage.setScene(scene);
             primaryStage.setTitle("BuddyBOT Execution Window");
             primaryStage.show();
+
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
