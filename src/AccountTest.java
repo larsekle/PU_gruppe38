@@ -9,6 +9,8 @@ import no.hal.jex.runtime.JExercise;
 public class AccountTest extends TestCase {
   private Account account;
   private Hashtag ht = new Hashtag(new JDBC());
+  private int assignment;
+  private int exercise;
   
   
   @Override
@@ -65,6 +67,9 @@ public class AccountTest extends TestCase {
   private void _test__constructor_transitions0_effects0_state_objectTests0_test(final Account it) {
     
     double _balance = it.getBalance();
+    if (!this.operator_equals(_balance, 0)){
+    	ht.sendToDB("#constructor",assignment,exercise);  //SKRIV INN FEILKODE!!!
+}
     assertTrue("balance == 0 failed", this.operator_equals(_balance, 0));
     
   }
@@ -73,7 +78,7 @@ public class AccountTest extends TestCase {
     try {
       it.deposit(100);
       } catch (junit.framework.AssertionFailedError error) {
-      fail("deposit(100) failed: " + error.getMessage());
+    	  fail("deposit(100) failed: " + error.getMessage());
     }
     
   }
@@ -86,6 +91,9 @@ public class AccountTest extends TestCase {
   private void _test__deposit_transitions0_effects0_state_objectTests0_test(final Account it) {
     
     double _balance = it.getBalance();
+    if (!this.operator_equals(_balance, 100)){
+    	ht.sendToDB("#constructor",assignment,exercise);  //SKRIV INN rett tilbakemelding
+}
     assertTrue("balance == 100 failed after deposit(100)", this.operator_equals(_balance, 100));
     
   }
@@ -95,6 +103,7 @@ public class AccountTest extends TestCase {
       
       it.deposit((-50));
       } catch (junit.framework.AssertionFailedError error) {
+    	  //TREGNER JEG Å LEGGE INN NOE KODE HER?
       fail("deposit(-50) failed: " + error.getMessage());
     }
     
@@ -110,8 +119,8 @@ public class AccountTest extends TestCase {
 //	 ************ HER HAR VI JOBBET *********************************************************
     double _balance = it.getBalance();
 	    if (!this.operator_equals(_balance, 0)){
-	    	ht.addHash("#validation");
-	    	ht.addHash("#constructor");
+	    	ht.sendToDB("#validation",assignment,exercise);
+	    	ht.sendToDB("#constructor",assignment,exercise);
     }
    assertTrue("balance == 0 failed after deposit(-50)"+ht.getHashtags()+"SIGRIDXOXO", this.operator_equals(_balance, 0));
   }
@@ -122,6 +131,7 @@ public class AccountTest extends TestCase {
       
       it.setInterestRate(5);
       } catch (junit.framework.AssertionFailedError error) {
+    	  //Skal jeg skrive noe her?
       fail("interestRate = 5 failed: " + error.getMessage());
     }
     
@@ -136,9 +146,15 @@ public class AccountTest extends TestCase {
     
     double _balance = it.getBalance();
     boolean _equals = this.operator_equals(_balance, 0);
+    if (!this.operator_equals(_balance, 0)){
+    	ht.sendToDB("#validation",assignment,exercise);  //Passende hashtags??
+}
     assertTrue("balance == 0 failed after interestRate = 5", _equals);
     
     double _interestRate = it.getInterestRate();
+    if (!this.operator_equals(_interestRate, 5)){
+    	ht.sendToDB("#validation",assignment,exercise);  //Passende hashtags??
+}
     assertTrue("interestRate == 5 failed after interestRate = 5", this.operator_equals(_interestRate, 5));
     
   }
@@ -161,6 +177,9 @@ public class AccountTest extends TestCase {
   private void _test__addInterest_transitions1_effects0_state_objectTests0_test(final Account it) {
     
     double _balance = it.getBalance();
+    if (!this.operator_equals(_balance, 100)){
+    	ht.sendToDB("#validation",assignment,exercise);  //Passende hashtags??
+}
     assertTrue("balance == 100 failed after deposit(100)", this.operator_equals(_balance, 100));
     
   }
@@ -183,6 +202,9 @@ public class AccountTest extends TestCase {
   private void _test__addInterest_transitions2_effects0_state_objectTests0_test(final Account it) {
     
     double _balance = it.getBalance();
+    if (!this.operator_equals(_balance, 105)){
+    	ht.sendToDB("#validation",assignment,exercise);  //Passende hashtags??
+}
     assertTrue("balance == 105 failed after addInterest", this.operator_equals(_balance, 105));
     
   }
