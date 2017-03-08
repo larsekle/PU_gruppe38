@@ -5,9 +5,11 @@ import java.util.Arrays;
 
 import Software.JDBC;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Slider;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 public class BuddyController {
 	
@@ -46,6 +48,9 @@ public class BuddyController {
 	@FXML
 	private Slider feedbackSlider; 
 	
+	@FXML 
+	private Button Send; 
+	
 	// Tried to collect Hyperlinks in ArrayList but continually failed when compiling. Could perhaps be looked at, but not important. 
 	//private ArrayList<Hyperlink> hyperlinks = new ArrayList<Hyperlink>(Arrays.asList(wiki1, wiki2, wiki3, online1, online2, online3, youtube1, youtube2, youtube3));
 	
@@ -57,7 +62,7 @@ public class BuddyController {
 		
 		// Get hashtags from Failure table (?) 
 		String hashtag = " ..... ";
-		problemText.setText("Hei! Det ser ut som du sliter med " + hashtag + ". Jeg vil anbefale deg å ta en titt på følgende lenker: ");
+		problemText.setText("Hi! It looks like you are strugglig with " + hashtag + ". I would advise you to look at the following resouces:");
 		online3.setText("online3");
 		
 		// Get top links from database
@@ -78,16 +83,6 @@ public class BuddyController {
 		youtube2.setText(youtubeLinks.get(1));
 		youtube3.setText(youtubeLinks.get(2));
 		
-//		for (int i = 0; i<=3; i++){
-//			hyperlinks.get(i).setText(wikiLinks.get(i)); 
-//		}
-//		for (int i = 0; i<=3; i++){
-//			hyperlinks.get(i+3).setText(youtubeLinks.get(i)); 
-//		}
-//		for (int i = 0; i<=3; i++){
-//			hyperlinks.get(i+6).setText(onlineLinks.get(i)); 
-//		}
-		
 	}
 	
 	@FXML
@@ -102,6 +97,7 @@ public class BuddyController {
 				link.setVisited(false);
 			}
 		}
-		// Should close the entire window
+		Stage stage = (Stage) Send.getScene().getWindow();
+		stage.close();
 	}
 }
