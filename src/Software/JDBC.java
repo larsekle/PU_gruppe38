@@ -32,54 +32,8 @@ public class JDBC {
 	
 	private Statement stmt = null; 
 	private ResultSet rs = null;
-	private ResultSet countRs = null;
 	
-	// Creates SQL-statement and sends to database. Database returns subset of Failures table based on input variables.
-	public void view(){
-		try  {
-			stmt = conn.createStatement();
-			String query = "SELECT * FROM Failures";
-			
-			if (stmt.execute(query)){
-				rs = stmt.getResultSet();
-			}
-			
-			while (rs.next()){
-				String StudentID = rs.getString(2);
-				String Assignment = rs.getString(4);
-				String Exercise = rs.getString(5);
-				String Tag = rs.getString(6);
-				
-				System.out.println(String.format("StudentID : %s, Assignment : %s, Exercise : %s, Tag : %s", StudentID, Assignment, Exercise, Tag));
-			}
-			
-		}  catch (SQLException ex){
-			System.out.println("SQLException: " + ex.getMessage());
-		}
-	}
-	
-	// Creates SQL-statement and sends to database. Database returns subset of Failures table based on input variables.
-	public void view(int Ass, int Ex, int tag){
-		try {
-			
-			stmt = conn.createStatement();
-			
-			String count = "SELECT COUNT(*) FROM Failures WHERE (StudentID="+getStudentID()+" AND Assignment="+Ass+" AND Exercise="+Ex+" AND Tag="+tag+")";
-
-			if(stmt.execute(count)){
-				countRs = stmt.getResultSet();
-			}
-			
-			while (countRs.next()){
-				System.out.println("Count: "+countRs.getString(1));
-			}
-			
-
-		} catch (SQLException ex){
-			System.out.println("SQLException: " + ex.getMessage());
-		}
-	}
-	
+		
 	// Inserts new row into Failures table
 	public void insertFailure(int Assignment, int Exercise, int tag, int Codeline, char FE){
 		try{
