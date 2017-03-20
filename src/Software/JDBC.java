@@ -6,11 +6,9 @@ import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Stack;
 
 
 import java.text.SimpleDateFormat;
@@ -40,7 +38,7 @@ public class JDBC {
 	
 		
 	// Inserts new row into Failures table
-	public void insertFailure(int Assignment, int Exercise, int tag, int Codeline, char FE){
+	public void insertFailure(int Assignment, int Exercise, String tag, int Codeline, char FE){
 		try{
 			
 			
@@ -49,8 +47,8 @@ public class JDBC {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String currentTime = sdf.format(dt);
 			
-			// Creates query and sends it til the database
-			String query = String.format("INSERT INTO Failures (StudentID, DateTime, Assignment, Exercise, Tag, Codeline, FE) VALUES (%s, '%s', %s, %s, %s, %s, '%s');", getStudentID(), currentTime, Assignment, Exercise, tag, Codeline, FE);
+			// Creates query and sends it to the database
+			String query = String.format("INSERT INTO Failures (StudentID, DateTime, Assignment, Exercise, Tag, Codeline, FE) VALUES (%s, '%s', %s, %s, '%s', %s, '%s');", getStudentID(), currentTime, Assignment, Exercise, tag, Codeline, FE);
 			stmt = conn.createStatement();
 			stmt.executeUpdate(query);
 			
@@ -147,7 +145,7 @@ public class JDBC {
 	}
 
 	// Creates SQL-statement and sends to database. Database returns top 3 links from Resources table based on type
-	public ArrayList<String> getLinks(String type, int tag){
+	public ArrayList<String> getLinks(String type, String tag){
 		// Create array containing top 3 links within each type, with empty string as default
 		HashMap<String, Double> links = new HashMap<String, Double>();	
 		
@@ -158,7 +156,7 @@ public class JDBC {
 		
 		try  {
 			stmt = conn.createStatement();
-			String query = "SELECT * FROM Resources WHERE Type = '" + type + "' AND Tag = " + tag;
+			String query = "SELECT * FROM Resources WHERE Type = '" + type + "' AND Tag = '" + tag + "'";
 			
 			if (stmt.execute(query)){
 				rs = stmt.getResultSet();
@@ -234,7 +232,7 @@ public class JDBC {
 	}
 	
 	// Gets the last Tag value inserted to the Failures table, based on largest FailID on the StudentID. 
-	public int getLastTag(){
+	public String getLastTag(){
 		try  {
 			stmt = conn.createStatement();
 			String query = "SELECT Tag FROM Failures WHERE DateTime = (SELECT MAX(FailID) FROM Failures WHERE StudentID = '"+ getStudentID() +"')";
@@ -244,16 +242,16 @@ public class JDBC {
 			}
 			
 			while (rs.next()){
-				return rs.getInt(1);
+				return rs.getString(1);
 			}
 		}  catch (SQLException ex){
 			System.out.println("SQLException: " + ex.getMessage());
 		}
-		return -1; 
+		return "-1"; 
 	}
 	
-	// Retrurn true if limit is reached
-	public boolean limitReached(int tag, int assignment, int exercise){
+	// Return true if limit is reached
+	public boolean limitReached(String tag, int assignment, int exercise){
 		// Check if limit is 0, and if so create new row. If limit not 0 then change existing row.
 		int limit = 0;
 		int count = 0; 
@@ -264,7 +262,7 @@ public class JDBC {
 			stmt = conn.createStatement();
 			
 			
-			// Get count of failures registerd on student, assignment, exercise 
+			// Get count of failures registered on student, assignment, exercise 
 			String query = String.format("SELECT COUNT(*) FROM Failures WHERE Assignment = %s AND Exercise = %s AND StudentID = %s AND Tag = %s", assignment, exercise, studID, tag); 
 			
 			if (stmt.execute(query)){
@@ -278,7 +276,7 @@ public class JDBC {
 			}
 			
 			// Get current limit for when BuddyBOT should assist the student, and compare with 'count'
-			query = String.format("SELECT CurrentLimit FROM FailureLimit WHERE Assignment = %s AND Exercise = %s AND StudentID = %s AND Tag = %s", assignment, exercise, studID, tag);
+			query = String.format("SELECT CurrentLimit FROM FailureLimit WHERE Assignment = %s AND Exercise = %s AND StudentID = %s AND Tag = '%s'", assignment, exercise, studID, tag);
 			
 			if (stmt.execute(query)){
 				rs = stmt.getResultSet();
@@ -290,7 +288,7 @@ public class JDBC {
 				// Increase CurrentLimit in StudentLimit table
 				if (count >= limit){
 					
-					query = String.format("UPDATE FailureLimit SET CurrentLimit = %s WHERE  Assignment = %s AND Exercise = %s AND StudentID = %s AND Tag = %s", limit+LIMIT_INCREMENT, assignment, exercise, studID, tag); 
+					query = String.format("UPDATE FailureLimit SET CurrentLimit = %s WHERE  Assignment = %s AND Exercise = %s AND StudentID = %s AND Tag = '%s'", limit+LIMIT_INCREMENT, assignment, exercise, studID, tag); 
 					stmt.executeUpdate(query);
 					
 				}
@@ -301,7 +299,7 @@ public class JDBC {
 				// Creates new row with start limit
 				
 				limit += LIMIT_INCREMENT; 
-				query = String.format("INSERT INTO FailureLimit(Assignment, Exercise, Tag, StudentID, CurrentLimit) VALUES (%s, %s, %s, %s, %s)", assignment, exercise, tag, studID, limit); 
+				query = String.format("INSERT INTO FailureLimit(Assignment, Exercise, Tag, StudentID, CurrentLimit) VALUES (%s, %s, '%s', %s, %s)", assignment, exercise, tag, studID, limit); 
 				stmt.executeUpdate(query);
 				
 				return count >= limit; 
