@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -12,9 +13,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="362.0" prefWidth="361.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.BuddyController">
+<AnchorPane prefHeight="467.0" prefWidth="411.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.SelfhelpController">
    <children>
-      <TabPane layoutX="-1.0" layoutY="132.0" prefHeight="162.0" prefWidth="412.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane layoutY="213.0" prefHeight="162.0" prefWidth="412.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="YouTube">
             <content>
@@ -51,19 +52,57 @@
             </Tab>
         </tabs>
       </TabPane>
-      <Text fx:id="problemText" layoutX="-1.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-- BuddyBOT presents what he believes the student is struggling with --" textAlignment="CENTER" wrappingWidth="411.9999950528145" />
+      <Text fx:id="problemText" layoutX="24.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hi! I am here to help you through your programming exercises. Which topic are you struggling with?" textAlignment="CENTER" wrappingWidth="361.9999950528145" />
       <Text fill="#53e1d7" layoutX="4.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BuddyBOT " textAlignment="CENTER" wrappingWidth="404.99999618530273">
          <font>
             <Font name="Leelawadee UI Bold" size="28.0" />
          </font>
       </Text>
-      <Slider fx:id="feedbackSlider" blockIncrement="2.0" layoutX="67.0" layoutY="334.0" max="5.0" />
-      <Text layoutX="29.0" layoutY="330.0" strokeType="OUTSIDE" strokeWidth="0.0" text="How usefull was this link?" textAlignment="CENTER" wrappingWidth="215.9999978542328" />
-      <Button fx:id="Send" layoutX="213.0" layoutY="322.0" mnemonicParsing="false" onAction="#handleSend" text="Send" />
-      <ImageView fitHeight="162.0" fitWidth="140.0" layoutX="274.0" layoutY="186.0" pickOnBounds="true" preserveRatio="true" smooth="false">
+      <Slider fx:id="feedbackSlider" blockIncrement="2.0" layoutX="68.0" layoutY="415.0" max="5.0" />
+      <Text layoutX="30.0" layoutY="411.0" strokeType="OUTSIDE" strokeWidth="0.0" text="How usefull was this link?" textAlignment="CENTER" wrappingWidth="215.9999978542328" />
+      <Button fx:id="Send" layoutX="214.0" layoutY="403.0" mnemonicParsing="false" onAction="#handleSend" text="Send" />
+      <ImageView fitHeight="162.0" fitWidth="140.0" layoutX="275.0" layoutY="267.0" pickOnBounds="true" preserveRatio="true" smooth="false">
          <image>
             <Image url="@img/BuddyBOT.png" />
          </image>
       </ImageView>
+      <ScrollPane layoutX="77.0" layoutY="90.0" prefHeight="106.0" prefWidth="259.0">
+         <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="450.0" prefWidth="157.0">
+               <children>
+                  <Text fx:id="tag1" layoutY="15.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag2" layoutY="30.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag3" layoutY="45.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag4" layoutY="60.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag5" layoutY="75.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag6" layoutY="90.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag7" layoutY="105.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag8" layoutY="120.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag9" layoutY="135.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag10" layoutY="150.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag11" layoutY="165.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag12" layoutY="180.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag13" layoutY="195.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag14" layoutY="210.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag15" layoutY="225.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag16" layoutY="240.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag17" layoutY="255.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag18" layoutY="270.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag19" layoutY="285.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag20" layoutY="300.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag21" layoutY="315.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag22" layoutY="330.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag23" layoutY="345.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag24" layoutY="360.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag25" layoutY="375.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag26" layoutY="390.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag27" layoutY="405.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag28" layoutY="420.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag29" layoutY="445.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag30" layoutY="460.0" onMouseClicked="#linkImport" />
+               </children>
+            </AnchorPane>
+         </content>
+      </ScrollPane>
    </children>
 </AnchorPane>

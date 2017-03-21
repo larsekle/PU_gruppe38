@@ -1,67 +1,68 @@
 package Software;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Hashtag {
 	
-	private int StudentID = 11;
-	private int DateTime = 1;
-	private int Assignment = 3;
-	private int Exercise = 5;
-	private int Tag = 9; 
 	private int Codeline = 12; 
-	private char FE = '0';
-	private Map<String, Integer> hashtags = new HashMap<String, Integer>();
-	private final static int LIMIT = 2;
+	private char FE = 'F';
+	private final int LIMIT_INCREMENT = 3;
 	private JDBC database;
+	private int assignment; 
+	private int exercise; 
+	private String tag; 
 	
-	public Hashtag (JDBC database){
-		this.database = database;
-	}
+	// TAGS must always contain less than 30 elements, or else SelfhelpGUI will not be able to show all hashtags.
+	public static final ArrayList<String> TAGS = new ArrayList<String>(Arrays.asList("OOT", "interface", "inheritance", "pattern", "class", "vararg", "lambda", "functional interface", "type", "encapsulation", "valid state", "abstract class", "super class", "delegation", "observable", "anonymous class", "collection", "iteration", "text handling", "value types", "scanner", "arraylist", "compare", "IO")); 
 	
-	public void addHash(String ht){
-		if(!hashtags.containsKey(ht)){
-			hashtags.put(ht, 1);
-			checkLimit(ht);
-		}else{
-			hashtags.put(ht, hashtags.get(ht)+1);
-			checkLimit(ht);
-			}
-		sendToDB(); 
-	}
-	
-	public void checkLimit(String s){
-		if (hashtags.get(s) == LIMIT){
-			talkToStudent(s);
-			hashtags.remove(s);
-		}
-	}
-	
-	public void checkLimitDB(){
-		database.view(Assignment, Exercise, Tag); 
-	}
-	
-	public Map<String, Integer> getHashtags(){
-		return hashtags;
+	public Hashtag (){
+		this.database = new JDBC(LIMIT_INCREMENT);
 	}
 	
 	public void talkToStudent(String tag){
-		System.out.println("LIMIT er nådd for "+tag+"! Snakker til student.");
-		return;
+		System.out.println("LIMIT is reached for "+ tag + "! Talking to student.");
+		GUI.Main.main((String[]) null);
 	}
 	
-	public void sendToDB (){
+	public void sendToDB(String tag, int assignment, int exercise){
 		database.connect();
-		database.insertFailure(Assignment, Exercise, Tag, Codeline, FE);
-
+		this.assignment = assignment; 
+		this.exercise = exercise; 
+		if (TAGS.indexOf(tag) < 0){
+			throw new IllegalArgumentException("Tag does not exist, contact supervisor"); 
+		}
+		
+		this.tag = tag; 
+		
+		database.insertFailure(assignment, exercise, tag, Codeline, FE);
+		if (database.limitReached(tag, assignment, exercise)){
+			talkToStudent(tag);
+		}
 	}
 	
+	public JDBC getDatabase(){
+		return database;
+	}
 	
-	public static void main(String[] args) {
+	public int getAss(){
+		return assignment;
+	}
 	
-		
+	public int getEx(){
+		return exercise;
+	}
+	
+	public String getTag(){
+		return tag;
+	}
+	
+	public int getCodeline(){
+		return Codeline;
+	}
+	
+	public char getFE(){
+		return FE;
 	}
 
 }
