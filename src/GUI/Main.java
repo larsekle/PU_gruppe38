@@ -22,6 +22,7 @@ public class Main extends Application {
         try {
             AnchorPane page = (AnchorPane) FXMLLoader.load(Main.class.getResource("BuddyGUI.fxml"));
             Scene scene = new Scene(page);
+            scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
             primaryStage.setScene(scene);
             primaryStage.setTitle("BuddyBOT Execution Window");
             primaryStage.show();

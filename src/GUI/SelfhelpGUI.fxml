@@ -7,7 +7,6 @@
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -67,44 +66,43 @@
             <Image url="@img/BuddyBOT.png" />
          </image>
       </ImageView>
-      <ScrollPane layoutX="60.0" layoutY="94.0" prefHeight="106.0" prefWidth="178.0">
+      <ScrollPane layoutX="77.0" layoutY="90.0" prefHeight="106.0" prefWidth="259.0">
          <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="762.0" prefWidth="157.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="450.0" prefWidth="157.0">
                <children>
-                  <Text fx:id="tag1" layoutY="25.0" onMouseClicked="#linkImport" />
-                  <Text fx:id="tag2" layoutY="50.0" onMouseClicked="#linkImport" />
-                  <Text fx:id="tag3" layoutY="75.0" onMouseClicked="#linkImport" />
-                  <Text fx:id="tag4" layoutY="100.0" onMouseClicked="#linkImport" />
-                  <Text fx:id="tag5" layoutY="125.0" onMouseClicked="#linkImport" />
-                  <Text fx:id="tag6" layoutY="150.0" onMouseClicked="#linkImport" />
-                  <Text fx:id="tag7" layoutY="175.0" onMouseClicked="#linkImport" />
-                  <Text fx:id="tag8" layoutY="200.0" onMouseClicked="#linkImport" />
-                  <Text fx:id="tag9" layoutY="225.0" onMouseClicked="#linkImport" />
-                  <Text fx:id="tag10" layoutY="250.0" onMouseClicked="#linkImport" />
-                  <Text fx:id="tag11" layoutY="275.0" onMouseClicked="#linkImport" />
-                  <Text fx:id="tag12" layoutY="300.0" onMouseClicked="#linkImport" />
-                  <Text fx:id="tag13" layoutY="325.0" onMouseClicked="#linkImport" />
-                  <Text fx:id="tag14" layoutY="350.0" onMouseClicked="#linkImport" />
-                  <Text fx:id="tag15" layoutY="375.0" onMouseClicked="#linkImport" />
-                  <Text fx:id="tag16" layoutY="400.0" onMouseClicked="#linkImport" />
-                  <Text fx:id="tag17" layoutY="425.0" onMouseClicked="#linkImport" />
-                  <Text fx:id="tag18" layoutY="450.0" onMouseClicked="#linkImport" />
-                  <Text fx:id="tag19" layoutY="475.0" onMouseClicked="#linkImport" />
-                  <Text fx:id="tag20" layoutY="500.0" onMouseClicked="#linkImport" />
-                  <Text fx:id="tag21" layoutY="525.0" onMouseClicked="#linkImport" />
-                  <Text fx:id="tag22" layoutY="550.0" onMouseClicked="#linkImport" />
-                  <Text fx:id="tag23" layoutY="575.0" onMouseClicked="#linkImport" />
-                  <Text fx:id="tag24" layoutY="600.0" onMouseClicked="#linkImport" />
-                  <Text fx:id="tag25" layoutY="625.0" onMouseClicked="#linkImport" />
-                  <Text fx:id="tag26" layoutY="650.0" onMouseClicked="#linkImport" />
-                  <Text fx:id="tag27" layoutY="675.0" onMouseClicked="#linkImport" />
-                  <Text fx:id="tag28" layoutY="700.0" onMouseClicked="#linkImport" />
-                  <Text fx:id="tag29" layoutY="725.0" onMouseClicked="#linkImport" />
-                  <Text fx:id="tag30" layoutY="750.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag1" layoutY="15.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag2" layoutY="30.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag3" layoutY="45.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag4" layoutY="60.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag5" layoutY="75.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag6" layoutY="90.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag7" layoutY="105.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag8" layoutY="120.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag9" layoutY="135.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag10" layoutY="150.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag11" layoutY="165.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag12" layoutY="180.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag13" layoutY="195.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag14" layoutY="210.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag15" layoutY="225.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag16" layoutY="240.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag17" layoutY="255.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag18" layoutY="270.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag19" layoutY="285.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag20" layoutY="300.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag21" layoutY="315.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag22" layoutY="330.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag23" layoutY="345.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag24" layoutY="360.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag25" layoutY="375.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag26" layoutY="390.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag27" layoutY="405.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag28" layoutY="420.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag29" layoutY="445.0" onMouseClicked="#linkImport" />
+                  <Text fx:id="tag30" layoutY="460.0" onMouseClicked="#linkImport" />
                </children>
             </AnchorPane>
          </content>
       </ScrollPane>
-      <Button fx:id="Send1" layoutX="275.0" layoutY="135.0" mnemonicParsing="false" onAction="#linkImport" text="Import links" />
    </children>
 </AnchorPane>
