@@ -263,7 +263,7 @@ public class JDBC {
 			
 			
 			// Get count of failures registered on student, assignment, exercise 
-			String query = String.format("SELECT COUNT(*) FROM Failures WHERE Assignment = %s AND Exercise = %s AND StudentID = %s AND Tag = %s", assignment, exercise, studID, tag); 
+			String query = String.format("SELECT COUNT(*) FROM Failures WHERE Assignment = %s AND Exercise = %s AND StudentID = %s AND Tag = '%s'", assignment, exercise, studID, tag); 
 			
 			if (stmt.execute(query)){
 				rs = stmt.getResultSet();

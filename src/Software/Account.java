@@ -21,17 +21,13 @@ public class Account {
 		this.interestRate = interestRate;
 	}
 	
+	// Error inserted, allows negative balance
 	void deposit(double amount) {
-			balance = balance + amount;
-	
+		balance = balance + amount;
 	}
+	
 	void addInterest() {
 		deposit(balance * interestRate / 100);		
 	}
-	
-//	public static void main(String[] args) {
-//		ResourcesPlugin rp = new ResourcesPlugin();
-//		System.out.println(ResourcesPlugin.getWorkspace().getRoot().getLocation().toString());
-//	}
 	
 }
