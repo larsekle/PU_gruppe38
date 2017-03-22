@@ -109,24 +109,22 @@ public class AccountTest extends TestCase {
   
   private void _test__depositNegative_transitions0_effects0_state_objectTests0_test(final Account it) {
     
-//	 ************ HER HAR VI JOBBET *********************************************************
     double _balance = it.getBalance();
 	    if (!this.operator_equals(_balance, 0)){
 	    	ht.sendToDB("encapsulation", assignment, exercise);
-	    	ht.sendToDB("interface", assignment, exercise);
     }
-   assertTrue("balance == 0 failed after deposit(-50) SIGRIDXOXO", this.operator_equals(_balance, 0));
+   assertTrue("balance == 0 failed after deposit(-50)", this.operator_equals(_balance, 0));
   }
-//  ******************************************************************************************
-  
+
   private void _transition_exprAction__addInterest_transitions0_actions0(final Account it) {
     try {
       
       it.setInterestRate(5);
       } catch (junit.framework.AssertionFailedError error) {
       fail("interestRate = 5 failed: " + error.getMessage());
-    }
-    
+      ht.sendToDB("encapsulation", assignment, exercise);
+      ht.sendToDB("type", assignment, exercise);
+    }    
   }
   
   private void _test__addInterest_transitions0_effects0_state(final Account it) {
@@ -138,11 +136,17 @@ public class AccountTest extends TestCase {
     
     double _balance = it.getBalance();
     boolean _equals = this.operator_equals(_balance, 0);
+    if (!_equals){
+    	ht.sendToDB("valid state", assignment, exercise);
+    	
+    }
     assertTrue("balance == 0 failed after interestRate = 5", _equals);
     
     double _interestRate = it.getInterestRate();
+    if (!this.operator_equals(_interestRate, 5)){
+    	ht.sendToDB("encapsulation", assignment, exercise);
+    }
     assertTrue("interestRate == 5 failed after interestRate = 5", this.operator_equals(_interestRate, 5));
-    
   }
   
   private void _transition_exprAction__addInterest_transitions1_actions0(final Account it) {
@@ -163,8 +167,9 @@ public class AccountTest extends TestCase {
   private void _test__addInterest_transitions1_effects0_state_objectTests0_test(final Account it) {
     
     double _balance = it.getBalance();
+    if (!this.operator_equals(_balance, 100)) ht.sendToDB("type", assignment, exercise);
     assertTrue("balance == 100 failed after deposit(100)", this.operator_equals(_balance, 100));
-    
+   
   }
   
   private void _transition_exprAction__addInterest_transitions2_actions0(final Account it) {
@@ -173,6 +178,8 @@ public class AccountTest extends TestCase {
       it.addInterest();
       } catch (junit.framework.AssertionFailedError error) {
       fail("addInterest failed: " + error.getMessage());
+      ht.sendToDB("encapsulation", assignment, exercise);
+      ht.sendToDB("type", assignment, exercise);
     }
     
   }

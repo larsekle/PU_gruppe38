@@ -1,0 +1,35 @@
+Valid Tags to DB: 
+
+OOT
+interface
+-
+inheritance
+pattern
+class
+-
+vararg
+lambda
+functional interface
+type
+encapsulation
+valid state
+-
+-
+abstract class
+-
+super class
+delegation
+observable
+anonymous class
+collection
+iteration
+text handling
+value types
+-
+scanner
+arrayList
+compare
+IO
+
+
+casting
