@@ -38,7 +38,7 @@ public class JDBC {
 	
 		
 	// Inserts new row into Failures table
-	public void insertFailure(int Assignment, int Exercise, String tag, int Codeline, char FE){
+	public void insertFailure(int Assignment, int Exercise, String tag, int Codeline, String FE){
 		try{
 			
 			

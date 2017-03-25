@@ -26,7 +26,7 @@ public class Hashtag {
 		GUI.Main.main((String[]) null);
 	}
 	
-	public void sendToDB(String tag, int assignment, int exercise){
+	public void sendToDB(String tag, int assignment, int exercise, String FE){
 		database.connect();
 		this.assignment = assignment; 
 		this.exercise = exercise; 

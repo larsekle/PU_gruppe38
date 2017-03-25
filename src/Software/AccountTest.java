@@ -68,6 +68,9 @@ public class AccountTest extends TestCase {
     
     double _balance = it.getBalance();
     assertTrue("balance == 0 failed", this.operator_equals(_balance, 0));
+    if (!this.operator_equals(_balance, 0)){
+    	ht.sendToDB("class", assignment, exercise, "Failure");
+    }
     
   }
   
@@ -76,6 +79,8 @@ public class AccountTest extends TestCase {
       it.deposit(100);
       } catch (junit.framework.AssertionFailedError error) {
       fail("deposit(100) failed: " + error.getMessage());
+      ht.sendToDB("valid state", assignment, exercise, "Error");
+
     }
     
   }
@@ -89,7 +94,11 @@ public class AccountTest extends TestCase {
     
     double _balance = it.getBalance();
     assertTrue("balance == 100 failed after deposit(100)", this.operator_equals(_balance, 100));
-    
+    if (!this.operator_equals(_balance, 100)){
+    	ht.sendToDB("valid state", assignment, exercise, "Failure");
+        ht.sendToDB("class", assignment, exercise, "Failure");
+    }
+
   }
   
   private void _transition_exprAction__depositNegative_transitions0_actions0(final Account it) {
@@ -98,6 +107,7 @@ public class AccountTest extends TestCase {
       it.deposit((-50));
       } catch (junit.framework.AssertionFailedError error) {
       fail("deposit(-50) failed: " + error.getMessage());
+      ht.sendToDB("valid state", assignment, exercise, "Error");
     }
     
   }
@@ -111,7 +121,7 @@ public class AccountTest extends TestCase {
     
     double _balance = it.getBalance();
 	    if (!this.operator_equals(_balance, 0)){
-	    	ht.sendToDB("encapsulation", assignment, exercise);
+	    	ht.sendToDB("encapsulation", assignment, exercise, "Failure");
     }
    assertTrue("balance == 0 failed after deposit(-50)", this.operator_equals(_balance, 0));
   }
@@ -122,8 +132,8 @@ public class AccountTest extends TestCase {
       it.setInterestRate(5);
       } catch (junit.framework.AssertionFailedError error) {
       fail("interestRate = 5 failed: " + error.getMessage());
-      ht.sendToDB("encapsulation", assignment, exercise);
-      ht.sendToDB("type", assignment, exercise);
+      ht.sendToDB("encapsulation", assignment, exercise, "Error");
+      ht.sendToDB("type", assignment, exercise, "Error");
     }    
   }
   
@@ -137,14 +147,14 @@ public class AccountTest extends TestCase {
     double _balance = it.getBalance();
     boolean _equals = this.operator_equals(_balance, 0);
     if (!_equals){
-    	ht.sendToDB("valid state", assignment, exercise);
+    	ht.sendToDB("valid state", assignment, exercise, "Failure");
     	
     }
     assertTrue("balance == 0 failed after interestRate = 5", _equals);
     
     double _interestRate = it.getInterestRate();
     if (!this.operator_equals(_interestRate, 5)){
-    	ht.sendToDB("encapsulation", assignment, exercise);
+    	ht.sendToDB("encapsulation", assignment, exercise, "Failure");
     }
     assertTrue("interestRate == 5 failed after interestRate = 5", this.operator_equals(_interestRate, 5));
   }
@@ -167,7 +177,7 @@ public class AccountTest extends TestCase {
   private void _test__addInterest_transitions1_effects0_state_objectTests0_test(final Account it) {
     
     double _balance = it.getBalance();
-    if (!this.operator_equals(_balance, 100)) ht.sendToDB("type", assignment, exercise);
+    if (!this.operator_equals(_balance, 100)) ht.sendToDB("type", assignment, exercise, "Failure");
     assertTrue("balance == 100 failed after deposit(100)", this.operator_equals(_balance, 100));
    
   }
@@ -178,8 +188,8 @@ public class AccountTest extends TestCase {
       it.addInterest();
       } catch (junit.framework.AssertionFailedError error) {
       fail("addInterest failed: " + error.getMessage());
-      ht.sendToDB("encapsulation", assignment, exercise);
-      ht.sendToDB("type", assignment, exercise);
+      ht.sendToDB("encapsulation", assignment, exercise, "Error");
+      ht.sendToDB("type", assignment, exercise, "Error");
     }
     
   }
@@ -193,6 +203,9 @@ public class AccountTest extends TestCase {
     
     double _balance = it.getBalance();
     assertTrue("balance == 105 failed after addInterest", this.operator_equals(_balance, 105));
-    
+    if (!this.operator_equals(_balance, 105)){
+	    ht.sendToDB("type", assignment, exercise, "Failure");
+	    ht.sendToDB("class", assignment, exercise, "Failure");
+    }
   }
 }
