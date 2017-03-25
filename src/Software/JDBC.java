@@ -18,7 +18,7 @@ public class JDBC {
 	private Connection conn = null;
 	
 	public JDBC(){
-		LIMIT_INCREMENT = 0;
+		LIMIT_INCREMENT = 2;
 	}
 	
 	public JDBC(int LIMIT_INCREMENT){
@@ -235,7 +235,7 @@ public class JDBC {
 	public String getLastTag(){
 		try  {
 			stmt = conn.createStatement();
-			String query = "SELECT Tag FROM Failures WHERE DateTime = (SELECT MAX(FailID) FROM Failures WHERE StudentID = '"+ getStudentID() +"')";
+			String query = "SELECT Tag FROM Failures WHERE DateTime = (SELECT MAX(DateTime) FROM Failures WHERE StudentID = "+ getStudentID() +")";
 			
 			if (stmt.execute(query)){
 				rs = stmt.getResultSet();
@@ -273,6 +273,24 @@ public class JDBC {
 				count = rs.getInt(1); 
 			} else{
 				throw new IllegalStateException(); 
+			}
+			
+			// Check whether Tag exists in FailureLimit and creates row if not
+			query = String.format("SELECT COUNT(CurrentLimit) FROM FailureLimit WHERE Assignment = %s AND Exercise = %s AND StudentID = %s AND Tag = '%s'", assignment, exercise, studID, tag);
+			
+			if (stmt.execute(query)){
+				rs = stmt.getResultSet();
+			}
+			
+			if (rs.next()){
+				limit = rs.getInt(1); 
+				
+				// Create new CurrentLimit row for Student, Assignment, Exercise and Tag
+				if (limit < 1){
+					
+					query = String.format("INSERT INTO FailureLimit(StudentID, Assignment, Exercise, Tag, CurrentLimit) VALUES (%s, %s, %s, '%s', %s);", studID, assignment, exercise, tag, LIMIT_INCREMENT); 
+					stmt.executeUpdate(query);
+				}
 			}
 			
 			// Get current limit for when BuddyBOT should assist the student, and compare with 'count'

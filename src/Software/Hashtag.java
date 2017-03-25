@@ -13,6 +13,7 @@ public class Hashtag {
 	private int assignment; 
 	private int exercise; 
 	private String tag; 
+	private boolean talkedToStudent = false; 
 	
 	// TAGS must always contain less than 30 elements, or else SelfhelpGUI will not be able to show all hashtags.
 	public static final ArrayList<String> TAGS = new ArrayList<String>(Arrays.asList("OOT", "interface", "inheritance", "pattern", "class", "vararg", "lambda", "functional interface", "type", "encapsulation", "valid state", "abstract class", "super class", "delegation", "observable", "anonymous class", "collection", "iteration", "text handling", "value types", "scanner", "arrayList", "compare", "IO", "casting")); 
@@ -23,7 +24,11 @@ public class Hashtag {
 	
 	public void talkToStudent(String tag){
 		System.out.println("LIMIT is reached for "+ tag + "! Talking to student.");
-		GUI.Main.main((String[]) null);
+		if (!talkedToStudent){
+			GUI.Main.main((String[]) null);
+			talkedToStudent = true; 
+		}
+		
 	}
 	
 	public void sendToDB(String tag, int assignment, int exercise, String FE){
