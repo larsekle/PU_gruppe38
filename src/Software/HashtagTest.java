@@ -18,13 +18,7 @@ public class HashtagTest extends junit.framework.TestCase {
 		
 		
 		for (int i = 0; i<200; i++){
-			int tag = (int) Math.floor(Math.random()*tags.size()); 
-			int assignment = (int) Math.ceil(Math.random()*4); 
-			int exercise = (int) Math.ceil(Math.random()*5); 
-			int choice = 0; 
-			if (Math.random()>0.5) choice =1;
-			String fe = FE.get(choice); 
-			ht.sendToDB(tags.get(tag), assignment, exercise, fe);
+			ht.sendToDB("OOT", 1, 1, "Failure");
 			
 		}
 	}
