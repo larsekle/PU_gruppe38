@@ -6,9 +6,7 @@ import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 
 
 import java.text.SimpleDateFormat;
@@ -179,29 +177,6 @@ public class JDBC {
 		
 		return null; 
 }
-	
-	// Return average rating for LinkID
-	public double getAVG(int linkID){
-		ResultSet subRs = null;
-		try  {
-			stmt = conn.createStatement();
-			String query = "SELECT AVG(Rating) FROM Feedback WHERE LinkID = " + linkID;
-			
-			if (stmt.execute(query)){
-				subRs = stmt.getResultSet();
-			}
-			
-			while (subRs.next()){
-				if (subRs.getDouble(1) == 0){
-					return 2.5; 
-				}
-				return subRs.getDouble(1);
-			}
-		}  catch (SQLException ex){
-			System.out.println("SQLException: " + ex.getMessage());
-		}
-		return -1; 
-	}
 	
 	// Gets the last Tag value inserted to the Failures table, based on largest FailID on the StudentID. 
 	public String getLastTag(){

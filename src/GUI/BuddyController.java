@@ -88,16 +88,15 @@ public class BuddyController {
 	}
 	
 	@FXML
+	// When student click on a link, they will be redirected to the webpage through default browser
 	private void handleLink(){
 		for (Hyperlink link : Arrays.asList(wiki1, wiki2, wiki3, online1, online2, online3, youtube1, youtube2, youtube3)){
 			if ((boolean) link.isVisited()){
 				try {
 			    	java.awt.Desktop.getDesktop().browse(new URI(link.getText()));
 			    } catch (URISyntaxException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				link.setVisited(false);
