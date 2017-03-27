@@ -1,5 +1,9 @@
 package Software;
 
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import junit.framework.TestCase;
 import no.hal.jex.runtime.JExercise;
 
@@ -11,7 +15,7 @@ public class AccountTest extends TestCase {
   private Hashtag ht;
   private final int assignment = 1; 
   private final int exercise = 1;
-  
+  private List<String> failures = new ArrayList<String>(); 
   
   @Override
   protected void setUp() {
@@ -31,7 +35,6 @@ public class AccountTest extends TestCase {
   @JExercise(description = "<h3>Konstrukt\u00F8r</h3>Tests \n\t\tinitialization\n")
   public void testConstructor() {
     _test__constructor_transitions0_effects0_state(account);
-    
   }
   
   @JExercise(tests = "void deposit(double)", description = "<h3>Innskudd</h3>Tests \n\t\tthe following sequence:\n\t\t<ul>\n\t\t<li>Setter inn 100 kr.: deposit(100)</li>\n\t\t</ul>\n")
@@ -56,18 +59,20 @@ public class AccountTest extends TestCase {
     _test__addInterest_transitions1_effects0_state(account);
     _transition_exprAction__addInterest_transitions2_actions0(account);
     _test__addInterest_transitions2_effects0_state(account);
-    
+        
   }
   
   private void _test__constructor_transitions0_effects0_state(final Account it) {
     _test__constructor_transitions0_effects0_state_objectTests0_test(account);
-    
   }
   
   private void _test__constructor_transitions0_effects0_state_objectTests0_test(final Account it) {
     
     double _balance = it.getBalance();
     assertTrue("balance == 0 failed", this.operator_equals(_balance, 0));
+    if (!this.operator_equals(_balance, 0)){
+    	failures.add("class,Failure"); 
+    }
     
   }
   
@@ -76,6 +81,8 @@ public class AccountTest extends TestCase {
       it.deposit(100);
       } catch (junit.framework.AssertionFailedError error) {
       fail("deposit(100) failed: " + error.getMessage());
+      failures.add("valid state,Error"); 
+
     }
     
   }
@@ -89,7 +96,11 @@ public class AccountTest extends TestCase {
     
     double _balance = it.getBalance();
     assertTrue("balance == 100 failed after deposit(100)", this.operator_equals(_balance, 100));
-    
+    if (!this.operator_equals(_balance, 100)){
+    	failures.add("valid state,Failure"); 
+        failures.add("class,Failure"); 
+    }
+
   }
   
   private void _transition_exprAction__depositNegative_transitions0_actions0(final Account it) {
@@ -98,6 +109,7 @@ public class AccountTest extends TestCase {
       it.deposit((-50));
       } catch (junit.framework.AssertionFailedError error) {
       fail("deposit(-50) failed: " + error.getMessage());
+      failures.add("valid state,Error"); 
     }
     
   }
@@ -111,7 +123,7 @@ public class AccountTest extends TestCase {
     
     double _balance = it.getBalance();
 	    if (!this.operator_equals(_balance, 0)){
-	    	ht.sendToDB("encapsulation", assignment, exercise);
+	    	failures.add("encapsulation,Failure"); 
     }
    assertTrue("balance == 0 failed after deposit(-50)", this.operator_equals(_balance, 0));
   }
@@ -122,8 +134,8 @@ public class AccountTest extends TestCase {
       it.setInterestRate(5);
       } catch (junit.framework.AssertionFailedError error) {
       fail("interestRate = 5 failed: " + error.getMessage());
-      ht.sendToDB("encapsulation", assignment, exercise);
-      ht.sendToDB("type", assignment, exercise);
+      failures.add("encapsulation,Error"); 
+      failures.add("type,Error"); 
     }    
   }
   
@@ -137,14 +149,14 @@ public class AccountTest extends TestCase {
     double _balance = it.getBalance();
     boolean _equals = this.operator_equals(_balance, 0);
     if (!_equals){
-    	ht.sendToDB("valid state", assignment, exercise);
+    	failures.add("valid state,Failure"); 
     	
     }
     assertTrue("balance == 0 failed after interestRate = 5", _equals);
     
     double _interestRate = it.getInterestRate();
     if (!this.operator_equals(_interestRate, 5)){
-    	ht.sendToDB("encapsulation", assignment, exercise);
+    	failures.add("encapsulation,Failure"); 
     }
     assertTrue("interestRate == 5 failed after interestRate = 5", this.operator_equals(_interestRate, 5));
   }
@@ -167,7 +179,7 @@ public class AccountTest extends TestCase {
   private void _test__addInterest_transitions1_effects0_state_objectTests0_test(final Account it) {
     
     double _balance = it.getBalance();
-    if (!this.operator_equals(_balance, 100)) ht.sendToDB("type", assignment, exercise);
+    if (!this.operator_equals(_balance, 100)) ht.sendToDB("type", assignment, exercise, "Failure");
     assertTrue("balance == 100 failed after deposit(100)", this.operator_equals(_balance, 100));
    
   }
@@ -178,8 +190,8 @@ public class AccountTest extends TestCase {
       it.addInterest();
       } catch (junit.framework.AssertionFailedError error) {
       fail("addInterest failed: " + error.getMessage());
-      ht.sendToDB("encapsulation", assignment, exercise);
-      ht.sendToDB("type", assignment, exercise);
+      failures.add("encapsulation,Error");
+      failures.add("type,Error"); 
     }
     
   }
@@ -193,6 +205,19 @@ public class AccountTest extends TestCase {
     
     double _balance = it.getBalance();
     assertTrue("balance == 105 failed after addInterest", this.operator_equals(_balance, 105));
-    
+    if (!this.operator_equals(_balance, 105)){
+	    failures.add("type,Failure");
+	    failures.add("class,Failure"); 
+    }
   }
+  
+  @Override
+  protected void tearDown(){
+	  while (!failures.isEmpty()){
+		  String failure = failures.remove(0); 
+		  List<String> inputs = Arrays.asList(failure.split(",")); 
+		  ht.sendToDB(inputs.get(0), assignment, exercise, inputs.get(1));
+	  }
+  }
+
 }
