@@ -17,8 +17,15 @@ public class HashtagTest extends junit.framework.TestCase {
 		Hashtag ht = new Hashtag();
 		
 		
+		ht.getDatabase().connect();
+		
+		
 		for (int i = 0; i<200; i++){
-			ht.sendToDB("OOT", 1, 1, "Failure");
+			int studID = 1; 
+			int linkID = (int) Math.ceil(Math.random()*92+28); 
+			int rating = (int) Math.ceil(Math.random()*5); 
+			
+			ht.getDatabase().insertFeedback(linkID, studID, rating);
 			
 		}
 	}

@@ -144,69 +144,41 @@ public class JDBC {
 		return 0; 
 	}
 
-	// Creates SQL-statement and sends to database. Database returns top 3 links from Resources table based on type
+	// Creates SQL-statement and sends to database. Database returns top 3 links from Resources table based on type and tag
 	public ArrayList<String> getLinks(String type, String tag){
-		// Create array containing top 3 links within each type, with empty string as default
-		HashMap<String, Double> links = new HashMap<String, Double>();	
 		
-		// in case 
-		for (int i = 0; i<3; i++){
-			links.put("", 0.0); 
-		}
+		ArrayList<String> links = new ArrayList<String>(3); 
 		
+		// Lets SQL do the work on calculating and ordering best average rating on links
 		try  {
 			stmt = conn.createStatement();
-			String query = "SELECT * FROM Resources WHERE Type = '" + type + "' AND Tag = '" + tag + "'";
+			String query = String.format("SELECT Resources.Link, Resources.Type, Resources.Tag FROM Resources "
+					+ "INNER JOIN Feedback ON Resources.LinkID=Feedback.LinkID "
+					+ "WHERE Tag = '%s' AND Type = '%s' "
+					+ "GROUP BY Resources.LinkID "
+					+ "ORDER BY AVG(Feedback.Rating) DESC;", tag, type);
+			
 			
 			if (stmt.execute(query)){
 				rs = stmt.getResultSet();
 			}
 			
-			while (rs.next()){
-				
-				// Insert links-map with each link and their corresponding average rating 			
-				links.put(rs.getString(2), getAVG(rs.getInt(1))); 
-			}	
+			for (int i = 0; i<3; i++){
+				if (rs.next()){
+					links.add(rs.getString(1)); 
+				} else{
+					links.add("");
+				}
+			}
+			
+			return links; 
+						
 		}  catch (SQLException ex){
 			System.out.println("SQLException: " + ex.getMessage());
 		}
 		
-		// Sorts rating with largest first
-		ArrayList<Double> rating = new ArrayList<Double>(links.values()); 
-		ArrayList<String> topLinks = new ArrayList<String>(); 
-		Collections.sort(rating);
-				
-		// Adds all links with highest average rating first 
-		if (links.size()<3){
-			
-			// Get as many links as the database contains
-			for (int i=0; i<links.size(); i++){
-				double valueForLink = rating.remove(rating.size()-1); 
-				for (String link : links.keySet() ){
-					if (links.get(link).equals(valueForLink)){
-						topLinks.add(link);
-					}
-				}
-			}
-			
-			// Fill up empty space with blank lines
-			for (int i=0; i<(3-links.size()); i++){
-				topLinks.add("");
-			}
-		} else{
-			// Fill up with three top links
-			for (int i=0; i<3; i++){
-				double valueForLink = rating.remove(rating.size()-1); 
-				for (String link : links.keySet() ){
-					if (links.get(link).equals(valueForLink)){
-						topLinks.add(link);
-					}
-				}
-			}
-		}
-		
-		return new ArrayList<String>(topLinks.subList(0, 3)); 
-	}
+		return null; 
+}
 	
 	// Return average rating for LinkID
 	public double getAVG(int linkID){
