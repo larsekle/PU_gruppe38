@@ -12,8 +12,11 @@ import java.util.Comparator;
 import Software.Hashtag;
 import Software.JDBC;
 import javafx.beans.property.ReadOnlyBooleanProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Slider;
 import javafx.scene.text.Text;
@@ -58,6 +61,9 @@ public class SelfhelpController {
 	
 	@FXML
 	private Button Send; 
+	
+	@FXML 
+	private Button t1;
 	
 	@FXML 
 	private Text tag1; 
@@ -149,6 +155,8 @@ public class SelfhelpController {
 	@FXML 
 	private Text tag30;
 	
+	@FXML 
+	private ComboBox t2; 
 		
 	// Tried to collect Hyperlinks in ArrayList but continually failed when compiling. Could perhaps be looked at, but not important. 
 	//private ArrayList<Hyperlink> hyperlinks = new ArrayList<Hyperlink>(Arrays.asList(wiki1, wiki2, wiki3, online1, online2, online3, youtube1, youtube2, youtube3));
@@ -168,13 +176,9 @@ public class SelfhelpController {
 		// Sort on tags without distinguish upper and lower case letters
 		tags.sort(Comparator.comparing(tag -> tag.toLowerCase()));
 		
-		int i = 0;
-		for (Text tag: Arrays.asList(tag1, tag2, tag3, tag4, tag5, tag6, tag7, tag8, tag9, tag10, tag11, tag12, tag13, tag14, tag15, tag16, tag17, tag18, tag19, tag20, tag21, tag22, tag23, tag24, tag25, tag26, tag27, tag28, tag29, tag30)){
-			if (i < tags.size()){
-				tag.setText(tags.get(i));
-			}
-			i++; 
-		}	
+		t2.getItems().removeAll(); 
+		t2.getItems().addAll(tags); 
+		
 	}
 	
 	@FXML
@@ -196,34 +200,31 @@ public class SelfhelpController {
 	}
 	
 	@FXML
+	// Gets value from drop down in GUI and request relevant links from DB
 	private void linkImport(){
-		for (Text tag: Arrays.asList(tag1, tag2, tag3, tag4, tag5, tag6, tag7, tag8, tag9, tag10, tag11, tag12, tag13, tag14, tag15, tag16, tag17, tag18, tag19, tag20, tag21, tag22, tag23, tag24, tag25, tag26, tag27, tag28, tag29, tag30)){
-			if (tag.pressedProperty().get()){
-				
-				problemText.setText("OK! I recommend taking a look at the following links: ");
-				
-				// Get top links from database
-				ArrayList<String> wikiLinks = database.getLinks("Wiki", tag.getText()); 
-				ArrayList<String> youtubeLinks = database.getLinks("Youtube", tag.getText());
-				ArrayList<String> onlineLinks = database.getLinks("Online", tag.getText());
-				
-				// Sets top links to the different tabs
-				wiki1.setText(wikiLinks.get(0));
-				wiki2.setText(wikiLinks.get(1));
-				wiki3.setText(wikiLinks.get(2));
-				
-				online1.setText(onlineLinks.get(0));
-				online2.setText(onlineLinks.get(1));
-				online3.setText(onlineLinks.get(2));
-				
-				youtube1.setText(youtubeLinks.get(0));
-				youtube2.setText(youtubeLinks.get(1));
-				youtube3.setText(youtubeLinks.get(2));
-				
-			}
-		}
 		
+		String tag = t2.getValue().toString();
 		
+		problemText.setText("Ok! Then I would recommend taking a look at the following links: ");
+		
+		// Get top links from database
+		ArrayList<String> wikiLinks = database.getLinks("Wiki", tag); 
+		ArrayList<String> youtubeLinks = database.getLinks("Youtube", tag);
+		ArrayList<String> onlineLinks = database.getLinks("Online", tag);
+		
+		// Sets top links to the different tabs
+		wiki1.setText(wikiLinks.get(0));
+		wiki2.setText(wikiLinks.get(1));
+		wiki3.setText(wikiLinks.get(2));
+		
+		online1.setText(onlineLinks.get(0));
+		online2.setText(onlineLinks.get(1));
+		online3.setText(onlineLinks.get(2));
+		
+		youtube1.setText(youtubeLinks.get(0));
+		youtube2.setText(youtubeLinks.get(1));
+		youtube3.setText(youtubeLinks.get(2));
+
 	}
 	
 	@FXML
