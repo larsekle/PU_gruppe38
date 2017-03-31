@@ -82,7 +82,6 @@ public class AccountTest extends TestCase {
       } catch (junit.framework.AssertionFailedError error) {
       fail("deposit(100) failed: " + error.getMessage());
       failures.add("valid state,Error"); 
-
     }
     
   }

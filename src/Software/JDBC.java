@@ -37,6 +37,7 @@ public class JDBC {
 		
 	// Inserts new row into Failures table
 	public void insertFailure(int Assignment, int Exercise, String tag, int Codeline, String FE){
+		
 		try{
 			
 			
@@ -277,9 +278,86 @@ public class JDBC {
 		return false; 
 	}
 	
+	// Sends user data from registration form to User table in database
+	public void sendUserData(String username, String password, String firstName, String lastName, String emailAddress, String studentAssistant){
+		try{
+			
+			// Creates query and sends it to the database
+			String query = String.format("INSERT INTO Users (Username, Password, Firstname, Lastname, Email, Position, StudentID, StudentAssistantID) VALUES ('%s', '%s', '%s', '%s', '%s', 'Student', %s, '%s');", username, password, firstName, lastName, emailAddress, getStudentID(), getStudentAssistantID(studentAssistant));
+			stmt = conn.createStatement();
+			stmt.executeUpdate(query);
+			
+		} catch (SQLException ex){
+			System.out.println("SQLException: " + ex.getMessage());
+		}
+	}
+	
+	// Convert student assistant name to ID
+	public int getStudentAssistantID(String name){
+		String query = String.format("SELECT StudentAssistantID FROM Users WHERE CONCAT(FirstName,' ', LastName) = '%s' AND Position = 'StudentAssistant'", name); 
+	
+		try {
+			
+			if (stmt.execute(query)){
+				rs = stmt.getResultSet();
+			} if (rs.next()){
+				return rs.getInt(1); 
+			} else{
+				throw new IllegalStateException(); 
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} return 0; 
+	}
+	
+	// Check whether user is already in DB 
+	public boolean userExists(){
+		try  {
+			stmt = conn.createStatement();
+			String query = "SELECT COUNT(*) FROM Users WHERE StudentID = " + getStudentID();
+			
+			if (stmt.execute(query)){
+				rs = stmt.getResultSet();
+			}
+			
+			if (rs.next() && rs.getInt(1)>0){
+				return true;
+			}
+			
+		}  catch (SQLException ex){
+			System.out.println("SQLException: " + ex.getMessage());
+		}
+		return false; 
+	}
+
+	
+	public ArrayList<String> getStudentAssistants(){
+		ArrayList<String> studentAssistant = new ArrayList<String>(); 
+			
+		try  {
+			stmt = conn.createStatement();
+			String query = String.format("SELECT FirstName, LastName FROM Users WHERE Position = 'StudentAssistant';");	
+			
+			if (stmt.execute(query)){
+				rs = stmt.getResultSet();
+			}
+			
+			while (rs.next()){
+				studentAssistant.add(rs.getString(1)+" "+rs.getString(2)); 		
+			}
+			
+			return studentAssistant; 
+						
+		}  catch (SQLException ex){
+			System.out.println("SQLException: " + ex.getMessage());
+		}
+		
+		return null; 
+	}
+	
 	// Gets connection for test purpose
 	public Connection getConnection(){
 		return conn; 
 	}
-	
+
 }

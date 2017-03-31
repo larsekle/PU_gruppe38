@@ -54,10 +54,6 @@ public class BuddyController {
 	@FXML 
 	private Button Send; 
 	
-	// Tried to collect Hyperlinks in ArrayList but continually failed when compiling. Could perhaps be looked at, but not important. 
-	//private ArrayList<Hyperlink> hyperlinks = new ArrayList<Hyperlink>(Arrays.asList(wiki1, wiki2, wiki3, online1, online2, online3, youtube1, youtube2, youtube3));
-	
-	
 	@FXML
 	private void initialize() {
 		database = new JDBC();
