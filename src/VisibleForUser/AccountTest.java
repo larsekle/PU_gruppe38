@@ -1,6 +1,9 @@
-package Software;
+package VisibleForUser;
 
 import java.util.List;
+
+import Software.Hashtag;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -82,7 +85,6 @@ public class AccountTest extends TestCase {
       } catch (junit.framework.AssertionFailedError error) {
       fail("deposit(100) failed: " + error.getMessage());
       failures.add("valid state,Error"); 
-
     }
     
   }

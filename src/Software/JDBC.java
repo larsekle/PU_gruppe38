@@ -6,9 +6,7 @@ import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 
 
 import java.text.SimpleDateFormat;
@@ -25,12 +23,14 @@ public class JDBC {
 		this.LIMIT_INCREMENT = LIMIT_INCREMENT;  
 	}
 	// Connects Eclipse user to SQL database
-	public void connect(){
+	public boolean connect(){
 		try {
 			conn = DriverManager.getConnection("jdbc:mysql://mysql.stud.ntnu.no/larsekle_tdt4140database?user=larsekle_tdt4140&password=PUgruppe38");
+			return true; 
 		} catch (Exception ex){
 			System.out.println("SQLException: "+ex.getMessage());
-		}		
+			return false; 
+		}
 	}
 	
 	private Statement stmt = null; 
@@ -38,9 +38,13 @@ public class JDBC {
 	
 		
 	// Inserts new row into Failures table
-	public void insertFailure(int Assignment, int Exercise, String tag, int Codeline, String FE){
+	public boolean insertFailure(int Assignment, int Exercise, String tag, int Codeline, String FE){
+		
+		if (!Hashtag.TAGS.contains(tag) && !tag.equals("TEST")){
+			return false; 
+		}
+		
 		try{
-			
 			
 			// Sets date based on system clock and formats as SQL DateTime
 			Date dt = new Date();
@@ -51,16 +55,17 @@ public class JDBC {
 			String query = String.format("INSERT INTO Failures (StudentID, DateTime, Assignment, Exercise, Tag, Codeline, FE) VALUES (%s, '%s', %s, %s, '%s', %s, '%s');", getStudentID(), currentTime, Assignment, Exercise, tag, Codeline, FE);
 			stmt = conn.createStatement();
 			stmt.executeUpdate(query);
-			
+			return true; 
 		} catch (SQLException ex){
 			System.out.println("SQLException: " + ex.getMessage());
+			return false; 
 		}
 	}
 	
 	// Inserts new row into Feedback table
 	public void insertFeedback(int linkID, int studID, double rating){
+		
 		try{
-			
 			// Creates query and sends it to the database
 			String query = String.format("INSERT INTO Feedback (StudentID, LinkID, Rating) VALUES (%s, %s, %s);", studID, linkID, rating);
 			stmt = conn.createStatement();
@@ -180,40 +185,24 @@ public class JDBC {
 		return null; 
 }
 	
-	// Return average rating for LinkID
-	public double getAVG(int linkID){
-		ResultSet subRs = null;
-		try  {
-			stmt = conn.createStatement();
-			String query = "SELECT AVG(Rating) FROM Feedback WHERE LinkID = " + linkID;
-			
-			if (stmt.execute(query)){
-				subRs = stmt.getResultSet();
-			}
-			
-			while (subRs.next()){
-				if (subRs.getDouble(1) == 0){
-					return 2.5; 
-				}
-				return subRs.getDouble(1);
-			}
-		}  catch (SQLException ex){
-			System.out.println("SQLException: " + ex.getMessage());
-		}
-		return -1; 
-	}
-	
 	// Gets the last Tag value inserted to the Failures table, based on largest FailID on the StudentID. 
 	public String getLastTag(){
 		try  {
 			stmt = conn.createStatement();
-			String query = "SELECT Tag FROM Failures WHERE DateTime = (SELECT MAX(DateTime) FROM Failures WHERE StudentID = "+ getStudentID() +")";
+			// Sets date based on system clock and formats as SQL DateTime
+			Date dt = new Date();
+			dt = new Date(dt.getTime() + 60000); 
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String currentTime = sdf.format(dt);
+			
+			
+			String query = String.format("SELECT Tag, DateTime FROM Failures WHERE DateTime = (SELECT MAX(DateTime) FROM Failures WHERE StudentID = '%s') AND DateTime > '%s'", getStudentID(), currentTime) ;
 			
 			if (stmt.execute(query)){
 				rs = stmt.getResultSet();
 			}
 			
-			while (rs.next()){
+			if (rs.next()){
 				return rs.getString(1);
 			}
 		}  catch (SQLException ex){
@@ -302,9 +291,86 @@ public class JDBC {
 		return false; 
 	}
 	
+	// Sends user data from registration form to User table in database
+	public void sendUserData(String username, String password, String firstName, String lastName, String emailAddress, String studentAssistant){
+		try{
+			
+			// Creates query and sends it to the database
+			String query = String.format("INSERT INTO Users (Username, Password, Firstname, Lastname, Email, Position, StudentID, StudentAssistantID) VALUES ('%s', '%s', '%s', '%s', '%s', 'Student', %s, '%s');", username, password, firstName, lastName, emailAddress, getStudentID(), getStudentAssistantID(studentAssistant));
+			stmt = conn.createStatement();
+			stmt.executeUpdate(query);
+			
+		} catch (SQLException ex){
+			System.out.println("SQLException: " + ex.getMessage());
+		}
+	}
+	
+	// Convert student assistant name to ID
+	public int getStudentAssistantID(String name){
+		String query = String.format("SELECT StudentAssistantID FROM Users WHERE CONCAT(FirstName,' ', LastName) = '%s' AND Position = 'StudentAssistant'", name); 
+	
+		try {
+			
+			if (stmt.execute(query)){
+				rs = stmt.getResultSet();
+			} if (rs.next()){
+				return rs.getInt(1); 
+			} else{
+				throw new IllegalStateException(); 
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} return 0; 
+	}
+	
+	// Check whether user is already in DB 
+	public boolean userExists(){
+		try  {
+			stmt = conn.createStatement();
+			String query = "SELECT COUNT(*) FROM Users WHERE Position = 'Student' AND StudentID = " + getStudentID();
+			
+			if (stmt.execute(query)){
+				rs = stmt.getResultSet();
+			}
+			
+			if (rs.next() && rs.getInt(1)>0){
+				return true;
+			}
+			
+		}  catch (SQLException ex){
+			System.out.println("SQLException: " + ex.getMessage());
+		}
+		return false; 
+	}
+
+	
+	public ArrayList<String> getStudentAssistants(){
+		ArrayList<String> studentAssistant = new ArrayList<String>(); 
+			
+		try  {
+			stmt = conn.createStatement();
+			String query = String.format("SELECT FirstName, LastName FROM Users WHERE Position = 'StudentAssistant';");	
+			
+			if (stmt.execute(query)){
+				rs = stmt.getResultSet();
+			}
+			
+			while (rs.next()){
+				studentAssistant.add(rs.getString(1)+" "+rs.getString(2)); 		
+			}
+			
+			return studentAssistant; 
+						
+		}  catch (SQLException ex){
+			System.out.println("SQLException: " + ex.getMessage());
+		}
+		
+		return null; 
+	}
+	
 	// Gets connection for test purpose
 	public Connection getConnection(){
 		return conn; 
 	}
-	
+
 }

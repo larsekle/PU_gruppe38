@@ -1,4 +1,4 @@
-package Software;
+package VisibleForUser;
 
 public class Account {
 

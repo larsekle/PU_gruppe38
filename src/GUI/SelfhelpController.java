@@ -63,104 +63,7 @@ public class SelfhelpController {
 	private Button Send; 
 	
 	@FXML 
-	private Button t1;
-	
-	@FXML 
-	private Text tag1; 
-
-	@FXML 
-	private Text tag2; 
-	
-	@FXML 
-	private Text tag3; 
-	
-	@FXML 
-	private Text tag4; 
-	
-	@FXML 
-	private Text tag5; 
-	
-	@FXML 
-	private Text tag6; 
-	
-	@FXML 
-	private Text tag7; 
-	
-	@FXML 
-	private Text tag8; 
-	
-	@FXML 
-	private Text tag9; 
-	
-	@FXML 
-	private Text tag10; 
-	
-	@FXML 
-	private Text tag11; 
-	
-	@FXML 
-	private Text tag12; 
-	
-	@FXML 
-	private Text tag13; 
-
-	@FXML 
-	private Text tag14; 
-	
-	@FXML 
-	private Text tag15; 
-	
-	@FXML 
-	private Text tag16; 
-	
-	@FXML 
-	private Text tag17; 
-	
-	@FXML 
-	private Text tag18; 
-	
-	@FXML 
-	private Text tag19; 
-	
-	@FXML 
-	private Text tag20; 
-	
-	@FXML 
-	private Text tag21; 
-	
-	@FXML 
-	private Text tag22; 
-	
-	@FXML 
-	private Text tag23; 
-	
-	@FXML 
-	private Text tag24;
-	
-	@FXML 
-	private Text tag25;
-	
-	@FXML 
-	private Text tag26; 
-	
-	@FXML 
-	private Text tag27; 
-	
-	@FXML 
-	private Text tag28; 
-	
-	@FXML 
-	private Text tag29; 
-	
-	@FXML 
-	private Text tag30;
-	
-	@FXML 
-	private ComboBox t2; 
-		
-	// Tried to collect Hyperlinks in ArrayList but continually failed when compiling. Could perhaps be looked at, but not important. 
-	//private ArrayList<Hyperlink> hyperlinks = new ArrayList<Hyperlink>(Arrays.asList(wiki1, wiki2, wiki3, online1, online2, online3, youtube1, youtube2, youtube3));
-	
+	private ComboBox<String> linkSelector; 
 	
 	@FXML
 	private void initialize() {
@@ -176,8 +79,8 @@ public class SelfhelpController {
 		// Sort on tags without distinguish upper and lower case letters
 		tags.sort(Comparator.comparing(tag -> tag.toLowerCase()));
 		
-		t2.getItems().removeAll(); 
-		t2.getItems().addAll(tags); 
+		linkSelector.getItems().removeAll(); 
+		linkSelector.getItems().addAll(tags); 
 		
 	}
 	
@@ -188,10 +91,8 @@ public class SelfhelpController {
 				try {
 			    	java.awt.Desktop.getDesktop().browse(new URI(link.getText()));
 			    } catch (URISyntaxException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				link.setVisited(false);
@@ -203,7 +104,7 @@ public class SelfhelpController {
 	// Gets value from drop down in GUI and request relevant links from DB
 	private void linkImport(){
 		
-		String tag = t2.getValue().toString();
+		String tag = linkSelector.getValue().toString();
 		
 		problemText.setText("Ok! Then I would recommend taking a look at the following links: ");
 		
