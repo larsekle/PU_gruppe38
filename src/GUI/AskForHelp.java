@@ -1,5 +1,6 @@
 package GUI;
 
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,9 +19,7 @@ public class AskForHelp extends Application {
     public static void main(String[] args) {
     	JDBC database = new JDBC(); 
     	database.connect();
-    	if (database.userExists()){
-            Application.launch(AskForHelp.class, (String[])null);
-    	}
+    	Application.launch(AskForHelp.class, (String[])null);
     }
 
     @Override
@@ -29,18 +28,17 @@ public class AskForHelp extends Application {
         	JDBC database = new JDBC(); 
         	database.connect();
         	
-        	AnchorPane page; 
-        	Scene scene; 
+        	
         	
            	if (!database.userExists()){
-           		page= (AnchorPane) FXMLLoader.load(Main.class.getResource("Register.fxml"));
-                scene = new Scene(page);
+            	Scene scene = new Scene((AnchorPane) FXMLLoader.load(getClass().getResource("Register.fxml")));
+                scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
                 primaryStage.setScene(scene);
                 primaryStage.setTitle("BuddyBOT Registration Window");
                 primaryStage.show();
-           	} else{ 
-	            page = (AnchorPane) FXMLLoader.load(AskForHelp.class.getResource("SelfhelpGUI.fxml"));
-	            scene = new Scene(page);
+           	} else {      
+            	Scene scene = new Scene((AnchorPane) FXMLLoader.load(AskForHelp.class.getResource("SelfhelpGUI.fxml"))); 
+                scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 	            primaryStage.setScene(scene);
 	            primaryStage.setTitle("BuddyBOT Selfhelp Window");
 	            primaryStage.show();

@@ -32,6 +32,7 @@ public class Main extends Application {
         	if (!database.userExists()){
         		 page= (AnchorPane) FXMLLoader.load(Main.class.getResource("Register.fxml"));
                  scene = new Scene(page);
+                 scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
                  primaryStage.setScene(scene);
                  primaryStage.setTitle("BuddyBOT Registration Window");
                  primaryStage.show();

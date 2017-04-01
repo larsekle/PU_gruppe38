@@ -23,12 +23,14 @@ public class JDBC {
 		this.LIMIT_INCREMENT = LIMIT_INCREMENT;  
 	}
 	// Connects Eclipse user to SQL database
-	public void connect(){
+	public boolean connect(){
 		try {
 			conn = DriverManager.getConnection("jdbc:mysql://mysql.stud.ntnu.no/larsekle_tdt4140database?user=larsekle_tdt4140&password=PUgruppe38");
+			return true; 
 		} catch (Exception ex){
 			System.out.println("SQLException: "+ex.getMessage());
-		}		
+			return false; 
+		}
 	}
 	
 	private Statement stmt = null; 
@@ -36,10 +38,13 @@ public class JDBC {
 	
 		
 	// Inserts new row into Failures table
-	public void insertFailure(int Assignment, int Exercise, String tag, int Codeline, String FE){
+	public boolean insertFailure(int Assignment, int Exercise, String tag, int Codeline, String FE){
+		
+		if (!Hashtag.TAGS.contains(tag) && !tag.equals("TEST")){
+			return false; 
+		}
 		
 		try{
-			
 			
 			// Sets date based on system clock and formats as SQL DateTime
 			Date dt = new Date();
@@ -50,16 +55,17 @@ public class JDBC {
 			String query = String.format("INSERT INTO Failures (StudentID, DateTime, Assignment, Exercise, Tag, Codeline, FE) VALUES (%s, '%s', %s, %s, '%s', %s, '%s');", getStudentID(), currentTime, Assignment, Exercise, tag, Codeline, FE);
 			stmt = conn.createStatement();
 			stmt.executeUpdate(query);
-			
+			return true; 
 		} catch (SQLException ex){
 			System.out.println("SQLException: " + ex.getMessage());
+			return false; 
 		}
 	}
 	
 	// Inserts new row into Feedback table
 	public void insertFeedback(int linkID, int studID, double rating){
+		
 		try{
-			
 			// Creates query and sends it to the database
 			String query = String.format("INSERT INTO Feedback (StudentID, LinkID, Rating) VALUES (%s, %s, %s);", studID, linkID, rating);
 			stmt = conn.createStatement();
@@ -183,13 +189,20 @@ public class JDBC {
 	public String getLastTag(){
 		try  {
 			stmt = conn.createStatement();
-			String query = "SELECT Tag FROM Failures WHERE DateTime = (SELECT MAX(DateTime) FROM Failures WHERE StudentID = "+ getStudentID() +")";
+			// Sets date based on system clock and formats as SQL DateTime
+			Date dt = new Date();
+			dt = new Date(dt.getTime() + 60000); 
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String currentTime = sdf.format(dt);
+			
+			
+			String query = String.format("SELECT Tag, DateTime FROM Failures WHERE DateTime = (SELECT MAX(DateTime) FROM Failures WHERE StudentID = '%s') AND DateTime > '%s'", getStudentID(), currentTime) ;
 			
 			if (stmt.execute(query)){
 				rs = stmt.getResultSet();
 			}
 			
-			while (rs.next()){
+			if (rs.next()){
 				return rs.getString(1);
 			}
 		}  catch (SQLException ex){
@@ -314,7 +327,7 @@ public class JDBC {
 	public boolean userExists(){
 		try  {
 			stmt = conn.createStatement();
-			String query = "SELECT COUNT(*) FROM Users WHERE StudentID = " + getStudentID();
+			String query = "SELECT COUNT(*) FROM Users WHERE Position = 'Student' AND StudentID = " + getStudentID();
 			
 			if (stmt.execute(query)){
 				rs = stmt.getResultSet();

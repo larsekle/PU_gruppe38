@@ -1,6 +1,9 @@
-package Software;
+package VisibleForUser;
 
 import java.util.List;
+
+import Software.Hashtag;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
