@@ -135,7 +135,7 @@ public class SelfhelpController {
 			if ((boolean) link.isVisited()){
 				int linkID = database.getLinkID(link.getText());
 				int studID = database.getStudentID();
-				double rating = feedbackSlider.getValue();
+				int rating = (int) feedbackSlider.getValue();
 				database.insertFeedback(linkID, studID, rating);
 				link.setVisited(false);
 			}

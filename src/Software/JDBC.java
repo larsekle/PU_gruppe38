@@ -14,6 +14,8 @@ import java.text.SimpleDateFormat;
 public class JDBC {
 	private final int LIMIT_INCREMENT;  
 	private Connection conn = null;
+	private Statement stmt = null; 
+	private ResultSet rs = null;
 	
 	public JDBC(){
 		LIMIT_INCREMENT = 2;
@@ -22,21 +24,19 @@ public class JDBC {
 	public JDBC(int LIMIT_INCREMENT){
 		this.LIMIT_INCREMENT = LIMIT_INCREMENT;  
 	}
+	
 	// Connects Eclipse user to SQL database
 	public boolean connect(){
 		try {
 			conn = DriverManager.getConnection("jdbc:mysql://mysql.stud.ntnu.no/larsekle_tdt4140database?user=larsekle_tdt4140&password=PUgruppe38");
+			stmt = conn.createStatement();
 			return true; 
 		} catch (Exception ex){
 			System.out.println("SQLException: "+ex.getMessage());
 			return false; 
 		}
 	}
-	
-	private Statement stmt = null; 
-	private ResultSet rs = null;
-	
-		
+			
 	// Inserts new row into Failures table
 	public boolean insertFailure(int Assignment, int Exercise, String tag, int Codeline, String FE){
 		
@@ -53,7 +53,6 @@ public class JDBC {
 			
 			// Creates query and sends it to the database
 			String query = String.format("INSERT INTO Failures (StudentID, DateTime, Assignment, Exercise, Tag, Codeline, FE) VALUES (%s, '%s', %s, %s, '%s', %s, '%s');", getStudentID(), currentTime, Assignment, Exercise, tag, Codeline, FE);
-			stmt = conn.createStatement();
 			stmt.executeUpdate(query);
 			return true; 
 		} catch (SQLException ex){
@@ -63,16 +62,16 @@ public class JDBC {
 	}
 	
 	// Inserts new row into Feedback table
-	public void insertFeedback(int linkID, int studID, double rating){
+	public boolean insertFeedback(int linkID, int studID, int rating){
 		
 		try{
 			// Creates query and sends it to the database
 			String query = String.format("INSERT INTO Feedback (StudentID, LinkID, Rating) VALUES (%s, %s, %s);", studID, linkID, rating);
-			stmt = conn.createStatement();
 			stmt.executeUpdate(query);
-			
+			return true;
 		} catch (SQLException ex){
 			System.out.println("SQLException: " + ex.getMessage());
+			return false;
 		}
 	}
 		
@@ -93,8 +92,6 @@ public class JDBC {
 	// Converts filepath to StudentID from database
 	private int filepathToID(String filepath){
 		try {
-			stmt = conn.createStatement();
-			
 			
 			// Checks how many times the student is listed in table (0 or 1)
 			String query = "SELECT COUNT(*) FROM StudentID WHERE Filepath = '"+filepath+"';";
@@ -110,7 +107,6 @@ public class JDBC {
 			// If new student, assign studentID in table StudentID
 			if (count == 0){
 				query = String.format("INSERT INTO StudentID (Filepath) VALUES ('%s');", filepath);
-				stmt = conn.createStatement();
 				stmt.executeUpdate(query);
 			}
 			
@@ -126,13 +122,12 @@ public class JDBC {
 		} catch (SQLException ex){
 			System.out.println("SQLException: " + ex.getMessage());
 		}
-		return 0; 
+		return -1; 
 	}
 	
 	// Get linkID from Resources table based on entire link
 	public int getLinkID(String link){
 		try  {
-			stmt = conn.createStatement();
 			String query = "SELECT * FROM Resources WHERE Link = '" + link + "'";
 			
 			if (stmt.execute(query)){
@@ -146,7 +141,7 @@ public class JDBC {
 		}  catch (SQLException ex){
 			System.out.println("SQLException: " + ex.getMessage());
 		}
-		return 0; 
+		return -1; 
 	}
 
 	// Creates SQL-statement and sends to database. Database returns top 3 links from Resources table based on type and tag
@@ -156,7 +151,6 @@ public class JDBC {
 		
 		// Lets SQL do the work on calculating and ordering best average rating on links
 		try  {
-			stmt = conn.createStatement();
 			String query = String.format("SELECT Resources.Link, Resources.Type, Resources.Tag FROM Resources "
 					+ "INNER JOIN Feedback ON Resources.LinkID=Feedback.LinkID "
 					+ "WHERE Tag = '%s' AND Type = '%s' "
@@ -188,15 +182,14 @@ public class JDBC {
 	// Gets the last Tag value inserted to the Failures table, based on largest FailID on the StudentID. 
 	public String getLastTag(){
 		try  {
-			stmt = conn.createStatement();
 			// Sets date based on system clock and formats as SQL DateTime
 			Date dt = new Date();
-			dt = new Date(dt.getTime() + 60000); 
+			dt = new Date(dt.getTime() - 60000); 
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String currentTime = sdf.format(dt);
 			
 			
-			String query = String.format("SELECT Tag, DateTime FROM Failures WHERE DateTime = (SELECT MAX(DateTime) FROM Failures WHERE StudentID = '%s') AND DateTime > '%s'", getStudentID(), currentTime) ;
+			String query = String.format("SELECT Tag, DateTime FROM Failures WHERE DateTime = (SELECT MAX(DateTime) FROM Failures WHERE StudentID = %s) AND DateTime > '%s'", getStudentID(), currentTime) ;
 			
 			if (stmt.execute(query)){
 				rs = stmt.getResultSet();
@@ -219,9 +212,7 @@ public class JDBC {
 		int studID = getStudentID(); 
 		
 		
-		try  {
-			stmt = conn.createStatement();
-			
+		try  {		
 			
 			// Get count of failures registered on student, assignment, exercise 
 			String query = String.format("SELECT COUNT(*) FROM Failures WHERE Assignment = %s AND Exercise = %s AND StudentID = %s AND Tag = '%s'", assignment, exercise, studID, tag); 
@@ -292,16 +283,16 @@ public class JDBC {
 	}
 	
 	// Sends user data from registration form to User table in database
-	public void sendUserData(String username, String password, String firstName, String lastName, String emailAddress, String studentAssistant){
+	public boolean sendUserData(String username, String password, String firstName, String lastName, String emailAddress, String studentAssistant){
 		try{
 			
 			// Creates query and sends it to the database
 			String query = String.format("INSERT INTO Users (Username, Password, Firstname, Lastname, Email, Position, StudentID, StudentAssistantID) VALUES ('%s', '%s', '%s', '%s', '%s', 'Student', %s, '%s');", username, password, firstName, lastName, emailAddress, getStudentID(), getStudentAssistantID(studentAssistant));
-			stmt = conn.createStatement();
 			stmt.executeUpdate(query);
-			
+			return true; 
 		} catch (SQLException ex){
 			System.out.println("SQLException: " + ex.getMessage());
+			return false; 
 		}
 	}
 	
@@ -326,7 +317,6 @@ public class JDBC {
 	// Check whether user is already in DB 
 	public boolean userExists(){
 		try  {
-			stmt = conn.createStatement();
 			String query = "SELECT COUNT(*) FROM Users WHERE Position = 'Student' AND StudentID = " + getStudentID();
 			
 			if (stmt.execute(query)){
@@ -343,12 +333,11 @@ public class JDBC {
 		return false; 
 	}
 
-	
+	// Gets all student assistants from Users table
 	public ArrayList<String> getStudentAssistants(){
 		ArrayList<String> studentAssistant = new ArrayList<String>(); 
 			
 		try  {
-			stmt = conn.createStatement();
 			String query = String.format("SELECT FirstName, LastName FROM Users WHERE Position = 'StudentAssistant';");	
 			
 			if (stmt.execute(query)){
@@ -366,6 +355,20 @@ public class JDBC {
 		}
 		
 		return null; 
+	}
+	
+	// Inserts optional query in DB
+	public boolean insertQuery(String query){
+		
+		try{
+			
+			// Sends query to DB
+			stmt.executeUpdate(query);
+			return true; 
+		} catch (SQLException ex){
+			System.out.println("SQLException: " + ex.getMessage());
+			return false; 
+		}
 	}
 	
 	// Gets connection for test purpose

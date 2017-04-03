@@ -20,9 +20,9 @@ public class HashtagTest extends junit.framework.TestCase {
 		ht.getDatabase().connect();
 		
 		
-		for (int i = 0; i<200; i++){
+		for (int i = 28; i<121; i++){
 			int studID = 1; 
-			int linkID = (int) Math.ceil(Math.random()*92+28); 
+			int linkID = i;
 			int rating = (int) Math.ceil(Math.random()*5); 
 			
 			ht.getDatabase().insertFeedback(linkID, studID, rating);
