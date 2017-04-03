@@ -69,11 +69,10 @@ public class SelfhelpController {
 	private void initialize() {
 		database = new JDBC();
 		database.connect();
-
 		
-		problemText.setText("Hi! BuddyBOT is here to help. Which topic would you like to take a look at?");
-		online3.setText("online3");
+		String lastTag = database.getLastTag(); 
 		
+		problemText.setText("Hi! BuddyBOT is here to help. Which topic would you like to take a look at?");	
 		ArrayList<String> tags = Hashtag.TAGS;
 		
 		// Sort on tags without distinguish upper and lower case letters

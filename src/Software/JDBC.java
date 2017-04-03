@@ -19,10 +19,12 @@ public class JDBC {
 	
 	public JDBC(){
 		LIMIT_INCREMENT = 2;
+		connect(); 
 	}
 	
 	public JDBC(int LIMIT_INCREMENT){
 		this.LIMIT_INCREMENT = LIMIT_INCREMENT;  
+		connect(); 
 	}
 	
 	// Connects Eclipse user to SQL database
@@ -38,7 +40,7 @@ public class JDBC {
 	}
 			
 	// Inserts new row into Failures table
-	public boolean insertFailure(int Assignment, int Exercise, String tag, int Codeline, String FE){
+	public boolean insertFailure(int Assignment, int Exercise, String tag, String FE){
 		
 		if (!Hashtag.TAGS.contains(tag) && !tag.equals("TEST")){
 			return false; 
@@ -52,7 +54,7 @@ public class JDBC {
 			String currentTime = sdf.format(dt);
 			
 			// Creates query and sends it to the database
-			String query = String.format("INSERT INTO Failures (StudentID, DateTime, Assignment, Exercise, Tag, Codeline, FE) VALUES (%s, '%s', %s, %s, '%s', %s, '%s');", getStudentID(), currentTime, Assignment, Exercise, tag, Codeline, FE);
+			String query = String.format("INSERT INTO Failures (StudentID, DateTime, Assignment, Exercise, Tag, FE) VALUES (%s, '%s', %s, %s, '%s', '%s');", getStudentID(), currentTime, Assignment, Exercise, tag, FE);
 			stmt.executeUpdate(query);
 			return true; 
 		} catch (SQLException ex){
@@ -184,7 +186,7 @@ public class JDBC {
 		try  {
 			// Sets date based on system clock and formats as SQL DateTime
 			Date dt = new Date();
-			dt = new Date(dt.getTime() - 60000); 
+			dt = new Date(dt.getTime() - 120000); 
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String currentTime = sdf.format(dt);
 			

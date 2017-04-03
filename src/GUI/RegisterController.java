@@ -59,15 +59,16 @@ public class RegisterController {
 	
 	@FXML
 	private ComboBox<String> studentAss; 
-	
+		
 	@FXML
 	private void initialize() {
-		JDBC database = new JDBC(); 
+		database = new JDBC(); 
 		database.connect();
 		
 		studentAss.getItems().removeAll(); 
 		studentAss.getItems().addAll(database.getStudentAssistants()); 
 		
+		String tag = database.getLastTag(); 
 		
 	}
 	
@@ -93,10 +94,7 @@ public class RegisterController {
 	
 	@FXML
 	// Sends review from students to database based on link visited and rating through slide bar
-	private void handleSend() {
-		JDBC database = new JDBC(); 
-		database.connect();
-		
+	private void handleSend() {		
 		
 		if (username.getText().equals("Username") || password.getText().equals("Password") || confirmPassword.getText().equals("Confirm password") || firstName.getText().equals("First name") || lastName.getText().equals("Last name")  || emailAddress.getText().equals("Email address")){
 			message.setText("Please fill ut the entire form");

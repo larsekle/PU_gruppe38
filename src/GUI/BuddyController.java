@@ -59,9 +59,8 @@ public class BuddyController {
 		database = new JDBC();
 		database.connect();
 		String tag = database.getLastTag(); 
-		
+				
 		problemText.setText("Hi! It looks like you are strugglig with the topic " + tag + ". I would advise you to look at the following resouces:");
-		online3.setText("online3");
 		
 		// Get top links from database
 		ArrayList<String> wikiLinks = database.getLinks("Wiki", tag); 

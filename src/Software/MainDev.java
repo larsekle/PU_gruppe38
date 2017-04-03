@@ -3,7 +3,7 @@ package Software;
 import java.util.Arrays;
 import java.util.List;
 
-public class HashtagTest extends junit.framework.TestCase {
+public class MainDev extends junit.framework.TestCase {
 
 	protected void setUp(){
 		
@@ -14,19 +14,13 @@ public class HashtagTest extends junit.framework.TestCase {
 		
 		List<String> tags = Arrays.asList("OOT", "interface", "inheritance", "pattern", "class", "vararg", "lambda", "functional interface", "type", "encapsulation", "valid state", "abstract class", "super class", "delegation", "observable", "anonymous class", "collection", "iteration", "text handling", "value types", "scanner", "arrayList", "compare", "IO", "casting"); 
 		List<String> FE = Arrays.asList("Failure", "Error"); 
-		Hashtag ht = new Hashtag();
-		
-		
-		ht.getDatabase().connect();
-		
+		Hashtag ht = new Hashtag();	
 		
 		for (int i = 28; i<121; i++){
 			int studID = 1; 
 			int linkID = i;
 			int rating = (int) Math.ceil(Math.random()*5); 
-			
-			ht.getDatabase().insertFeedback(linkID, studID, rating);
-			
+						
 		}
 	}
 	

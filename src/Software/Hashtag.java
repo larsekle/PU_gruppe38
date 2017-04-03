@@ -5,13 +5,8 @@ import java.util.Arrays;
 
 public class Hashtag {
 	
-	private int codeline = 12; 
-	private char FE = 'F';
 	private final int LIMIT_INCREMENT = 3;
-	private JDBC database;
-	private int assignment; 
-	private int exercise; 
-	private String tag; 
+	private JDBC database; 
 	private boolean talkedToStudent = false; 
 	
 	// TAGS must always contain less than 30 elements, or else SelfhelpGUI will not be able to show all hashtags.
@@ -19,54 +14,30 @@ public class Hashtag {
 	
 	public Hashtag (){
 		this.database = new JDBC(LIMIT_INCREMENT);
+		database.connect(); 
 	}
 	
-	public void talkToStudent(String tag){
-		System.out.println("LIMIT is reached for "+ tag + "! Talking to student.");
+	public boolean talkToStudent(String tag){
 		if (!talkedToStudent){
 			GUI.Main.main((String[]) null);
 			talkedToStudent = true; 
-		}
-		
+			return true; 
+		} return false; 
 	}
 	
-	public void sendToDB(String tag, int assignment, int exercise, String FE){
-		database.connect();
-		this.assignment = assignment; 
-		this.exercise = exercise; 
+	public boolean sendToDB(String tag, int assignment, int exercise, String FE){
 		if (TAGS.indexOf(tag) < 0){
 			throw new IllegalArgumentException(tag + ":  Tag does not exist, contact supervisor"); 
 		}
-		database.insertFailure(assignment, exercise, tag, codeline, FE);
+		database.insertFailure(assignment, exercise, tag, FE);
 		if (database.limitReached(tag, assignment, exercise)){
 			talkToStudent(tag);
 		}
 		
-		this.tag = tag;
+		return true; 
 	}
 	
 	public JDBC getDatabase(){
-		return database;
+		return database; 
 	}
-	
-	public int getAss(){
-		return assignment;
-	}
-	
-	public int getEx(){
-		return exercise;
-	}
-	
-	public String getTag(){
-		return tag;
-	}
-	
-	public int getCodeline(){
-		return codeline;
-	}
-	
-	public char getFE(){
-		return FE;
-	}
-
 }
