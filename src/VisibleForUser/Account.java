@@ -4,30 +4,57 @@ public class Account {
 
 	private double balance;
 	private double interestRate;
+
+	public Account(double balance, double interestRate) {
+		checkNotNegative(balance, "Balance"); 
+		this.balance = balance;
+		setInterestRate(interestRate);
+	}
 	
+	public Account(){
+		
+	}
+
+	protected void checkNotNegative(double value, String valueName) {
+		if (value < 0) {
+			throw new IllegalArgumentException(valueName + " cannot be negative: " + value);
+		}
+	}
+ 
 	public String toString() {
 		return String.format("[Account balance=%f interestRate=%f", balance, interestRate);
 	}
 	
-	double getBalance() {
+	public double getInterestRate() {
+		return interestRate;
+	}
+
+	public void setInterestRate(double interestRate) {
+		checkNotNegative(interestRate, "Interest rate");
+		this.interestRate = interestRate;
+	}
+
+	public double getBalance() {
 		return balance;
 	}
 	
-	double getInterestRate() {
-		return interestRate;
-	}
 	
-	void setInterestRate(double interestRate) {
-		this.interestRate = interestRate;
-	}
-	
-	// Error inserted, allows negative balance
-	void deposit(double amount) {
+
+	public void deposit(double amount) {
+//		checkNotNegative(amount, "Amount");
 		balance = balance + amount;
 	}
 	
-	void addInterest() {
-		deposit(balance * interestRate / 100);		
+	public void withdraw(double amount) {
+		checkNotNegative(amount, "Amount");
+		double newBalance = balance - amount;
+		if (newBalance < 0) {
+			throw new IllegalArgumentException("The balance cannot become negative: " + newBalance);
+		}
+		balance = newBalance;
 	}
 	
+	public void addInterest() {
+		deposit(balance * interestRate / 100);		
+	}
 }

@@ -69,9 +69,7 @@ public class SelfhelpController {
 	private void initialize() {
 		database = new JDBC();
 		database.connect();
-		
-		String lastTag = database.getLastTag(); 
-		
+			
 		problemText.setText("Hi! BuddyBOT is here to help. Which topic would you like to take a look at?");	
 		ArrayList<String> tags = Hashtag.TAGS;
 		
@@ -81,8 +79,9 @@ public class SelfhelpController {
 		linkSelector.getItems().removeAll(); 
 		linkSelector.getItems().addAll(tags); 
 		
+		if (AskForHelp.test) linkImport(); 
 	}
-	
+	 
 	@FXML
 	private void handleLink(){
 		for (Hyperlink link : Arrays.asList(wiki1, wiki2, wiki3, online1, online2, online3, youtube1, youtube2, youtube3)){
@@ -99,11 +98,13 @@ public class SelfhelpController {
 		}
 	}
 	
-	@FXML
+	@FXML 
 	// Gets value from drop down in GUI and request relevant links from DB
 	private void linkImport(){
+		String tag; 
+		if (AskForHelp.test) tag = "encapsulation"; 
+		else tag = linkSelector.getValue().toString();
 		
-		String tag = linkSelector.getValue().toString();
 		
 		problemText.setText("Ok! Then I would recommend taking a look at the following links: ");
 		
@@ -135,7 +136,8 @@ public class SelfhelpController {
 				int linkID = database.getLinkID(link.getText());
 				int studID = database.getStudentID();
 				int rating = (int) feedbackSlider.getValue();
-				database.insertFeedback(linkID, studID, rating);
+				int assignment = database.getLastAssignment(); 
+				database.insertFeedback(linkID, studID, rating, assignment);
 				link.setVisited(false);
 			}
 		}

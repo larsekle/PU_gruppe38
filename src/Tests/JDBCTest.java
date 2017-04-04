@@ -25,7 +25,7 @@ public class JDBCTest extends TestCase {
 	
 	@JExercise(description = "Insert feedback on link")
 	public void testInsertFeedback(){
-		assertTrue(db.insertFeedback(1, 1, -1));
+		assertTrue(db.insertFeedback(1, 1, -1, 1));
 		db.insertQuery("DELETE FROM Feedback WHERE Rating = -1"); 
 	}
 	
@@ -39,7 +39,7 @@ public class JDBCTest extends TestCase {
 		assertTrue(db.getLinkID("https://www.youtube.com/watch?v=ZHLdVRXIuC8") == 28); 
 		assertTrue(db.getLinkID("test") == -1); 
 	}
-	
+	 
 	@JExercise(description = "Test whether getLinks is ok")
 	public void testGetLinks(){
 		ArrayList<String> links = db.getLinks("YouTube", "OOT"); 
