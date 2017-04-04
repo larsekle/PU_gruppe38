@@ -1,5 +1,6 @@
 package Tests;
 
+import VisibleForUser.AccountTest;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -9,6 +10,9 @@ public class AllTests {
 		TestSuite suite = new TestSuite(AllTests.class.getName());
 		//$JUnit-BEGIN$
 		suite.addTestSuite(JDBCTest.class);
+		suite.addTestSuite(HashtagTest.class);
+		suite.addTestSuite(AccountTest.class);
+		suite.addTestSuite(GUITest.class);
 		//$JUnit-END$
 		return suite;
 	}
