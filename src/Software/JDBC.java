@@ -12,7 +12,7 @@ import java.util.Date;
 import java.text.SimpleDateFormat;
 
 /**
- * @author Lars Erik Kleiven
+ * @author Lars E. Kleiven, Ingrid E. Hermanrud, Sigrid L. Fosen, Helena Van de Pontseele
  *
  */
 public class JDBC {
@@ -70,12 +70,10 @@ public class JDBC {
 		
 		try{
 			
-			// Sets date based on system clock and formats as SQL DateTime
 			Date dt = new Date();
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String currentTime = sdf.format(dt);
 			
-			// Creates query and sends it to the database
 			String query = String.format("INSERT INTO Failures (StudentID, DateTime, Assignment, Exercise, Tag, FE) VALUES (%s, '%s', %s, %s, '%s', '%s');", getStudentID(), currentTime, Assignment, Exercise, tag, FE);
 			stmt.executeUpdate(query);
 			return true; 
@@ -133,7 +131,6 @@ public class JDBC {
 	private int filepathToID(String filepath){
 		try {
 			
-			// Checks how many times the student is listed in table (0 or 1)
 			String query = "SELECT COUNT(*) FROM StudentID WHERE Filepath = '"+filepath+"';";
 			if (stmt.execute(query)){
 				rs = stmt.getResultSet();
@@ -144,13 +141,11 @@ public class JDBC {
 			}
 			
 			
-			// If new student, assign studentID in table StudentID
 			if (count == 0){
 				query = String.format("INSERT INTO StudentID (Filepath) VALUES ('%s');", filepath);
 				stmt.executeUpdate(query);
 			}
 			
-			// Get the studentID 
 			query = "SELECT StudentID FROM StudentID WHERE Filepath = '"+filepath+"';";
 			if (stmt.execute(query)){
 				rs = stmt.getResultSet();
@@ -236,7 +231,6 @@ public class JDBC {
 	 */
 	public String getLastTag(){
 		try  {
-			// Sets date based on system clock and formats as SQL DateTime
 			Date dt = new Date();
 			dt = new Date(dt.getTime() - 120000); 
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
