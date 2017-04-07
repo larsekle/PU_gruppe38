@@ -280,7 +280,6 @@ public class JDBC {
 		return -1; 
 	}
 	
-	// 
 	/**
 	 * Check whether it is time for BuddyBOT to help the student. Compares number of failures within assignment, exercise and tag with next limit for when GUI gets activated.
 	 * Get count of failures registered on student, assignment, exercise 
