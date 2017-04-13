@@ -10,6 +10,7 @@ public class JDBCTest extends TestCase {
 	 
 	
 	private static JDBC db = new JDBC(); 
+	private static JDBC dbNoConnection = new JDBC(true); 
 	
 	@JExercise(description = "Trying to connect to database")
 	public void testConnection(){
@@ -20,24 +21,30 @@ public class JDBCTest extends TestCase {
 	public void testInsertfailure(){
 		assertTrue(db.insertFailure(0, 0, "TEST", "TEST"));
 		assertFalse(db.insertFailure(0, 0, "NULL", "12345"));
+		assertFalse(dbNoConnection.insertFailure(0, 0, "TEST", "TEST"));
+		
 		db.insertQuery("DELETE FROM Failures WHERE FE = 'TEST'"); 
 	}
 	
 	@JExercise(description = "Insert feedback on link")
 	public void testInsertFeedback(){
 		assertTrue(db.insertFeedback(1, 1, -1, 1));
+		assertFalse(dbNoConnection.insertFeedback(1, 1, -1, 1));
+
 		db.insertQuery("DELETE FROM Feedback WHERE Rating = -1"); 
 	}
 	
 	@JExercise(description = "Test whether getStudentID is ok")
 	public void testGetStudentID(){
 		assertTrue(db.getStudentID() != -1); 
+		assertFalse(dbNoConnection.getStudentID() != -1); 
 	}
 	
 	@JExercise(description = "Test whether getLinkID is ok")
 	public void testGetLinkID(){
 		assertTrue(db.getLinkID("https://www.youtube.com/watch?v=ZHLdVRXIuC8") == 28); 
 		assertTrue(db.getLinkID("test") == -1); 
+		assertTrue(dbNoConnection.getLinkID("test") == -1); 
 	}
 	 
 	@JExercise(description = "Test whether getLinks is ok")
@@ -53,7 +60,6 @@ public class JDBCTest extends TestCase {
 		links = db.getLinks("YouTube", "test"); 
 		assertTrue(links.get(0).equals("")); 
 		assertTrue(links.size()==3);
-		
 	}
 	
 	@JExercise(description = "Test if getLastTag ok")
@@ -62,52 +68,65 @@ public class JDBCTest extends TestCase {
 		
 		assertTrue(db.getLastTag().equals("TEST")); 
 		assertFalse(db.getLastTag().equals("")); 
+		assertFalse(dbNoConnection.getLastTag().equals("TEST")); 
 		
 		db.insertQuery("DELETE FROM Failures WHERE FE = 'TEST'");
 	}
 	
 	@JExercise(description = "Test if limitReached ok")
 	public void testLimitReached(){		
-		db.insertFailure(0, 0, "TEST", "TEST");
-		assertFalse(db.limitReached("TEST", 0, 0));
-		
-		db.insertFailure(0, 0, "TEST", "TEST");
-		assertTrue(db.limitReached("TEST", 0, 0));
+		try {
+			db.insertFailure(0, 0, "TEST", "TEST");
+			assertFalse(db.limitReached("TEST", 0, 0));
+			
+			db.insertFailure(0, 0, "TEST", "TEST");
+			assertTrue(db.limitReached("TEST", 0, 0));
+			assertFalse(dbNoConnection.limitReached("TEST", 0, 0));
 
-		db.insertQuery("DELETE FROM Failures WHERE FE = 'TEST'");
-		db.insertQuery("DELETE FROM FailureLimit WHERE Tag = 'TEST'");
+		} finally{
+			db.insertQuery("DELETE FROM Failures WHERE FE = 'TEST'");
+			db.insertQuery("DELETE FROM FailureLimit WHERE Tag = 'TEST'");
+		}
 	}
 	
 	@JExercise(description = "Test if sendUserData ok")
 	public void testSendUserData(){	
-		assertTrue(db.sendUserData("TEST", "", "", "", "", "Lars Erik Kleiven"));
-		db.insertQuery("DELETE FROM Users WHERE Username = 'TEST'");
+		try {
+			assertTrue(db.sendUserData("TEST", "", "", "", "", "Lars Erik Kleiven"));
+			assertFalse(dbNoConnection.sendUserData("TEST", "", "", "", "", "Lars Erik Kleiven"));
+		} finally {
+			db.insertQuery("DELETE FROM Users WHERE Username = 'TEST'");
+		}
 	}
 	
 	@JExercise(description = "Test if getStudentAssistandID ok")
 	public void testGetStudentAssistantID(){		
-		assertTrue(db.getStudentAssistantID("Lars Erik Kleiven") == 3);
-		assertFalse(db.getStudentAssistantID("Lars Erik Kleiven") != 3);
+		assertTrue(db.getStudentAssistantID("Lars Erik Kleiven") == 1);
+		assertFalse(db.getStudentAssistantID("Lars Erik Kleiven") != 1);
 	}
 	
 	@JExercise(description = "Test if userExists ok")
 	public void testUserExists(){
 		db.sendUserData("TEST", "", "", "", "", "Lars Erik Kleiven");
 		assertTrue(db.userExists());
+		assertFalse(dbNoConnection.userExists());
+		
 		db.insertQuery("DELETE FROM Users WHERE Username = 'TEST'");
 	}
 	
 	@JExercise(description = "Test if getStudentAssistants ok")
 	public void testGetUserAssistants(){		
 		ArrayList<String> assistants = db.getStudentAssistants(); 
-		assertTrue(assistants.size()>0); 
-		assertTrue(assistants.indexOf("") == -1); 	
+		assertTrue(assistants.size() > 0); 
+		assertTrue(assistants.indexOf("") == -1);
 
 	}
 	
 	@JExercise(description = "Test if insertQuery ok")
 	public void testQuery(){		
 		assertTrue(db.insertQuery("DELETE FROM Users WHERE Username = 'TEST'"));
+		assertFalse(dbNoConnection.insertQuery("DELETE FROM Users WHERE Username = 'TEST'"));
+		
 	}
 	
 	@JExercise(description = "Test getConnection")

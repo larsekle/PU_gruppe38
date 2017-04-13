@@ -5,15 +5,10 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 
 import Software.Hashtag;
 import Software.JDBC;
-import javafx.beans.property.ReadOnlyBooleanProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -22,7 +17,11 @@ import javafx.scene.control.Slider;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class SelfhelpController {
+/**
+ * @author Lars E. Kleiven, Ingrid E. Hermanrud, Sigrid L. Fosen, Helena Van de Pontseele
+ *
+ */
+public class AskForHelpController {
 	
 	private JDBC database; 
 	
@@ -60,15 +59,18 @@ public class SelfhelpController {
 	private Slider feedbackSlider; 
 	
 	@FXML
-	private Button Send; 
+	private Button send; 
 	
 	@FXML 
 	private ComboBox<String> linkSelector; 
 	
+	/**
+	 * Method to initialize FXML window. Gets all tags and presents them to the user through a drop-down list.
+	 * If test then test sequence will be run directly. 
+	 */
 	@FXML
 	private void initialize() {
 		database = new JDBC();
-		database.connect();
 			
 		problemText.setText("Hi! BuddyBOT is here to help. Which topic would you like to take a look at?");	
 		ArrayList<String> tags = Hashtag.TAGS;
@@ -78,10 +80,23 @@ public class SelfhelpController {
 		
 		linkSelector.getItems().removeAll(); 
 		linkSelector.getItems().addAll(tags); 
+		try{
+			if (RegisterMain.test){
+				linkSelector.setValue(tags.get(0));
+				linkImport(); 
+				youtube1.setVisited(true);
+				handleSend();
+			}
+		} catch (Exception e){
+			e.printStackTrace();
+		}
 		
-		if (AskForHelp.test) linkImport(); 
 	}
-	 
+	
+	/**
+	 * When student click on a link, they will be redirected to the webpage through default browser. 
+	 * Link is then set to default, so that the user can access multiple links at once.  
+	 */
 	@FXML
 	private void handleLink(){
 		for (Hyperlink link : Arrays.asList(wiki1, wiki2, wiki3, online1, online2, online3, youtube1, youtube2, youtube3)){
@@ -98,22 +113,20 @@ public class SelfhelpController {
 		}
 	}
 	
+	/**
+	 * When a link is selected this method will import the relevant links and set them to GUI.
+	 */
 	@FXML 
-	// Gets value from drop down in GUI and request relevant links from DB
 	private void linkImport(){
-		String tag; 
-		if (AskForHelp.test) tag = "encapsulation"; 
-		else tag = linkSelector.getValue().toString();
+		String tag = linkSelector.getValue().toString();
 		
 		
 		problemText.setText("Ok! Then I would recommend taking a look at the following links: ");
 		
-		// Get top links from database
 		ArrayList<String> wikiLinks = database.getLinks("Wiki", tag); 
 		ArrayList<String> youtubeLinks = database.getLinks("Youtube", tag);
 		ArrayList<String> onlineLinks = database.getLinks("Online", tag);
 		
-		// Sets top links to the different tabs
 		wiki1.setText(wikiLinks.get(0));
 		wiki2.setText(wikiLinks.get(1));
 		wiki3.setText(wikiLinks.get(2));
@@ -128,8 +141,11 @@ public class SelfhelpController {
 
 	}
 	
+	/**
+	 * Sends feedback from students to database based on link visited and rating through slide bar
+	 * Uses try/catch to handle testing. 
+	 */
 	@FXML
-	// Sends review from students to database based on link visited and rating through slide bar
 	private void handleSend() {
 		for (Hyperlink link : Arrays.asList(wiki1, wiki2, wiki3, online1, online2, online3, youtube1, youtube2, youtube3)){
 			if ((boolean) link.isVisited()){
@@ -141,7 +157,13 @@ public class SelfhelpController {
 				link.setVisited(false);
 			}
 		}
-		Stage stage = (Stage) Send.getScene().getWindow();
-		stage.close();
+		Stage stage = null; 
+		try {
+			stage = (Stage) send.getScene().getWindow();
+			stage.close();
+		}catch (Exception e){
+			stage = RegisterMain.stage; 
+			new Main().start(stage);
+		} 
 	}
 }
