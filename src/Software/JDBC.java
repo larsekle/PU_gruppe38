@@ -39,7 +39,16 @@ public class JDBC {
 	}
 	
 	/**
-	 * Connects Eclipse user to SQL database
+	 * Constructor for JDBC for test-use. Does not connect to DB. 
+	 * @param test 
+	 */
+	public JDBC(boolean test){
+		if (!test) connect();  
+		LIMIT_INCREMENT = 2;
+	}
+	
+	/**
+	 * Creates connection to SQL database. Will only succeed when connected to the NTNU VPN.
 	 * @return whether the operation was successful 
 	 */
 	public boolean connect(){
@@ -53,7 +62,6 @@ public class JDBC {
 		}
 	}
 			
-	 
 	/**
 	 * Inserts new row into Failures table
 	 * @param Assignment
@@ -67,9 +75,7 @@ public class JDBC {
 		if (!Hashtag.TAGS.contains(tag) && !tag.equals("TEST")){
 			return false; 
 		}
-		
 		try{
-			
 			Date dt = new Date();
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String currentTime = sdf.format(dt);
@@ -77,8 +83,8 @@ public class JDBC {
 			String query = String.format("INSERT INTO Failures (StudentID, DateTime, Assignment, Exercise, Tag, FE) VALUES (%s, '%s', %s, %s, '%s', '%s');", getStudentID(), currentTime, Assignment, Exercise, tag, FE);
 			stmt.executeUpdate(query);
 			return true; 
-		} catch (SQLException ex){
-			System.out.println("SQLException: " + ex.getMessage());
+		} catch (Exception e){
+			System.out.println("Exception: " + e.getMessage());
 			return false; 
 		}
 	}
@@ -96,8 +102,8 @@ public class JDBC {
 			String query = String.format("INSERT INTO Feedback (StudentID, LinkID, Rating, Assignment) VALUES (%s, %s, %s, %s);", studID, linkID, rating, assignment);
 			stmt.executeUpdate(query);
 			return true;
-		} catch (SQLException ex){
-			System.out.println("SQLException: " + ex.getMessage());
+		} catch (Exception e){
+			System.out.println("Exception: " + e.getMessage());
 			return false;
 		}
 	}
@@ -154,8 +160,8 @@ public class JDBC {
 				return rs.getInt(1);
 			}
 			
-		} catch (SQLException ex){
-			System.out.println("SQLException: " + ex.getMessage());
+		} catch (Exception e){
+			System.out.println("Exception: " + e.getMessage());
 		}
 		return -1; 
 	}
@@ -178,8 +184,8 @@ public class JDBC {
 				return rs.getInt(1);
 			}
 			
-		}  catch (SQLException ex){
-			System.out.println("SQLException: " + ex.getMessage());
+		}  catch (Exception e){
+			System.out.println("Exception: " + e.getMessage());
 		}
 		return -1; 
 	}
@@ -202,26 +208,19 @@ public class JDBC {
 					+ "GROUP BY Resources.LinkID "
 					+ "ORDER BY AVG(Feedback.Rating) DESC;", tag, type);
 			
-			
 			if (stmt.execute(query)){
 				rs = stmt.getResultSet();
 			}
-			
 			for (int i = 0; i<3; i++){
 				if (rs.next()){
 					links.add(rs.getString(1)); 
 				} else{
 					links.add("");
 				}
-			}
-			
-			return links; 
-						
-		}  catch (SQLException ex){
-			System.out.println("SQLException: " + ex.getMessage());
-		}
-		
-		return null; 
+			} return links; 
+		}  catch (Exception e){
+			System.out.println("Exception: " + e.getMessage());
+		}  return null; 
 	}
 	
 	 
@@ -236,18 +235,16 @@ public class JDBC {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String currentTime = sdf.format(dt);
 			
-			
 			String query = String.format("SELECT Tag, DateTime FROM Failures WHERE DateTime = (SELECT MAX(DateTime) FROM Failures WHERE StudentID = %s) AND DateTime > '%s'", getStudentID(), currentTime) ;
 			
 			if (stmt.execute(query)){
 				rs = stmt.getResultSet();
 			}
-			
 			if (rs.next()){
 				return rs.getString(1);
 			}
-		}  catch (SQLException ex){
-			System.out.println("SQLException: " + ex.getMessage());
+		}  catch (Exception e){
+			System.out.println("Exception: " + e.getMessage());
 		}
 		return "-1"; 
 	}
@@ -264,20 +261,17 @@ public class JDBC {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String currentTime = sdf.format(dt);
 			
-			
-			String query = String.format("SELECT Assigment, DateTime FROM Failures WHERE DateTime = (SELECT MAX(DateTime) FROM Failures WHERE StudentID = %s) AND DateTime > '%s'", getStudentID(), currentTime) ;
+			String query = String.format("SELECT Assignment, DateTime FROM Failures WHERE DateTime = (SELECT MAX(DateTime) FROM Failures WHERE StudentID = %s) AND DateTime > '%s'", getStudentID(), currentTime) ;
 			
 			if (stmt.execute(query)){
 				rs = stmt.getResultSet();
 			}
-			
 			if (rs.next()){
 				return rs.getInt(1);
 			}
-		}  catch (SQLException ex){
-			System.out.println("SQLException: " + ex.getMessage());
-		}
-		return -1; 
+		}  catch (Exception e){
+			System.out.println("Exception: " + e.getMessage());
+		}  return -1; 
 	}
 	
 	/**
@@ -293,19 +287,16 @@ public class JDBC {
 	 * @return true if limit reached, false if not. 
 	 */
 	public boolean limitReached(String tag, int assignment, int exercise){
-		 
 		int limit = 0;
 		int count = 0; 
 		int studID = getStudentID(); 
 		
-		try  {		
-			
+		try  {	
 			String query = String.format("SELECT COUNT(*) FROM Failures WHERE Assignment = %s AND Exercise = %s AND StudentID = %s AND Tag = '%s'", assignment, exercise, studID, tag); 
 			
 			if (stmt.execute(query)){
 				rs = stmt.getResultSet();
-			} 
-			
+			}
 			if (rs.next()){
 				count = rs.getInt(1); 
 			} else{
@@ -316,8 +307,7 @@ public class JDBC {
 			
 			if (stmt.execute(query)){
 				rs = stmt.getResultSet();
-			}
-			
+			}			
 			if (rs.next()){
 				limit = rs.getInt(1);
 				if (limit < 1){
@@ -330,8 +320,7 @@ public class JDBC {
 			
 			if (stmt.execute(query)){
 				rs = stmt.getResultSet();
-			}
-			
+			}			
 			if (rs.next()){
 				limit = rs.getInt(1); 
 				if (count >= limit){
@@ -345,10 +334,9 @@ public class JDBC {
 				stmt.executeUpdate(query);
 				return count >= limit; 
 			}
-		}  catch (SQLException ex){
-			System.out.println("SQLException: " + ex.getMessage());
-		}
-		return false; 
+		}  catch (Exception e){
+			System.out.println("Exception: " + e.getMessage());
+		}  return false; 
 	}
 	
 	 
@@ -365,13 +353,11 @@ public class JDBC {
 	 */
 	public boolean sendUserData(String username, String password, String firstName, String lastName, String emailAddress, String studentAssistant){
 		try{
-			
-			// Creates query and sends it to the database
 			String query = String.format("INSERT INTO Users (Username, Password, Firstname, Lastname, Email, Position, StudentID, StudentAssistantID) VALUES ('%s', '%s', '%s', '%s', '%s', 'Student', %s, '%s');", username, password, firstName, lastName, emailAddress, getStudentID(), getStudentAssistantID(studentAssistant));
 			stmt.executeUpdate(query);
 			return true; 
-		} catch (SQLException ex){
-			System.out.println("SQLException: " + ex.getMessage());
+		} catch (Exception e){
+			System.out.println("Exception: " + e.getMessage());
 			return false; 
 		}
 	}
@@ -385,13 +371,12 @@ public class JDBC {
 		String query = String.format("SELECT StudentAssistantID FROM Users WHERE CONCAT(FirstName,' ', LastName) = '%s' AND Position = 'StudentAssistant'", name); 
 	
 		try {
-			
 			if (stmt.execute(query)){
 				rs = stmt.getResultSet();
 			} if (rs.next()){
 				return rs.getInt(1); 
 			} else{
-				throw new IllegalStateException(); 
+				return -1;  
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -409,15 +394,12 @@ public class JDBC {
 			if (stmt.execute(query)){
 				rs = stmt.getResultSet();
 			}
-			
 			if (rs.next() && rs.getInt(1)>0){
 				return true;
 			}
-			
-		}  catch (SQLException ex){
-			System.out.println("SQLException: " + ex.getMessage());
-		}
-		return false; 
+		}  catch (Exception e){
+			System.out.println("Exception: " + e.getMessage());
+		}  return false; 
 	}
 
 	/**
@@ -433,18 +415,13 @@ public class JDBC {
 			if (stmt.execute(query)){
 				rs = stmt.getResultSet();
 			}
-			
 			while (rs.next()){
 				studentAssistant.add(rs.getString(1)+" "+rs.getString(2)); 		
-			}
-			
-			return studentAssistant; 
+			} return studentAssistant; 
 						
-		}  catch (SQLException ex){
-			System.out.println("SQLException: " + ex.getMessage());
-		}
-		
-		return null; 
+		}  catch (Exception e){
+			System.out.println("Exception: " + e.getMessage());
+		}  return null; 
 	}
 	
 	/**
@@ -453,12 +430,11 @@ public class JDBC {
 	 * @return whether operation was successful 
 	 */
 	public boolean insertQuery(String query){
-		
 		try{
 			stmt.executeUpdate(query);
 			return true; 
-		} catch (SQLException ex){
-			System.out.println("SQLException: " + ex.getMessage());
+		} catch (Exception e){
+			System.out.println("Exception: " + e.getMessage());
 			return false; 
 		}
 	}

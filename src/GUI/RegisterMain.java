@@ -3,7 +3,6 @@ package GUI;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import Software.JDBC;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -14,41 +13,38 @@ import javafx.stage.Stage;
  * @author Lars E. Kleiven, Ingrid E. Hermanrud, Sigrid L. Fosen, Helena Van de Pontseele
  *
  */
-public class Main extends Application implements Runnable{
+public class RegisterMain extends Application implements Runnable{
+	
+	public static boolean test = false; 
+	public static Stage stage = null; 
 	
     /**
      * Main used to start the GUI
-     * Checks whether it is necessary to open the registration form first.
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-    	JDBC database = new JDBC(); 
-    	if (database.userExists()){
-        	Application.launch(Main.class, (String[])null);    		
-    	} else{
-        	Application.launch(RegisterMain.class, (String[])null);    		
-    	}
+    	Application.launch(RegisterMain.class, (java.lang.String[])null);
     }
 
     /**
-     * Start method to set up and load GUI. 
+     * Start method to set up and load GUI for user registration.
      * CSS is added to FXML and shown to the user. 
      * @see javafx.application.Application#start(javafx.stage.Stage)
      */
     @Override
     public void start(Stage primaryStage) {
         try {
- 
-        	AnchorPane page = (AnchorPane) FXMLLoader.load(Main.class.getResource("BuddyGUI.fxml"));
+        	stage = primaryStage; 
+        	AnchorPane page= (AnchorPane) FXMLLoader.load(RegisterMain.class.getResource("Register.fxml"));
         	Scene scene = new Scene(page);
-            scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-            primaryStage.setScene(scene);
-            primaryStage.setTitle("BuddyBOT Execution Window");
-            primaryStage.show();
-        	
-        } catch (Exception ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
+	        scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+	        primaryStage.setScene(scene);
+	        primaryStage.setTitle("BuddyBOT Registration Window");
+	        primaryStage.show();
+	    	
+	    } catch (Exception ex) {
+	        Logger.getLogger(RegisterMain.class.getName()).log(Level.SEVERE, null, ex);
+	    }
     }
     
 	/** 
@@ -57,6 +53,7 @@ public class Main extends Application implements Runnable{
 	 */
 	@Override
 	public void run() {
+		test = true; 
 		main((String[]) null);
 	} 
 }

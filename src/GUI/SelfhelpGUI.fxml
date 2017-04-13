@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="387.0" prefWidth="412.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.SelfhelpController">
+<AnchorPane prefHeight="387.0" prefWidth="412.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.AskForHelpController">
    <children>
       <TabPane layoutX="-1.0" layoutY="155.0" prefHeight="162.0" prefWidth="412.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -60,7 +60,7 @@
       </Text>
       <Slider fx:id="feedbackSlider" blockIncrement="2.0" layoutX="67.0" layoutY="357.0" max="5.0" />
       <Text layoutX="29.0" layoutY="353.0" strokeType="OUTSIDE" strokeWidth="0.0" text="How usefull was this link?" textAlignment="CENTER" wrappingWidth="215.9999978542328" />
-      <Button fx:id="Send" layoutX="213.0" layoutY="345.0" mnemonicParsing="false" onAction="#handleSend" text="Send" />
+      <Button fx:id="send" layoutX="213.0" layoutY="345.0" mnemonicParsing="false" onAction="#handleSend" text="Send" />
       <ImageView fitHeight="162.0" fitWidth="140.0" layoutX="274.0" layoutY="209.0" pickOnBounds="true" preserveRatio="true" smooth="false">
          <image>
             <Image url="@BuddyBOT.png" />

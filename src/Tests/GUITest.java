@@ -4,8 +4,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-import GUI.AskForHelp;
-import GUI.Main;
+import GUI.RegisterMain;
+import Software.JDBC;
 import junit.framework.TestCase;
 import no.hal.jex.runtime.JExercise;
 
@@ -13,16 +13,17 @@ public class GUITest extends TestCase {
 	ExecutorService service = Executors.newSingleThreadExecutor(); 
 	
 	@JExercise(description = "Trying to run Main and then AskForHelp from the Main method. ExecuteService helps terminate if process takes to long.")
-	public void testGUI(){			
+	public void testRegisterGUI(){			
 		
 		try{
-			Main.test = true;
-			AskForHelp.test = true; 
-			service.execute(new Main());
+			service.execute(new RegisterMain());
 			service.shutdown();
 			service.awaitTermination(10, TimeUnit.SECONDS);
-			assertTrue(true); 
-			} catch(Exception e){
+			JDBC database = new JDBC(); 
+			database.insertQuery("DELETE FROM Users WHERE Username = 'TEST'"); 
+			database.insertQuery("DELETE FROM Feedback WHERE Assignment = -1"); 
+			assertTrue(true);
+		} catch(Exception e){
 			fail(); 
 		}
 		

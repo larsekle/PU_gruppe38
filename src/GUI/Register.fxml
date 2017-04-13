@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="439.0" prefWidth="412.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.RegisterController">
+<AnchorPane fx:id="pane" prefHeight="439.0" prefWidth="412.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.RegisterController">
    <children>
       <Text layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hi! Welcome to TDT4100. " textAlignment="CENTER" wrappingWidth="411.9999950528145">
          <font>

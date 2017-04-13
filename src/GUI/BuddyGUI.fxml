@@ -51,7 +51,7 @@
             </Tab>
         </tabs>
       </TabPane>
-      <Text fx:id="problemText" layoutX="-1.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-- BuddyBOT presents what he believes the student is struggling with --" textAlignment="CENTER" wrappingWidth="411.9999950528145" />
+      <Text fx:id="message" layoutX="17.0" layoutY="82.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-- BuddyBOT presents what he believes the student is struggling with --" textAlignment="CENTER" wrappingWidth="379.9999950528145" />
       <Text fill="#53e1d7" layoutX="4.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BuddyBOT " textAlignment="CENTER" wrappingWidth="404.99999618530273">
          <font>
             <Font name="Leelawadee UI Bold" size="28.0" />
@@ -59,7 +59,7 @@
       </Text>
       <Slider fx:id="feedbackSlider" blockIncrement="2.0" layoutX="67.0" layoutY="334.0" max="5.0" />
       <Text layoutX="29.0" layoutY="330.0" strokeType="OUTSIDE" strokeWidth="0.0" text="How usefull was this link?" textAlignment="CENTER" wrappingWidth="215.9999978542328" />
-      <Button fx:id="Send" layoutX="213.0" layoutY="322.0" mnemonicParsing="false" onAction="#handleSend" text="Send" />
+      <Button fx:id="send" layoutX="213.0" layoutY="322.0" mnemonicParsing="false" onAction="#handleSend" text="Send" />
       <ImageView fitHeight="162.0" fitWidth="140.0" layoutX="274.0" layoutY="186.0" pickOnBounds="true" preserveRatio="true" smooth="false">
          <image>
             <Image url="@BuddyBOT.png" />
