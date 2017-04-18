@@ -13,7 +13,7 @@
 //	private static Hashtag hash = new Hashtag();
 //	private final int assignment = 1; 
 //	private final int exercise = 1; 
-//	private static final ArrayList<String> FE = new ArrayList<String>(Arrays.asList("Failures", "Error")); 	
+//	private static final ArrayList<String> FE = new ArrayList<String>(Arrays.asList("Failure", "Error")); 	
 //	
 //		
 //	@Override

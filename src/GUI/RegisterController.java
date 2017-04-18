@@ -6,6 +6,7 @@ import java.net.URISyntaxException;
 import java.util.Arrays;
 
 import Software.JDBC;
+import VisibleForUser.AskForHelp;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;

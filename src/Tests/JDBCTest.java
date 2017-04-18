@@ -103,6 +103,9 @@ public class JDBCTest extends TestCase {
 	public void testGetStudentAssistantID(){		
 		assertTrue(db.getStudentAssistantID("Lars Erik Kleiven") == 1);
 		assertFalse(db.getStudentAssistantID("Lars Erik Kleiven") != 1);
+		assertTrue(db.getStudentAssistantID("test") == -1);
+		assertFalse(db.getStudentAssistantID("test123") != -1);
+		assertTrue(dbNoConnection.getStudentAssistantID("test123") == -1); 
 	}
 	
 	@JExercise(description = "Test if userExists ok")

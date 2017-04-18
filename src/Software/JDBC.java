@@ -25,7 +25,7 @@ public class JDBC {
 	 * Constructor for JDBC with default LIMIT_INCREMENT for number of errors between each time BuddyBOT should help
 	 */
 	public JDBC(){
-		LIMIT_INCREMENT = 2;
+		LIMIT_INCREMENT = 3;
 		connect(); 
 	}
 	
@@ -378,7 +378,7 @@ public class JDBC {
 			} else{
 				return -1;  
 			}
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		} return -1; 
 	}

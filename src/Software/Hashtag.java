@@ -3,7 +3,6 @@ package Software;
 import java.util.ArrayList;
 import java.util.Arrays;
 import GUI.Main;
-import GUI.RegisterMain;
 
 /**
  * @author Lars E. Kleiven, Ingrid E. Hermanrud, Sigrid L. Fosen, Helena Van de Pontseele
