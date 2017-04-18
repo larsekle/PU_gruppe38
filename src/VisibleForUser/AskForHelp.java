@@ -1,8 +1,10 @@
-package GUI;
+package VisibleForUser;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import GUI.Main;
+import GUI.RegisterMain;
 import Software.JDBC;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
