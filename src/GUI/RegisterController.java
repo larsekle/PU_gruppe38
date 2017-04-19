@@ -64,6 +64,8 @@ public class RegisterController {
 	@FXML
 	private ComboBox<String> studentAss; 
 		
+	@FXML 
+	private Text title; 
 	
 	/**
 	 * Method to initialize FXML window. 
@@ -76,6 +78,8 @@ public class RegisterController {
 		
 		studentAss.getItems().removeAll(); 
 		studentAss.getItems().addAll(database.getStudentAssistants()); 
+		
+		title.setId("title");
 		
 		try{
 			if (RegisterMain.test){

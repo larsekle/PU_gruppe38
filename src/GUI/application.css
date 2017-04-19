@@ -1,10 +1,104 @@
 /* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
 
 .root{
-    -fx-base: rgb(0, 0, 102);
-    -fx-background: rgb(224, 224, 224);
-}
-.button{
-	-fx-background: blue; 
+/*  -fx-base: rgb(0, 0, 102);*/  
+    -fx-background: rgb(252, 244, 217);
+
 }
 
+
+#title{
+	-fx-fill: rgb( 70, 32, 102);
+}
+
+
+.combo-box, .text-field, .text-field:focused, .text-field:hover, .button, .button:hover, .check-box .box {
+	-fx-text-fill: rgb( 70, 32, 102);
+	-fx-background-color: white; 
+	-fx-background-radius: 5;
+	 
+}
+
+.text-field:hover, .combo-box-base:hover, .check-box .box :hover, .button:hover, .button:focused, .slider .thumb:hover{
+	-fx-border-color: rgb(255, 122, 90);
+	-fx-border-radius: 5;
+	-fx-border-width: 2;  
+}
+
+
+.text-field:focused{
+	-fx-border-color: rgb(255, 122, 90);
+	-fx-border-radius: 5;
+	-fx-border-width: 2;
+	-fx-effect: none; 
+}
+.combo-box-popup .list-view .list-cell{
+	-fx-text-fill: rgb( 70, 32, 102);
+}
+
+.combo-box-popup .list-view{
+	-fx-background-radius: 5;
+	-fx-border-color: rgb(255, 122, 90);
+	-fx-border-radius: 5;
+	-fx-border-width: 2; 
+}
+
+.combo-box-popup .list-view .list-cell:filled:hover, .combo-box-popup .list-view .list-cell:focused {
+	-fx-background-color: rgb(255, 122, 90);
+	-fx-background-radius: 5;
+}
+.combo-box-base{
+	-fx-text-fill: rgb( 70, 32, 102);
+}
+
+.check-box .mark:selected{
+	-fx-background-color: rgb( 70, 32, 102);
+}
+
+.hyperlink{
+	-fx-text-fill: rgb( 70, 32, 102);
+}
+
+.hyperlink :hover{
+	-fx-font-weight: bold; 
+	-fx-underline: false;
+}
+
+.tab-pane *.tab-header-area *.tab-header-background {
+  	-fx-background-color:transparent;
+}
+
+.tab-pane .tab-content-area{
+	-fx-background-color: transparent; 
+	-fx-border-color:  rgb(255, 122, 90);
+	-fx-border-width: 2; 
+	-fx-border-radius: 3; 
+	
+}
+
+.tab{
+	-fx-background-color: transparent;
+	-fx-border-color: transparent;  
+}
+
+.tab:hover, .tab:selected{
+	-fx-background-color:  rgb(255, 122, 90);
+	-fx-border-color: transparent;	
+}
+
+.tab-pane:focused > .tab-header-area > .headers-region > .tab:selected .focus-indicator {
+     -fx-border-width: 0;
+}
+.tab {
+	-fx-text-fill: rgb( 70, 32, 102);
+}
+
+.list-view{
+	-fx-background-color: white;
+	-fx-padding: 1px; 
+}
+
+.slider{
+    -fx-focus-color: transparent; 
+    -fx-faint-focus-color:transparent;
+}

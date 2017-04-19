@@ -41,10 +41,11 @@ public class AskForHelp extends Application implements Runnable {
     public void start(Stage primaryStage) {
         try {     	
         	
-    		AnchorPane page = (AnchorPane) FXMLLoader.load(Main.class.getResource("SelfhelpGUI.fxml"));
+    		AnchorPane page = (AnchorPane) FXMLLoader.load(Main.class.getResource("/GUI/SelfhelpGUI.fxml"));
     		Scene scene = new Scene(page);
-            scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+            scene.getStylesheets().add(getClass().getResource("/GUI/application.css").toExternalForm());
             primaryStage.setScene(scene);
+            primaryStage.setResizable(false);
             primaryStage.setTitle("BuddyBOT Selfhelp Window");
             primaryStage.show();
     	
