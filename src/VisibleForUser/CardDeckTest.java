@@ -105,8 +105,10 @@ public class CardDeckTest extends TestCase {
 		c2 = _init_c2();
 		expected = _init_expected();
 	  } catch (NullPointerException ex) {
-		  if (!failureSent) hash.sendToDB(assignment, exercise, "class", FE.get(1)); 
-		  failureSent = true; 
+		  if (!failureSent){
+			  hash.sendToDB(assignment, exercise, "class", FE.get(1));
+			  failureSent = true; 
+		  }
 	  }
   }
   
@@ -118,21 +120,15 @@ public class CardDeckTest extends TestCase {
     int i = 0;
     while (expectedIt.hasNext()) {
       {
-    	  try{
-	        final Card expectedCard = expectedIt.next();
-	        final Card actualCard = it.getCard(i);
-	        char _suit = expectedCard.getSuit();
-	        char _suit_1 = actualCard.getSuit();
-	        JextestExtensions.operator_assertEquals(_suit, _suit_1);
-	        int _face = expectedCard.getFace();
-	        int _face_1 = actualCard.getFace();
-	        JextestExtensions.operator_assertEquals(_face, _face_1);
-	        i = (i + 1);
-    	  } catch (NullPointerException ex){
-    		  if (!failureSent) hash.sendToDB(assignment, exercise, "interface", FE.get(1)); 
-    		  if (!failureSent) hash.sendToDB(assignment, exercise, "iteration", FE.get(1)); 
-    		  failureSent = true;
-    	  }
+	  	final Card expectedCard = expectedIt.next();
+        final Card actualCard = it.getCard(i);
+        char _suit = expectedCard.getSuit();
+        char _suit_1 = actualCard.getSuit();
+        JextestExtensions.operator_assertEquals(_suit, _suit_1);
+        int _face = expectedCard.getFace();
+        int _face_1 = actualCard.getFace();
+        JextestExtensions.operator_assertEquals(_face, _face_1);
+        i = (i + 1);
       }
     }
   }
@@ -141,24 +137,21 @@ public class CardDeckTest extends TestCase {
     final Iterator<Card> actualIt = actual.iterator();
     while (expected.hasNext()) {
       {
-        try{
-	    	boolean _hasNext = actualIt.hasNext();
-	        if (!_hasNext && !failureSent) {
-	        	hash.sendToDB(assignment, exercise, "iteration",	FE.get(1)); 
-	        	failureSent = true;
-	        }
-	        TestCase.assertTrue(_hasNext);
-	        final Card expectedCard = expected.next();
-	        final Card actualCard = actualIt.next();
-	        char _suit = expectedCard.getSuit();
-	        char _suit_1 = actualCard.getSuit();
-	        JextestExtensions.operator_assertEquals(_suit, _suit_1);
-	        int _face = expectedCard.getFace();
-	        int _face_1 = actualCard.getFace();
-	        JextestExtensions.operator_assertEquals(_face, _face_1);
-        } catch(NullPointerException ex){
-        	if (!failureSent) hash.sendToDB(assignment, exercise, "interface", FE.get(1)); 
+	    final Card expectedCard = expected.next();
+    	boolean _hasNext = actualIt.hasNext();
+        if (!_hasNext && !failureSent) {
+        	hash.sendToDB(assignment, exercise, "iteration",	FE.get(1)); 
+        	failureSent = true;
         }
+        TestCase.assertTrue(_hasNext);
+        final Card actualCard = actualIt.next();
+        char _suit = expectedCard.getSuit();
+        char _suit_1 = actualCard.getSuit();
+        JextestExtensions.operator_assertEquals(_suit, _suit_1);
+        int _face = expectedCard.getFace();
+        int _face_1 = actualCard.getFace();
+        JextestExtensions.operator_assertEquals(_face, _face_1);
+        
       }
     }
   }
@@ -191,10 +184,13 @@ public class CardDeckTest extends TestCase {
   private void _test__addCard_transitions0_effects0_state_objectTests0_test() {
     try {
       
-      } catch (junit.framework.AssertionFailedError error) {
-      fail("deck instanceof CardContainerImpl failed: " + error.getMessage());
-      if (!failureSent) hash.sendToDB(assignment, exercise, "interface", FE.get(1)); 
-      failureSent = true;
+      } catch (Exception error) {
+          if (!failureSent) {
+        	  hash.sendToDB(assignment, exercise, "inheritance", FE.get(1)); 
+        	  failureSent = true;
+          }
+    	  fail("deck instanceof CardContainerImpl failed: " + error.getMessage());
+
      }
     
     int _maxCardCount = this.deck.getMaxCardCount();
@@ -206,10 +202,13 @@ public class CardDeckTest extends TestCase {
     try {
       
       this.deck.iterator();
-      } catch (junit.framework.AssertionFailedError error) {
-      fail("deck.iterator failed: " + error.getMessage());
-      if (!failureSent) hash.sendToDB(assignment, exercise, "iteration", FE.get(0)); 
-      failureSent = true;
+      } catch (Exception error) {
+          if (!failureSent) {
+          	hash.sendToDB(assignment, exercise, "iteration", FE.get(0)); 
+          	hash.sendToDB(assignment, exercise, "interface", FE.get(0)); 
+          	failureSent = true;
+            }
+    	  fail("deck.iterator failed: " + error.getMessage());
       }
     
   }
@@ -220,13 +219,16 @@ public class CardDeckTest extends TestCase {
   }
   
   private void _test__cardContainer_transitions0_effects0_state_objectTests0_test(final CardDeck it) {
-    try {
+	  try {
       
-      this.testCards(it, this.expected);
-      } catch (junit.framework.AssertionFailedError error) {
-      fail("testCards(expected) failed after deck.iterator: " + error.getMessage());
-      if (!failureSent) hash.sendToDB(assignment, exercise, "iteration", FE.get(0)); 
-      failureSent = true;
+    	this.testCards(it, this.expected);
+      } catch (Exception error) {
+          if (!failureSent) {
+        	  hash.sendToDB(assignment, exercise, "iteration", FE.get(0)); 
+              failureSent = true;
+          }
+    	  fail("testCards(expected) failed after deck.iterator: " + error.getMessage());
+
       }
     
   }
@@ -235,10 +237,15 @@ public class CardDeckTest extends TestCase {
     try {
       
       this.deck.iterator();
-      } catch (junit.framework.AssertionFailedError error) {
-      fail("deck.iterator failed: " + error.getMessage());
-      if (!failureSent) hash.sendToDB(assignment, exercise, "iteration", FE.get(0)); 
-      failureSent = true;
+      } catch (Exception error) {
+    	  if (!failureSent) {
+        	  hash.sendToDB(assignment, exercise, "iteration", FE.get(0)); 
+        	  hash.sendToDB(assignment, exercise, "interface", FE.get(0)); 
+              failureSent = true;
+
+          }
+    	  fail("deck.iterator failed: " + error.getMessage());
+      
      }
     
   }
@@ -253,10 +260,12 @@ public class CardDeckTest extends TestCase {
       
       Iterator<Card> _iterator = this.expected.iterator();
       this.testCards(it, _iterator);
-      } catch (junit.framework.AssertionFailedError error) {
-      fail("testCards(expected.iterator) failed after deck.iterator: " + error.getMessage());
-      if (!failureSent) hash.sendToDB(assignment, exercise, "iteration", FE.get(0)); 
-      failureSent = true;
+      } catch (Exception error) {
+    	  if (!failureSent) {
+        	  hash.sendToDB(assignment, exercise, "iteration", FE.get(0)); 
+        	  failureSent = true;
+          }
+    	  fail("testCards(expected.iterator) failed after deck.iterator: " + error.getMessage());
      }
     
   }

@@ -29,7 +29,8 @@ public class CardContainerImpl implements CardContainer, Iterable<Card> {
 	}
 
 	public Iterator<Card> iterator() {
-		return cards.iterator();
+//		return cards.iterator();
+		return null; 
 	}
 	
 	protected void addCard(Card card) {
