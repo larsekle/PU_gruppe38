@@ -2,7 +2,6 @@ package Software;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -57,7 +56,7 @@ public class JDBC {
 			stmt = conn.createStatement();
 			return true; 
 		} catch (Exception ex){
-			System.out.println("SQLException: "+ex.getMessage());
+			System.out.println("Exception: "+ex.getMessage());
 			return false; 
 		}
 	}
