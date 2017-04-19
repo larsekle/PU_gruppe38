@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Hyperlink?>
@@ -53,19 +54,25 @@
         </tabs>
       </TabPane>
       <Text fx:id="problemText" layoutX="24.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hi! I am here to help you through your programming exercises. Which topic are you struggling with?" textAlignment="CENTER" wrappingWidth="361.9999950528145" />
-      <Text fill="#53e1d7" layoutX="4.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BuddyBOT " textAlignment="CENTER" wrappingWidth="404.99999618530273">
+      <Text fx:id="title" fill="#53e1d7" layoutX="4.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BuddyBOT" textAlignment="CENTER" wrappingWidth="404.99999618530273">
          <font>
             <Font name="Leelawadee UI Bold" size="28.0" />
          </font>
       </Text>
       <Slider fx:id="feedbackSlider" blockIncrement="2.0" layoutX="67.0" layoutY="357.0" max="5.0" />
       <Text layoutX="29.0" layoutY="353.0" strokeType="OUTSIDE" strokeWidth="0.0" text="How usefull was this link?" textAlignment="CENTER" wrappingWidth="215.9999978542328" />
-      <Button fx:id="send" layoutX="213.0" layoutY="345.0" mnemonicParsing="false" onAction="#handleSend" text="Send" />
+      <Button fx:id="send" layoutX="213.0" layoutY="345.0" mnemonicParsing="false" onAction="#handleSend" text="Send">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
       <ImageView fitHeight="162.0" fitWidth="140.0" layoutX="274.0" layoutY="209.0" pickOnBounds="true" preserveRatio="true" smooth="false">
          <image>
             <Image url="@BuddyBOT.png" />
          </image>
       </ImageView>
-      <ComboBox fx:id="linkSelector" layoutX="139.0" layoutY="95.0" onAction="#linkImport" prefWidth="150.0" />
+      <ComboBox fx:id="linkSelector" layoutX="139.0" layoutY="95.0" onAction="#linkImport" prefWidth="150.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></ComboBox>
    </children>
 </AnchorPane>

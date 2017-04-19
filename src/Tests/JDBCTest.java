@@ -80,6 +80,8 @@ public class JDBCTest extends TestCase {
 			assertFalse(db.limitReached("TEST", 0, 0));
 			
 			db.insertFailure(0, 0, "TEST", "TEST");
+			db.insertFailure(0, 0, "TEST", "TEST");
+
 			assertTrue(db.limitReached("TEST", 0, 0));
 			assertFalse(dbNoConnection.limitReached("TEST", 0, 0));
 

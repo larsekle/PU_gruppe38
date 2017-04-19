@@ -64,6 +64,9 @@ public class AskForHelpController {
 	@FXML 
 	private ComboBox<String> linkSelector; 
 	
+	@FXML
+	private Text title; 
+	
 	/**
 	 * Method to initialize FXML window. Gets all tags and presents them to the user through a drop-down list.
 	 * If test then test sequence will be run directly. 
@@ -74,6 +77,8 @@ public class AskForHelpController {
 			
 		problemText.setText("Hi! BuddyBOT is here to help. Which topic would you like to take a look at?");	
 		ArrayList<String> tags = Hashtag.TAGS;
+		
+		title.setId("title");
 		
 		// Sort on tags without distinguish upper and lower case letters
 		tags.sort(Comparator.comparing(tag -> tag.toLowerCase()));

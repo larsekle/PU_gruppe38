@@ -43,6 +43,7 @@ public class Main extends Application implements Runnable{
         	Scene scene = new Scene(page);
             scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
             primaryStage.setScene(scene);
+            primaryStage.setResizable(false);
             primaryStage.setTitle("BuddyBOT Execution Window");
             primaryStage.show();
         	

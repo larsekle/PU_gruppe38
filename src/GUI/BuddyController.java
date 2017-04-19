@@ -59,7 +59,10 @@ public class BuddyController {
 	@FXML 
 	private Button send; 
 	
-	private String tag; 
+	private String tag;
+	
+	@FXML 
+	private Text title; 
 	
 	/**
 	 * Method to initialize FXML window. Gets last used tag, and gets associated links from database. 
@@ -74,6 +77,7 @@ public class BuddyController {
 		if (RegisterMain.test) tag = "encapsulation"; 
 
 		message.setText("Hi! It looks like you are strugglig with the topic " + tag + ". I would advise you to look at the following resouces:");
+		title.setId("title");
 		
 		// Get top links from database
 		ArrayList<String> wikiLinks = database.getLinks("Wiki", tag); 
