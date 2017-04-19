@@ -22,7 +22,7 @@ public class CardHandTest extends TestCase {
 	private boolean failureSent = false; 
 	
 	
-	private CardHand hand;
+  private CardHand hand;
   
   private CardHand _init_hand() {
     CardHand _cardHand = new CardHand(2);
@@ -51,15 +51,11 @@ public class CardHandTest extends TestCase {
   
   @Override
   protected void setUp() {
-	  try {
-	    hand = _init_hand();
-	    s1 = _init_s1();
-	    c2 = _init_c2();
-	    expected = _init_expected();
-	  } catch (NullPointerException ex){
-	      if (!failureSent) hash.sendToDB(assignment, exercise, "class", FE.get(0)); 
-	      failureSent = true; 
-	  }
+    hand = _init_hand();
+    s1 = _init_s1();
+    c2 = _init_c2();
+    expected = _init_expected();
+    
   }
   
   private boolean operator_assertEquals(final CardContainer it, final Collection<Card> expected) {
@@ -72,20 +68,15 @@ public class CardHandTest extends TestCase {
       int i = 0;
       while (expectedIt.hasNext()) {
         {
-        	try{
-	          final Card expectedCard = expectedIt.next();
-	          final Card actualCard = it.getCard(i);
-	          char _suit = expectedCard.getSuit();
-	          char _suit_1 = actualCard.getSuit();
-	          JextestExtensions.operator_assertEquals(_suit, _suit_1);
-	          int _face = expectedCard.getFace();
-	          int _face_1 = actualCard.getFace();
-	          JextestExtensions.operator_assertEquals(_face, _face_1);
-	          i = (i + 1);
-        	} catch (NullPointerException ex){
-      	      if (!failureSent) hash.sendToDB(assignment, exercise, "iterator", FE.get(0)); 
-      	      failureSent = true;
-        	}
+          final Card expectedCard = expectedIt.next();
+          final Card actualCard = it.getCard(i);
+          char _suit = expectedCard.getSuit();
+          char _suit_1 = actualCard.getSuit();
+          JextestExtensions.operator_assertEquals(_suit, _suit_1);
+          int _face = expectedCard.getFace();
+          int _face_1 = actualCard.getFace();
+          JextestExtensions.operator_assertEquals(_face, _face_1);
+          i = (i + 1);
         }
       }
       _xblockexpression = true;
@@ -99,21 +90,16 @@ public class CardHandTest extends TestCase {
       final Iterator<Card> actualIt = actual.iterator();
       while (expected.hasNext()) {
         {
-        	try{
-	          boolean _hasNext = actualIt.hasNext();
-	          TestCase.assertTrue(_hasNext);
-	          final Card expectedCard = expected.next();
-	          final Card actualCard = actualIt.next();
-	          char _suit = expectedCard.getSuit();
-	          char _suit_1 = actualCard.getSuit();
-	          JextestExtensions.operator_assertEquals(_suit, _suit_1);
-	          int _face = expectedCard.getFace();
-	          int _face_1 = actualCard.getFace();
-	          JextestExtensions.operator_assertEquals(_face, _face_1);
-        	} catch(NullPointerException ex){
-    	      if (!failureSent) hash.sendToDB(assignment, exercise, "iterator", FE.get(0)); 
-    	      failureSent = true;
-        	}
+          boolean _hasNext = actualIt.hasNext();
+          TestCase.assertTrue(_hasNext);
+          final Card expectedCard = expected.next();
+          final Card actualCard = actualIt.next();
+          char _suit = expectedCard.getSuit();
+          char _suit_1 = actualCard.getSuit();
+          JextestExtensions.operator_assertEquals(_suit, _suit_1);
+          int _face = expectedCard.getFace();
+          int _face_1 = actualCard.getFace();
+          JextestExtensions.operator_assertEquals(_face, _face_1);
         }
       }
       _xblockexpression = true;
@@ -130,9 +116,6 @@ public class CardHandTest extends TestCase {
     try {
       _transition_exprAction__addCard_transitions1_actions0();
       fail("IllegalStateException should be thrown after hand.addCard(new Card('S', 3))");
-	  if (!failureSent) hash.sendToDB(assignment, exercise, "valid state", FE.get(0)); 
-	  failureSent = true;
-
     } catch (Exception e) {
       assertTrue("IllegalStateException should be thrown after hand.addCard(new Card('S', 3))", e instanceof IllegalStateException);
     }
@@ -167,14 +150,19 @@ public class CardHandTest extends TestCase {
     try {
       
       } catch (junit.framework.AssertionFailedError error) {
+    	    if (!failureSent){   	
+    	  	  hash.sendToDB(assignment, exercise, "interface", FE.get(0));
+    	  	  failureSent = true;
+    	    }
       fail("hand instanceof CardContainerImpl failed after hand.addCard(new Card('S',1)) ,hand.addCard(new Card('S',2)): " + error.getMessage());
-	  if (!failureSent) hash.sendToDB(assignment, exercise, "interface", FE.get(0)); 
-	  failureSent = true;
-      }
+    }
     
     int _cardCount = this.hand.getCardCount();
     assertEquals("hand.cardCount == 0 failed after hand.addCard(new Card('S',1)) ,hand.addCard(new Card('S',2))", 0, _cardCount);
-    
+    if (!failureSent){   	
+	  	  hash.sendToDB(assignment, exercise, "interface", FE.get(0));
+	  	  failureSent = true;
+	}
   }
   
   private void _transition_exprAction__addCard_transitions0_actions0() {
@@ -183,10 +171,12 @@ public class CardHandTest extends TestCase {
       Card _card = new Card('S', 1);
       this.hand.addCard(_card);
       } catch (junit.framework.AssertionFailedError error) {
-      fail("hand.addCard(new Card('S',1)) failed: " + error.getMessage());
-	  if (!failureSent) hash.sendToDB(assignment, exercise, "inheritance", FE.get(0)); 
-	  failureSent = true;
-     }
+    	    if (!failureSent){   	
+    	  	  hash.sendToDB(assignment, exercise, "class", FE.get(0));
+    	  	  failureSent = true;
+    	      }
+    	  fail("hand.addCard(new Card('S',1)) failed: " + error.getMessage());
+    }
     
   }
   
@@ -196,10 +186,12 @@ public class CardHandTest extends TestCase {
       Card _card = new Card('S', 2);
       this.hand.addCard(_card);
       } catch (junit.framework.AssertionFailedError error) {
-      fail("hand.addCard(new Card('S',2)) failed: " + error.getMessage());
-	  if (!failureSent) hash.sendToDB(assignment, exercise, "inheritance", FE.get(0)); 
-	  failureSent = true;
-     }
+    	    if (!failureSent){   	
+    	  	  hash.sendToDB(assignment, exercise, "class", FE.get(0));
+    	  	  failureSent = true;
+    	      }
+    	  fail("hand.addCard(new Card('S',2)) failed: " + error.getMessage());
+    }
     
   }
   
@@ -211,10 +203,12 @@ public class CardHandTest extends TestCase {
   private void _test__addCard_transitions0_effects0_state_objectTests0_test(final CardHand it) {
     
     int _cardCount = it.getCardCount();
+    
     assertEquals("cardCount == 2 failed after hand.addCard(new Card('S',1)) ,hand.addCard(new Card('S',2))", 2, _cardCount);
-	if (!failureSent) hash.sendToDB(assignment, exercise, "interface", FE.get(0)); 
-	if (!failureSent) hash.sendToDB(assignment, exercise, "inheritance", FE.get(0)); 
-
+    if (2 != _cardCount && !failureSent){   	
+	  hash.sendToDB(assignment, exercise, "class", FE.get(0));
+	  failureSent = true;
+    }
   }
   
   private void _transition_exprAction__addCard_transitions1_actions0() {
@@ -223,9 +217,11 @@ public class CardHandTest extends TestCase {
       Card _card = new Card('S', 3);
       this.hand.addCard(_card);
       } catch (junit.framework.AssertionFailedError error) {
+    	  if (!failureSent){
+    		  hash.sendToDB(assignment, exercise, "class", FE.get(0));
+    		  failureSent = true; 
+    	  }
       fail("hand.addCard(new Card('S', 3)) failed: " + error.getMessage());
-  	  if (!failureSent) hash.sendToDB(assignment, exercise, "inheritance", FE.get(0)); 
-  	  failureSent = true;
     }
     
   }
@@ -238,9 +234,12 @@ public class CardHandTest extends TestCase {
   private void _test__addCard_transitions2_effects0_state_objectTests0_test(final CardHand it) {
     
     int _cardCount = it.getCardCount();
+    if (2 != _cardCount && !failureSent){   	
+	  hash.sendToDB(assignment, exercise, "class", FE.get(0));
+	  failureSent = true;
+    }
     assertEquals("cardCount == 2 failed", 2, _cardCount);
-    if(2 != _cardCount) if (!failureSent) hash.sendToDB(assignment, exercise, "inheritance", FE.get(0));
-    failureSent = true;
+    
   }
   
   private void _transition_exprAction__cardContainer_transitions0_actions0() {
@@ -248,9 +247,11 @@ public class CardHandTest extends TestCase {
       
       this.hand.addCard(this.s1);
       } catch (junit.framework.AssertionFailedError error) {
-      fail("hand.addCard(s1) failed: " + error.getMessage());
-  	  if (!failureSent) hash.sendToDB(assignment, exercise, "inheritance", FE.get(0)); 
-  	  failureSent = true;
+    	  if (!failureSent){
+    		  hash.sendToDB(assignment, exercise, "class", FE.get(0));
+    		  failureSent = true; 
+    	  }
+    	  fail("hand.addCard(s1) failed: " + error.getMessage());
     }
     
   }
@@ -260,9 +261,11 @@ public class CardHandTest extends TestCase {
       
       this.hand.addCard(this.c2);
       } catch (junit.framework.AssertionFailedError error) {
-      fail("hand.addCard(c2) failed: " + error.getMessage());
-  	  if (!failureSent) hash.sendToDB(assignment, exercise, "inheritance", FE.get(0)); 
-  	  failureSent = true;
+    	  if (!failureSent){
+    		  hash.sendToDB(assignment, exercise, "class", FE.get(0));
+    		  failureSent = true; 
+    	  }
+    	  fail("hand.addCard(c2) failed: " + error.getMessage());
     }
     
   }
@@ -272,9 +275,12 @@ public class CardHandTest extends TestCase {
       
       this.hand.iterator();
       } catch (junit.framework.AssertionFailedError error) {
-      fail("hand.iterator failed: " + error.getMessage());
-  	  if (!failureSent) hash.sendToDB(assignment, exercise, "iterator", FE.get(0)); 
-  	  failureSent = true;
+    	  if (!failureSent){
+    		  hash.sendToDB(assignment, exercise, "iteration", FE.get(0));
+    		  hash.sendToDB(assignment, exercise, "interface", FE.get(0));
+    		  failureSent = true; 
+    	  }
+    	  fail("hand.iterator failed: " + error.getMessage());
     }
     
   }
@@ -288,8 +294,7 @@ public class CardHandTest extends TestCase {
     
     assertTrue("hand ?= expected failed after hand.addCard(s1) ,hand.addCard(c2) ,hand.iterator", this.operator_assertEquals(
       this.hand, this.expected));
-	if (!this.hand.equals(this.expected)) if (!failureSent) hash.sendToDB(assignment, exercise, "OOT", FE.get(0)); 
-	failureSent = true;
+    
   }
   
   private void _transition_exprAction__handIterator_transitions0_actions0() {
@@ -297,7 +302,11 @@ public class CardHandTest extends TestCase {
       
       this.hand.addCard(this.s1);
       } catch (junit.framework.AssertionFailedError error) {
-      fail("hand.addCard(s1) failed: " + error.getMessage());
+    	  if (!failureSent){
+    		  hash.sendToDB(assignment, exercise, "class", FE.get(0));
+    		  failureSent = true; 
+    	  }
+    	  fail("hand.addCard(s1) failed: " + error.getMessage());
     }
     
   }
@@ -307,6 +316,10 @@ public class CardHandTest extends TestCase {
       
       this.hand.addCard(this.c2);
       } catch (junit.framework.AssertionFailedError error) {
+    	  if (!failureSent){
+    		  hash.sendToDB(assignment, exercise, "class", FE.get(0));
+    		  failureSent = true; 
+    	  }
       fail("hand.addCard(c2) failed: " + error.getMessage());
     }
     
@@ -317,9 +330,11 @@ public class CardHandTest extends TestCase {
       
       this.hand.iterator();
       } catch (junit.framework.AssertionFailedError error) {
-      fail("hand.iterator failed: " + error.getMessage());
-  	  if (!failureSent) hash.sendToDB(assignment, exercise, "iterator", FE.get(0)); 
-  	  failureSent = true;
+    	  if (!failureSent){
+    		  hash.sendToDB(assignment, exercise, "iteration", FE.get(0));
+    		  failureSent = true; 
+    	  }
+    	  fail("hand.iterator failed: " + error.getMessage());
     }
     
   }
@@ -332,8 +347,18 @@ public class CardHandTest extends TestCase {
   private void _test__handIterator_transitions0_effects0_state_objectTests0_test() {
     
     Iterator<Card> _iterator = this.expected.iterator();
+    try {
+    	this.operator_assertEquals(this.hand, _iterator);
+    	
+    } catch (Exception ex){
+    	if (!failureSent){
+    		hash.sendToDB(assignment, exercise, "iteration", FE.get(0)); 
+    		failureSent = true; 
+    	}
+    }	
+    
     assertTrue("hand ?= expected.iterator failed after hand.addCard(s1) ,hand.addCard(c2) ,hand.iterator", this.operator_assertEquals(
       this.hand, _iterator));
-    
+
   }
 }
