@@ -71,7 +71,7 @@
 .tab-pane .tab-content-area{
 	-fx-background-color: transparent; 
 	-fx-border-color:  rgb(255, 122, 90);
-	-fx-border-width: 2; 
+	-fx-border-width: 1; 
 	-fx-border-radius: 3; 
 	
 }
