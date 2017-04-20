@@ -22,7 +22,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <ListView layoutX="14.0" layoutY="12.0" prefHeight="109.0" prefWidth="251.0" />
+                        <ListView layoutX="14.0" layoutY="11.0" prefHeight="109.0" prefWidth="378.0" />
                         <Hyperlink fx:id="youtube1" layoutX="14.0" layoutY="14.0" onAction="#handleLink" prefHeight="17.0" prefWidth="224.0" text="https://www.youtube.com/watch?v=Hl-zzrqQoSE&amp;list=PLFE2CE09D83EE3E28" />
                         <Hyperlink fx:id="youtube2" layoutX="14.0" layoutY="48.0" onAction="#handleLink" prefHeight="17.0" prefWidth="224.0" text="https://www.youtube.com/watch?v=Hl-zzrqQoSE&amp;list=PLFE2CE09D83EE3E28" />
                         <Hyperlink fx:id="youtube3" layoutX="14.0" layoutY="81.0" onAction="#handleLink" prefHeight="17.0" prefWidth="224.0" text="https://www.youtube.com/watch?v=Hl-zzrqQoSE&amp;list=PLFE2CE09D83EE3E28" />
@@ -33,7 +33,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <ListView layoutX="14.0" layoutY="12.0" prefHeight="109.0" prefWidth="251.0" />
+                        <ListView layoutX="14.0" layoutY="11.0" prefHeight="109.0" prefWidth="378.0" />
                         <Hyperlink fx:id="wiki1" layoutX="14.0" layoutY="14.0" onAction="#handleLink" prefHeight="17.0" prefWidth="224.0" text="https://www.youtube.com/watch?v=Hl-zzrqQoSE&amp;list=PLFE2CE09D83EE3E28" />
                         <Hyperlink fx:id="wiki2" layoutX="14.0" layoutY="48.0" onAction="#handleLink" prefHeight="17.0" prefWidth="224.0" text="https://www.youtube.com/watch?v=Hl-zzrqQoSE&amp;list=PLFE2CE09D83EE3E28" />
                         <Hyperlink fx:id="wiki3" layoutX="14.0" layoutY="81.0" onAction="#handleLink" prefHeight="17.0" prefWidth="224.0" text="https://www.youtube.com/watch?v=Hl-zzrqQoSE&amp;list=PLFE2CE09D83EE3E28" />
@@ -44,7 +44,7 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <ListView layoutX="14.0" layoutY="12.0" prefHeight="109.0" prefWidth="251.0" />
+                        <ListView layoutX="14.0" layoutY="11.0" prefHeight="109.0" prefWidth="378.0" />
                         <Hyperlink fx:id="online1" layoutX="14.0" layoutY="14.0" onAction="#handleLink" prefHeight="17.0" prefWidth="224.0" text="https://www.youtube.com/watch?v=Hl-zzrqQoSE&amp;list=PLFE2CE09D83EE3E28" />
                         <Hyperlink fx:id="online2" layoutX="14.0" layoutY="48.0" onAction="#handleLink" prefHeight="17.0" prefWidth="224.0" text="https://www.youtube.com/watch?v=Hl-zzrqQoSE&amp;list=PLFE2CE09D83EE3E28" />
                         <Hyperlink fx:id="online3" layoutX="14.0" layoutY="81.0" onAction="#handleLink" prefHeight="17.0" prefWidth="224.0" text="https://www.youtube.com/watch?v=Hl-zzrqQoSE&amp;list=PLFE2CE09D83EE3E28" />
