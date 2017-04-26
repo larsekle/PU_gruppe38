@@ -75,7 +75,7 @@ public class AccountTest extends TestCase {
 	public void testDeposit() {
 		account.deposit(100);
 		if (account.getBalance() != 200){
-			if (!failureSent) hash.sendToDB(assignment, exercise,"encapsulation", FE.get(0)); 
+			if (!failureSent) hash.sendToDB(assignment, exercise,"valid state", FE.get(0)); 
 			failureSent = true; 
 		}
 		assertEquals(200.0d, account.getBalance(), epsilon);
@@ -84,7 +84,7 @@ public class AccountTest extends TestCase {
 	public void testDepositNegativeAmount() {
 		try {
 			account.deposit(-50);
-			if (!failureSent) hash.sendToDB(assignment, exercise,"encapsulation", FE.get(0)); 
+			if (!failureSent) hash.sendToDB(assignment, exercise,"valid state", FE.get(0)); 
 			failureSent = true; 
 			fail("deposit should throw an IllegalArgumentException when given negative amounts.");
 		} catch (Exception e) {
@@ -102,7 +102,7 @@ public class AccountTest extends TestCase {
 			account.withdraw(50);
 			assertEquals(50.0d, account.getBalance(), epsilon);
 		} catch (Exception e){
-			if (!failureSent) hash.sendToDB(assignment, exercise,"encapsulation", FE.get(1));
+			if (!failureSent) hash.sendToDB(assignment, exercise,"valid state", FE.get(1));
 			if (!failureSent) hash.sendToDB(assignment, exercise,"value types", FE.get(1));
 			failureSent = true; 
 			fail();

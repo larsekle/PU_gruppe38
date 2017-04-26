@@ -60,7 +60,7 @@
          </font>
       </Text>
       <Slider fx:id="feedbackSlider" blockIncrement="2.0" layoutX="67.0" layoutY="357.0" max="5.0" />
-      <Text layoutX="29.0" layoutY="353.0" strokeType="OUTSIDE" strokeWidth="0.0" text="How usefull was this link?" textAlignment="CENTER" wrappingWidth="215.9999978542328" />
+      <Text layoutX="29.0" layoutY="353.0" strokeType="OUTSIDE" strokeWidth="0.0" text="How useful was this link?" textAlignment="CENTER" wrappingWidth="215.9999978542328" />
       <Button fx:id="send" layoutX="213.0" layoutY="345.0" mnemonicParsing="false" onAction="#handleSend" text="Send">
          <cursor>
             <Cursor fx:constant="HAND" />
