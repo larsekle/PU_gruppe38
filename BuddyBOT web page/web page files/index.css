@@ -1,0 +1,178 @@
+    
+/* Dividing the page in thirds */
+#wrapper {
+width:100%;
+margin : 0;
+}
+
+#first-div {
+width:42%;
+margin : 0;
+float:left;
+text-align: right;
+padding-right: 30px;
+
+}
+
+#second-div {
+width:50%;
+margin : 0;
+float : left ;
+text-align: center;
+
+}
+
+#third-div{
+  width:1%;
+  margin: 0;
+  float: left;
+  
+}
+
+#first-div-2 {
+  width:42%;
+  margin : 0;
+  float:left;
+  text-align: right;
+  padding-right: 30px;
+  
+}
+
+#second-div-2 {
+  width:15%;
+  margin : 0;
+  float : left ;
+  text-align: right;
+  
+}
+
+#third-div-2{
+  width:26%;
+  margin: 0px;
+  float: left;
+  text-align:left;
+  padding-left: 3.5%;
+  
+}
+
+
+
+
+
+/* Text boxes on hover */
+.container {
+  position: relative;
+  width: 100%;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 30px;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 60%;
+  opacity: 0;
+  transition: .5s ease;
+}
+
+.overlay-2 {
+  position: absolute;
+  top: 0;
+  bottom: 30px;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 270px;
+  opacity: 0;
+  transition: .5s ease;
+}
+
+.container:hover .overlay {
+  opacity: 0.8;
+}
+
+.container:hover .overlay-2{
+  opacity: 0.8;
+}
+
+.text {
+  color: #8d8d8d;
+  width:450px;
+  font-size: 14px;
+  text-align: left;
+  padding-left:10px;
+
+  position: absolute;
+  left: 100%;
+
+  top: 50%;
+  
+  
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+}
+
+.text-2 {
+  color: #8d8d8d;
+  width:800px;
+  font-size: 14px;
+  text-align: right;
+  padding-right: 430px;
+
+  position: absolute;
+  left: 0%;
+  top: 50%;
+  
+  
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+
+}
+
+.fargeblokk {
+  background-color: #113166;
+  text-align: center;
+  color:white;
+  height: 200px;
+
+}
+
+
+.padding-boarder{
+  padding-top:40px;
+  width:100%;
+}
+
+.padding-text1{
+    padding-top: 80px;
+}
+
+/*Circular images */
+
+.circular-img, .circular-img-rig{
+  border-radius: 50%;
+  height:220px;
+  width:220px;
+  text-align: center;
+  background-color: #DF694B;
+  border-color: #DF694B;
+  display: block;
+    
+}
+
+.circular-img {
+  margin-left: 20px;
+  -webkit-transition: margin 1s ease;
+     -moz-transition: margin 1s ease;
+       -o-transition: margin 1s ease;
+      -ms-transition: margin 1s ease;
+          transition: margin 1s ease;
+}

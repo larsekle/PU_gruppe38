@@ -1,0 +1,39 @@
+.img-circle{
+    border-radius: 50%;
+    height: 150px;
+    width: 150px;
+    background: url('buddypic.png');
+    background-size: 100%
+  }
+
+  .image-padding-bottom{
+    padding-top: 30px;
+  }
+  .padding{
+    padding: 2%;
+  }
+  .header{
+    height: 50px;
+    color: orange;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    background: white;
+  }
+  .headertext{
+    color: #df694b;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+
+  }
+  a:link{
+      color: #df694b;
+      font-family: sans-serif;
+      font-weight:bold;
+      }
+  a:visited{
+      color:#df694b;
+      font-weight:bold;
+      }
